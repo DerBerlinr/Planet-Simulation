@@ -1,52 +1,38 @@
-from gui import *
+from ursina import *
+
+app = Ursina()  # App erstellen
+
+window.title = 'Planetensimulation'  # 'Meta-Daten' der App setzen
+window.borderless = True
+window.fullscreen = True
+window.exit_button.visible = True
+window.fps_counter.enabled = True
+
+planets = []
 
 
-class Main:
+class Planet(Entity):
+    def __init__(self, that_color):  # Entity wird erstellt, indem die init-Methode der Entity-Klasse aufgerufen wird
+        super().__init__(
+            model='cube',  # Planet soll ballförmig sein
+            color=that_color,  # farbe des Planeten wird festgelegt
+        )
+        planets.append(self)
 
-#-------------init-------------
+    def set_coords(self, x, y, z):  # Koordinaten eines Planeten setzen
+        self.x = x
+        self.y = y
+        self.z = z
 
-    def __init__(self): #init
-        gui = GUI()
+    def update(self):   # testen zum herumbewegen eines Planeten
+        self.x += held_keys['d'] * .1
+        self.x -= held_keys['a'] * .1
+        self.y += held_keys['w'] * .1
+        self.y -= held_keys['s'] * .1
+        self.z += held_keys['q'] * .1
+        self.z -= held_keys['e'] * .1
 
-    def get_first_pos(self,pos): #erhaelt die ersten Positionen der Planenten aus der Tabelle
-        gui.data[0]
 
-#-------------reset-------------
+p = Planet(color.orange)
 
-    def adjusted_data(self): #File löschen um Zugriff auf flasche Daten zu verhindern
-        pass
-
-#-------------calculation-------------
-
-    def calc(self,amount=1): #berechnet naechste Positionen
-        pass
-
-#-------------time-------------
-
-    def calc_next_pos(self): #errechnet naechste Planeten Positionen
-        pass
-
-#-------------time-jumping-------------
-
-    def get_pos_time_f(self, time): #Holt Positionen für Zeiten in der Zukunft (vorspulen)
-        pass
-
-    def get_pos_time_p(self, time): #Holt Positionen für Zeiten in der Zukunft (zurueckspulen)
-        pass
-
-#-------------button-usage and user-entries-------------
-
-    def start(self): #startet die Simulation
-        pass
-
-    def pause(self): #pausiert die Simulation
-        pass
-
-    def speed_up(self): #erhöht Geschwindigkeit der Simulation
-        pass
-
-    def speed_down(self): #verringert Geschwindigkeit der Simulation
-        pass
-
-    def get_display_data(self): #liest Daten aus und leitet an GUI weiter zur dortigen visuellen Darstellung
-        pass
+app.run()   # opens a window and starts the game.
