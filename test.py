@@ -1,13 +1,8 @@
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 
-app = Ursina()  # App erstellen
 
-window.title = 'Planetensimulation'  # 'Meta-Daten' der App setzen
-window.borderless = True
-window.fullscreen = True
-window.exit_button.visible = True
-window.fps_counter.enabled = True
+app = Ursina()
 
 
 class Planet(Entity):
@@ -33,6 +28,6 @@ class Planet(Entity):
 
 
 planet = Planet(color=color.orange)
-planet.set_coords(9,0,9)
-player = FirstPersonController()  # First-Person-Controller wird erstellt (prä-fabrizierte Klasse, modifiziert, dass das Springen und die Schwerkraft nicht mehr existieren und man sich mit shift und space auf und ab bewegen kann)
+planet.set_coords(9,9,9)
+player = FirstPersonController(jumping=False)
 app.run()
