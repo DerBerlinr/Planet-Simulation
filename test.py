@@ -4,30 +4,35 @@ from ursina.prefabs.first_person_controller import FirstPersonController
 
 app = Ursina()
 
+# Define a Voxel class.
+# By setting the parent to scene and the model to 'cube' we it becomes a 3d button.
 
-class Planet(Entity):
-    def __init__(self, color, speed=1, mass=1, diameter=1, x=0, y=0, z=0):  # Entity wird erstellt, indem die init-Methode der Entity-Klasse aufgerufen wird
-        super().__init__(
-            model='sphere',  # Planet soll ballförmig sein
-            color=color,  # farbe des Planeten wird festgelegt
-            collision=True,
-            collider='sphere'
-            # TODO: Texturen hinzufügen
+class Voxel(Button):
+    def __init__(self, position=(0,0,0)):
+        super().__init__(  
+            parent = scene,
+            position = position,
+            model = 'cube',
+            origin_y = .5,
+            texture = 'white_cube',
+            color = color.color(0, 0, random.uniform(.9, 1.0)),
+            highlight_color = color.lime,
         )
-        self.speed = speed
-        self.mass = mass
-        self.scale = Vec3(diameter, diameter, diameter)
-        self.x = x
-        self.y = y
-        self.z = z
-
-    def set_coords(self, x, y, z):  # Koordinaten eines Planeten setzen
-        self.x = x
-        self.y = y
-        self.z = z
 
 
-planet = Planet(color=color.orange)
-planet.set_coords(9,9,9)
-player = FirstPersonController(jumping=False)
+    def input(self, key):
+        if self.hovered:
+            if key == 'left mouse down':
+                voxel = Voxel(position=self.position + mouse.normal)
+
+            if key == 'right mouse down':
+                destroy(self)
+
+
+for z in range(8):
+    for x in range(8):
+        voxel = Voxel(position=(x,0,z))
+
+
+player = FirstPersonController()
 app.run()
