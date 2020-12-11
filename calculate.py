@@ -1,135 +1,115 @@
 import math
 
-listx = []
-listy = []
-listz = []
-listvx = []
-listvy = []
-listvz = []
-listax = []
-listay = []
-listaz = []
+class Calc:
+    def __init__(self):
+        self.listx = []
+        self.listy = []
+        self.listz = []
+        self.listvx = []
+        self.listvy = []
+        self.listvz = []
+        self.listax = []
+        self.listay = []
+        self.listaz = []
+
+
+        self.x0 = 500000
+        self.vx0 = -500
+
+        self.y0 = 1000000000
+        self.vy0 = 1000
+
+        self.z0 = 75000000
+        self.vz0 = -300
+
+        self.G = 6.675*10**-11
+        self.mS = 1.989*10**30
+        self.mE = 5.972*10**24
+
+        self.dt = 60
+
+
+        self.sqrt_xyz = math.sqrt(self.x0 ** 2 + self.y0 ** 2 + self.z0 ** 2)
+
+        self.listx.append(self.x0)
+        self.listy.append(self.y0)
+        self.listz.append(self.z0)
+        self.listvx.append(self.vx0)
+        self.listvy.append(self.vy0)
+        self.listvz.append(self.vz0)
 
 
 
-x0 = 500000
-vx0 = -500
+    def ax_t(self, t):
+        ax = -self.G*self.mS*(self.x_t(t))/(self.sqrt_xyz)**3
+        self.listax.append(ax)
+        return ax
+    def x_t(self, t):
+        x = self.listx[self.list_counter]
+        return x
+    def vx_t(self, t):
+        vx = self.listvx[self.list_counter] + self.listax[self.list_counter]*self.dt/2
+        self.listvx.append(vx)
+        return vx
 
 
-y0 = 1000000000
-vy0 = 1000
+    def ay_t(self, t):
+        ay = -self.G*self.mS*(self.y_t(t))/(self.sqrt_xyz)**3
+        self.listay.append(ay)
+        return ay
+    def y_t(self, t):
+        y = self.listy[self.list_counter]
+        return y
+    def vy_t(self, t):
+        vy = self.listvy[self.list_counter] + self.listay[self.list_counter]*self.dt/2
+        self.listvy.append(vy)
+        return vy
 
 
-z0 = 75000000
-vz0 = -300
+    def az_t(self, t):
+        az = -self.G*self.mS*(self.z_t(t))/(self.sqrt_xyz)**3
+        self.listaz.append(az)
+        return az
+    def z_t(self, t):
+        z = self.listz[self.list_counter]
+        return z
+    def vz_t(self, t):
+        vz = self.listvz[self.list_counter] + self.listaz[self.list_counter]*self.dt/2
+        self.listvz.append(vz)
+        return vz
 
 
-G = 6.675*10**-11
-mS = 1.989*10**30
-mE = 5.972*10**24
+    def get_coords(self, t):
 
-t = 0
-dt = 60
-v=0
-
-sqrt_xyz = math.sqrt(x0 ** 2 + y0 ** 2 + z0 ** 2)
-
-listx.append(x0)
-listy.append(y0)
-listz.append(z0)
-listvx.append(vx0)
-listvy.append(vy0)
-listvz.append(vz0)
+        self.list_counter = int(t/60)
 
 
-
-def ax_t(t):
-    ax = -G*mS*(x_t(t))/(sqrt_xyz)**3
-    listax.append(ax)
-    return ax
-def x_t(t):
-    x = listx[list_counter]
-    return x
-def vx_t(t):
-    vx = listvx[list_counter] + listax[list_counter]*dt/2
-    listvx.append(vx)
-    return vx
+        self.ax = self.ax_t(t)
+        if len(self.listvx) == 1:
+            self.vx = self.vx0 + self.ax_t(t)*self.dt/2
+        else:
+            self.vx = self.vx_t(t+self.dt/2) + self.ax_t(t)*self.dt
+        self.x = self.x_t(t) + self.vx_t(t+self.dt/2)*self.dt
+        self.listx.append(self.x)
 
 
-def ay_t(t):
-    ay = -G*mS*(y_t(t))/(sqrt_xyz)**3
-    listay.append(ay)
-    return ay
-def y_t(t):
-    y = listy[list_counter]
-    return y
-def vy_t(t):
-    vy = listvy[list_counter] + listay[list_counter]*dt/2
-    listvy.append(vy)
-    return vy
+        self.ay = self.ay_t(t)
+        if len(self.listvy) == 1:
+            self.vy = self.vy0 + self.ay_t(t) * self.dt / 2
+        else:
+            self.vy = self.vy_t(t + self.dt / 2) + self.ay_t(t)*self.dt
+        self.y = self.y_t(t) + self.vy_t(t + self.dt / 2) * self.dt
+        self.listy.append(self.y)
 
 
-def az_t(t):
-    az = -G*mS*(z_t(t))/(sqrt_xyz)**3
-    listaz.append(az)
-    return az
-def z_t(t):
-    z = listz[list_counter]
-    return z
-def vz_t(t):
-    vz = listvz[list_counter] + listaz[list_counter]*dt/2
-    listvz.append(vz)
-    return vz
+        self.az = self.az_t(t)
+        if len(self.listvz) == 1:
+            self.vz = self.vz0 + self.az_t(t) * self.dt / 2
+        else:
+            self.vz = self.vz_t(t + self.dt / 2) + self.az_t(t)*self.dt
+        self.z = self.z_t(t) + self.vz_t(t + self.dt / 2) * self.dt
+        self.listz.append(self.z)
 
+        self.sqrt_xyz = math.sqrt(self.x ** 2 + self.y ** 2 + self.z ** 2)
 
-while t != 6000:
-
-    list_counter = int(t/60)
-
-    ax = ax_t(t)
-    if len(listvx) == 1:
-        vx = vx0 + ax_t(t)*dt/2
-    else:
-        vx = vx_t(t+dt/2) + ax_t(t)*dt
-    x = x_t(t) + vx_t(t+dt/2)*dt
-    listx.append(x)
-
-
-    ay = ay_t(t)
-    if len(listvy) == 1:
-        vy = vy0 + ay_t(t) * dt / 2
-    else:
-        vy = vy_t(t + dt / 2) + ay_t(t)*dt
-    y = y_t(t) + vy_t(t + dt / 2) * dt
-    listy.append(y)
-
-
-    az = az_t(t)
-    if len(listvz) == 1:
-        vz = vz0 + az_t(t) * dt / 2
-    else:
-        vz = vz_t(t + dt / 2) + az_t(t)*dt
-    print("vz,z_t,vz_t")
-    print(vz)
-    print(z_t(t))
-    print(vz_t(t))
-    z = z_t(t) + vz_t(t + dt / 2) * dt
-    listz.append(z)
-
-    sqrt_xyz = math.sqrt(x ** 2 + y ** 2 + z ** 2)
-    t = t + 60
-
-print("Werte x:")
-for i in listx:
-    print(i)
-print("Werte y:")
-for i in listy:
-    print(i)
-print("Werte z:")
-for i in listz:
-    print(i)
-
-
-
-
-
+        return self.listx[self.list_counter], self.listy[self.list_counter], self.listz[self.list_counter]

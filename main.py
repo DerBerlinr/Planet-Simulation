@@ -1,4 +1,5 @@
 from ursina import *
+from calculate import Calc
 
 app = Ursina()
 
@@ -51,6 +52,8 @@ class FirstPersonController(Entity):
         self.mouse_sensitivity = Vec2(40, 40)
         self.target_smoothing = 100
         self.smoothing = self.target_smoothing
+        self.time = 0
+        self.c = Calc()
 
     def update(self):
         if mouse.locked:
@@ -69,6 +72,15 @@ class FirstPersonController(Entity):
                                   ).normalized()
 
             self.position += self.direction * self.speed * time.dt
+
+            x, y, z = self.c.get_coords(self.time)
+            print(x, y, z)
+            x = x/500000
+            y = y/1000000000
+            z = z/75000000
+            planet.set_coords(x, y, z)
+
+            self.time += 60
 
         # EXIT FPC -----------------------------------------------------------------
         if held_keys['escape']:
