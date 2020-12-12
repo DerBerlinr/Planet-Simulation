@@ -1,7 +1,7 @@
 import math
 
 class Calc:
-    def __init__(self):
+    def __init__(self, x0=500000, vx0=-500, y0=1000000000, vy0=1000, z0=75000000, vz0=-300):
         self.listx = []
         self.listy = []
         self.listz = []
@@ -13,14 +13,14 @@ class Calc:
         self.listaz = []
 
 
-        self.x0 = 500000
-        self.vx0 = -500
+        self.x0 = x0
+        self.vx0 = vx0
 
-        self.y0 = 1000000000
-        self.vy0 = 1000
+        self.y0 = y0
+        self.vy0 = vy0
 
-        self.z0 = 75000000
-        self.vz0 = -300
+        self.z0 = z0
+        self.vz0 = vz0
 
         self.G = 6.675*10**-11
         self.mS = 1.989*10**30
