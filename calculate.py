@@ -28,9 +28,6 @@ class Calc:
 
         self.dt = 60
 
-
-        self.sqrt_xyz = math.sqrt(self.x0 ** 2 + self.y0 ** 2 + self.z0 ** 2)
-
         self.listx.append(self.x0)
         self.listy.append(self.y0)
         self.listz.append(self.z0)
@@ -48,7 +45,7 @@ class Calc:
         x = self.listx[self.list_counter]
         return x
     def vx_t(self, t):
-        vx = self.listvx[self.list_counter] + self.listax[self.list_counter]*self.dt/2
+        vx = self.listvx[self.list_counter-1] + self.listax[self.list_counter]*self.dt/2
         self.listvx.append(vx)
         return vx
 
@@ -61,7 +58,7 @@ class Calc:
         y = self.listy[self.list_counter]
         return y
     def vy_t(self, t):
-        vy = self.listvy[self.list_counter] + self.listay[self.list_counter]*self.dt/2
+        vy = self.listvy[self.list_counter-1] + self.listay[self.list_counter]*self.dt/2
         self.listvy.append(vy)
         return vy
 
@@ -74,7 +71,7 @@ class Calc:
         z = self.listz[self.list_counter]
         return z
     def vz_t(self, t):
-        vz = self.listvz[self.list_counter] + self.listaz[self.list_counter]*self.dt/2
+        vz = self.listvz[self.list_counter-1] + self.listaz[self.list_counter]*self.dt/2
         self.listvz.append(vz)
         return vz
 
@@ -83,6 +80,7 @@ class Calc:
 
         self.list_counter = int(t/60)
 
+        self.sqrt_xyz = self.listx[self.list_counter] ** 2 + self.listy[self.list_counter] ** 2 + self.listz[self.list_counter] ** 2
 
         self.ax = self.ax_t(t)
         if len(self.listvx) == 1:
@@ -110,6 +108,5 @@ class Calc:
         self.z = self.z_t(t) + self.vz_t(t + self.dt / 2) * self.dt
         self.listz.append(self.z)
 
-        self.sqrt_xyz = math.sqrt(self.x ** 2 + self.y ** 2 + self.z ** 2)
 
         return self.listx[self.list_counter], self.listy[self.list_counter], self.listz[self.list_counter]
