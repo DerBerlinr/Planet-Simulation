@@ -1,5 +1,6 @@
 from ursina import *
-from calculate import Calc
+from calc import Calc
+import numpy as np
 
 app = Ursina()
 
@@ -53,7 +54,10 @@ class FirstPersonController(Entity):
         self.target_smoothing = 100
         self.smoothing = self.target_smoothing
         self.time = 0
-        self.c = Calc()
+        self.timediff = 60
+        self.c = Calc(pos=np.array([140699825958.8049, -54738590238.00282, 2510791.537005455]), vel=np.array([10308.531985820431, 27640.154010970804, -0.7364511260199437]))#, timediff=self.timediff
+        self.a = Text(origin=(-1, -1))
+
 
     def update(self):
         if mouse.locked:
@@ -71,16 +75,24 @@ class FirstPersonController(Entity):
                                   self.up * (held_keys['space'] - held_keys['shift'])
                                   ).normalized()
 
-            self.position += self.direction * self.speed * time.dt
+            self.position += self.direction/2 * self.speed * time.dt
+            #print(self.position)
+            #self.a.update_text(str(self.position[0]) + str(self.position[1]) + str(self.position[2]))
 
-            x, y, z = self.c.get_coords(self.time)
-            print(x, y, z)
-            x = x/500000
-            y = y/1000000000
-            z = z/75000000
-            planet.set_coords(x, y, z)
+            # PLANET POS -----------------------------------------------------------
+            for i in range(10000):
+                old_x, old_y, old_z = self.c.get_coords(self.time)
+                #print('POS: x=', old_x, '; y=', old_y, '; z=', old_z)
+                a = self.c.v
+                #print('SPEED: ', a)
+                x = old_x/10000000000
+                y = old_y/10000000000
+                z = old_z/10000000000
+                #print('New_POS: x=', x, '; y=', y, '; z=', z)
+                planet.set_coords(x, y, z)
+                self.time += 60 #self.timediff
+            print("done")
 
-            self.time += 60
 
         # EXIT FPC -----------------------------------------------------------------
         if held_keys['escape']:
@@ -168,8 +180,13 @@ bu_add.on_click = add_planet
 
 # SETUP +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-planet = Planet(color=color.orange, name="planet1")  # crate a planet
-planet.set_coords(9, 0, 9)  # set Pos of planet
+planet = Planet(color=color.orange, name="planet1", diameter=.1, speed=(10308.531985820431, 27640.154010970804, -0.7364511260199437))  # crate a planet
+planet.set_coords(140699825958.8049, -54738590238.00282, 2510791.537005455)  # set Pos of planet
+
+planet2 = Planet(color=color.red, name='planet2', diameter=.1)
+planet2.set_coords(14.1, -5.4, 0)
+
+sun = Planet(color=color.yellow, name="sun", diameter=.5)
 
 fpc = FirstPersonController()
 
