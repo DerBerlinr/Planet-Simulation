@@ -48,4 +48,6 @@ class Calc():
             x = self.pos_new(t)
 
             planet.set_coords(x[0], x[1], x[2])
+            if not t % 180000:
+                print(x[0], x[1], x[2])
             t += 60

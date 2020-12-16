@@ -18,10 +18,10 @@ class Planet(Entity):
         self.z = z
 
     def set_coords(self, x, y, z):  # set coordinates of planet
-        self.x = x
-        self.y = y
-        self.z = z
-        print(x, y, z)
+        self.x = x/10000000000000
+        self.y = y/10000000000000
+        self.z = z/10000000000000
+
 
     def get_coords(self):
         return (self.x, self.y, self.z)

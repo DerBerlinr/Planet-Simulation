@@ -27,14 +27,15 @@ class Main:
         planet2.set_coords(14.1, -5.4, 0)
         self.planet_list.append(planet2)
 
-        #for i in self.planet_list:
-        #    c = Calc()
-        #    temp = threading.Thread(target=c.get_coords(i))
-        #    temp.start()
-
         sun = Planet(color=ursina.color.yellow, name="sun", diameter=.5)
 
         fpc = FirstPersonController()
+
+        for i in self.planet_list:
+            c = Calc()
+            temp = threading.Thread(target=c.get_coords, args=(i,))
+            temp.start()
+
 
         self.app.run()
 
