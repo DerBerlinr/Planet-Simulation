@@ -1,193 +1,44 @@
-from ursina import *
-from calc import Calc
-import numpy as np
-
-app = Ursina()
-
-window.title = 'planet simulation'  # set meta data for app
-window.borderless = True
-window.fullscreen = True
-window.exit_button.visible = True
-window.fps_counter.enabled = True
+import threading
+import ursina
+from calc import *
+from gui import FirstPersonController
+from planet import Planet
 
 
-class Planet(Entity):
-    def __init__(self, color, name, speed=1, mass=1, diameter=1, x=0, y=0, z=0):
-        super().__init__(
-            model='sphere',
-            color=color,
-            collision=True,
-            collider='sphere'
-            # TODO: add Textures
-        )
-        self.name = name
-        self.speed = speed
-        self.mass = mass
-        self.scale = Vec3(diameter, diameter, diameter)
-        self.x = x
-        self.y = y
-        self.z = z
+class Main:
+    def __init__(self):
 
-    def set_coords(self, x, y, z):  # set coordinates of planet
-        self.x = x
-        self.y = y
-        self.z = z
+        self.app = ursina.Ursina()
 
+        ursina.window.title = 'planet simulation'  # set meta data for app
+        ursina.window.borderless = True
+        ursina.window.fullscreen = True
+        ursina.window.exit_button.visible = True
+        ursina.window.fps_counter.enabled = True
 
-# FIRST PERSON CONTROLLER +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        self.planet_list = []
 
+        planet = Planet(color=ursina.color.orange, name="planet1", diameter=.1,
+                        speed=(10308.531985820431, 27640.154010970804, -0.7364511260199437))  # crate a planet
+        planet.set_coords(140699825958.8049, -54738590238.00282, 2510791.537005455)  # set Pos of planet
+        self.planet_list.append(planet)
 
-class FirstPersonController(Entity):
-    def __init__(self, **kwargs):
-        super().__init__()
-        self.speed = 5
+        planet2 = Planet(color=ursina.color.red, name='planet2', diameter=.1)
+        planet2.set_coords(14.1, -5.4, 0)
+        self.planet_list.append(planet2)
 
-        self.camera_pivot = Entity(parent=self, y=2)
-        self.cursor = Entity(parent=camera.ui, model='quad', color=color.pink, scale=.008, rotation_z=45)
+        sun = Planet(color=ursina.color.yellow, name="sun", diameter=.5)
 
-        camera.parent = self.camera_pivot
-        camera.position = (0, 0, 0)
-        camera.rotation = (0, 0, 0)
-        camera.fov = 90
-        mouse.locked = True
-        self.mouse_sensitivity = Vec2(40, 40)
-        self.target_smoothing = 100
-        self.smoothing = self.target_smoothing
-        self.time = 0
-        self.timediff = 60
-        self.c = Calc(pos=np.array([140699825958.8049, -54738590238.00282, 2510791.537005455]), vel=np.array([10308.531985820431, 27640.154010970804, -0.7364511260199437]))#, timediff=self.timediff
-        self.a = Text(origin=(-1, -1))
+        fpc = FirstPersonController()
+
+        for i in self.planet_list:
+            c = Calc()
+            temp = threading.Thread(target=c.get_coords, args=(i,))
+            temp.start()
 
 
-    def update(self):
-        if mouse.locked:
-            for i in buttons:
-                i.enabled = False
-            # CAMERA ROTATION ------------------------------------------------------
-            self.rotation_y += mouse.velocity[0] * self.mouse_sensitivity[1]
-
-            self.camera_pivot.rotation_x -= mouse.velocity[1] * self.mouse_sensitivity[0]
-            self.camera_pivot.rotation_x = clamp(self.camera_pivot.rotation_x, -90, 90)
-
-            # CAMERA POSITION ------------------------------------------------------
-            self.direction = Vec3(self.forward * (held_keys['w'] - held_keys['s']) +
-                                  self.right * (held_keys['d'] - held_keys['a']) +
-                                  self.up * (held_keys['space'] - held_keys['shift'])
-                                  ).normalized()
-
-            self.position += self.direction/2 * self.speed * time.dt
-            #print(self.position)
-            #self.a.update_text(str(self.position[0]) + str(self.position[1]) + str(self.position[2]))
-
-            # PLANET POS -----------------------------------------------------------
-            for i in range(10000):
-                old_x, old_y, old_z = self.c.get_coords(self.time)
-                #print('POS: x=', old_x, '; y=', old_y, '; z=', old_z)
-                a = self.c.v
-                #print('SPEED: ', a)
-                x = old_x/10000000000
-                y = old_y/10000000000
-                z = old_z/10000000000
-                #print('New_POS: x=', x, '; y=', y, '; z=', z)
-                planet.set_coords(x, y, z)
-                self.time += 60 #self.timediff
-            print("done")
+        self.app.run()
 
 
-        # EXIT FPC -----------------------------------------------------------------
-        if held_keys['escape']:
-            for i in buttons:
-                i.enabled = True
-            mouse.locked = False
-
-
-# BUTTONS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-buttons = []
-
-
-# BUTTON FUNCS ---------------------------------------------------------------------
-
-def reenter_game():
-    mouse.locked = True
-
-
-planet_data_temp = []
-
-
-def add_planet():
-    for i in buttons:
-        i.enabled = False
-
-    name_field = InputField(name='name_field')
-    mass_field = InputField(name='mass_field')
-    speed_field = InputField(name='speed_field')
-    pos_x_field = InputField(name='pos_x_field')
-    pos_y_field = InputField(name='pos_y_field')
-    pos_z_field = InputField(name='pos_z_field')
-
-    planet_data_temp.append(name_field)
-    planet_data_temp.append(mass_field)
-    planet_data_temp.append(speed_field)
-    planet_data_temp.append(pos_x_field)
-    planet_data_temp.append(pos_y_field)
-    planet_data_temp.append(pos_z_field)
-
-    win = WindowPanel(
-        title='add planet',
-        content=(
-            Text('name:'),
-            name_field,
-            Text('mass in kg:'),
-            mass_field,
-            Text('speed in m/s:'),
-            speed_field,
-            Text('x-position:'),
-            pos_x_field,
-            Text('y-position:'),
-            pos_y_field,
-            Text('z-position:'),
-            pos_z_field,
-            Button(text='Submit', color=color.azure, on_click=submit_planet_data)
-        ),
-    )
-    planet_data_temp.append(win)
-
-
-def submit_planet_data():
-    '''
-    name = planet_data_temp[0].text
-    mass = int(planet_data_temp[1].text)
-    speed = int(planet_data_temp[2].text)
-    pos_x = int(planet_data_temp[3].text)
-    pos_y = int(planet_data_temp[4].text)
-    pos_z = int(planet_data_temp[5].text)
-    temp = Planet(color=color.blue, name=name, speed=speed, mass=mass, x=pos_x, y=pos_y, z=pos_z)
-    planet_data_temp[6].close()
-    mouse.locked = True
-    '''
-    exit()
-
-
-# BUTTONS --------------------------------------------------------------------------
-
-bu_reenter = Button(position=(0, .25, 0), text='Reenter Game', scale=(.5, .07))
-buttons.append(bu_reenter)
-bu_reenter.on_click = reenter_game
-
-bu_add = Button(position=(0, .15, 0), text='Add Planet', scale=(.5, .07))
-buttons.append(bu_add)
-bu_add.on_click = add_planet
-
-# SETUP +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-planet = Planet(color=color.orange, name="planet1", diameter=.1, speed=(10308.531985820431, 27640.154010970804, -0.7364511260199437))  # crate a planet
-planet.set_coords(140699825958.8049, -54738590238.00282, 2510791.537005455)  # set Pos of planet
-
-planet2 = Planet(color=color.red, name='planet2', diameter=.1)
-planet2.set_coords(14.1, -5.4, 0)
-
-sun = Planet(color=color.yellow, name="sun", diameter=.5)
-
-fpc = FirstPersonController()
-
-app.run()
+if __name__ == '__main__':
+    main = Main()
