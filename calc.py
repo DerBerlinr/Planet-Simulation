@@ -53,7 +53,7 @@ class Calc:
             planet.set_coords(x[0], x[1], x[2])
             if not t % 180000:
                 pass
-                #print(x[0] / 1000000000000, x[1] / 1000000000000, x[2] / 1000000000000)
+                # print(x[0] / 1000000000000, x[1] / 1000000000000, x[2] / 1000000000000)
             if held_keys['shift'] and held_keys['q']:
                 exit()
             t += 60
