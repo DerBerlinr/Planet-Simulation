@@ -92,11 +92,6 @@ class FirstPersonController(Entity):
         self.mouse_sensitivity = Vec2(40, 40)
         self.target_smoothing = 100
         self.smoothing = self.target_smoothing
-        self.time = 0
-        self.timediff = 1200
-        self.c = calc.Calc(pos=np.array([140699825958.8049, -54738590238.00282, 2510791.537005455]), vel=np.array(
-            [10308.531985820431, 27640.154010970804, -0.7364511260199437]))  # , timediff=self.timediff
-        self.counter = 0
         self.a = Text(origin=(-1, -1))
 
         self.gui = GUI()

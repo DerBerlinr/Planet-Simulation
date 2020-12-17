@@ -3,12 +3,12 @@ from ursina import *
 
 
 class Calc:
-    def __init__(self, pos=np.array([500000, 1000000000, 75000000]), vel=np.array([-500, 1000, -300])):
+    def __init__(self, posx=500000, posy=1000000000, posz=75000000, velx=-500, vely=1000, velz=-300):
         # G -> gravitational force; mS -> Mass of Sun
         self.G = np.array([-6.67430 * 10 ** -11, -6.67430 * 10 ** -11, -6.67430 * 10 ** -11])
         self.mS = np.array([1.9885 * 10 ** 30, 1.9885 * 10 ** 30, 1.9885 * 10 ** 30])
-        self.pos = pos
-        self.vel = vel
+        self.pos = np.array([posx, posy, posz])
+        self.vel = np.array([velx, vely, velz])
         self.dt = 1200
         self.a = None
         self.counter = 0
@@ -52,7 +52,8 @@ class Calc:
 
             planet.set_coords(x[0], x[1], x[2])
             if not t % 180000:
-                print(x[0] / 1000000000000, x[1] / 1000000000000, x[2] / 1000000000000)
+                pass
+                #print(x[0] / 1000000000000, x[1] / 1000000000000, x[2] / 1000000000000)
             if held_keys['shift'] and held_keys['q']:
                 exit()
             t += 60
