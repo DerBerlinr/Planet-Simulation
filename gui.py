@@ -17,9 +17,9 @@ class GUI:
 
         self.planet_data_temp = []
 
-    def reenter_game(self):
+    @staticmethod
+    def reenter_game():
         mouse.locked = True
-
 
     def add_planet(self):
         for i in self.buttons:
@@ -59,9 +59,9 @@ class GUI:
         )
         self.planet_data_temp.append(win)
 
-
-    def submit_planet_data(self):
-        '''
+    @staticmethod
+    def submit_planet_data():
+        """
         name = planet_data_temp[0].text
         mass = int(planet_data_temp[1].text)
         speed = int(planet_data_temp[2].text)
@@ -71,13 +71,12 @@ class GUI:
         temp = Planet(color=color.blue, name=name, speed=speed, mass=mass, x=pos_x, y=pos_y, z=pos_z)
         planet_data_temp[6].close()
         mouse.locked = True
-        '''
+        """
         exit()
 
 
-
 class FirstPersonController(Entity):
-    def __init__(self, **kwargs):
+    def __init__(self):
         super().__init__()
         self.speed = 5
 
@@ -89,12 +88,14 @@ class FirstPersonController(Entity):
         camera.rotation = (0, 0, 0)
         camera.fov = 90
         mouse.locked = True
+        self.direction = 0
         self.mouse_sensitivity = Vec2(40, 40)
         self.target_smoothing = 100
         self.smoothing = self.target_smoothing
         self.time = 0
         self.timediff = 1200
-        self.c = calc.Calc(pos=np.array([140699825958.8049, -54738590238.00282, 2510791.537005455]), vel=np.array([10308.531985820431, 27640.154010970804, -0.7364511260199437]))#, timediff=self.timediff
+        self.c = calc.Calc(pos=np.array([140699825958.8049, -54738590238.00282, 2510791.537005455]), vel=np.array(
+            [10308.531985820431, 27640.154010970804, -0.7364511260199437]))  # , timediff=self.timediff
         self.counter = 0
         self.a = Text(origin=(-1, -1))
 
@@ -117,17 +118,14 @@ class FirstPersonController(Entity):
                                   self.up * (held_keys['space'] - held_keys['shift'])
                                   ).normalized()
 
-            self.position += self.direction/2 * self.speed * time.dt
-            #print(self.position)
-            #self.a.update_text(str(self.position[0]) + str(self.position[1]) + str(self.position[2]))
+            self.position += self.direction / 2 * self.speed * time.dt
+            # print(self.position)
+            # self.a.update_text(str(self.position[0]) + str(self.position[1]) + str(self.position[2]))
 
             # PLANET POS -----------------------------------------------------------
-            
-
 
         # EXIT FPC -----------------------------------------------------------------
         if held_keys['escape']:
             for i in self.gui.buttons:
                 i.enabled = True
             mouse.locked = False
-
