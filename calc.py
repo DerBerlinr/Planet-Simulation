@@ -13,7 +13,7 @@ class Calc:
         self.a = None
         self.counter = 0
         self.v = None
-        self.vel_old = 0
+        self.vel_o = 0
 
     @staticmethod
     def mul_vec(vec1, vec2):
@@ -25,18 +25,23 @@ class Calc:
 
     def acc(self):
         # calculation of the acceleration
-        a = self.mul_vec(self.mul_vec(self.G, self.mS), self.pos) * 1 / (np.linalg.norm(self.pos)) ** 3
+        a = np.cross(self.mul_vec(self.G, self.mS), self.pos)*1/(np.linalg.norm(self.pos) ** 3)
+        print("a:",a)
         return a
 
-    def vel_new(self, t):
-        v = self.vel_old(t) + self.a * self.dt
+    def vel_new(self):
+        v = self.vel_old() + self.a * self.dt
+        print("v:",v)
         return v
 
     def vel_old(self):
-        self.vel_old = self.vel
+        self.vel_o = self.vel
+        print("vel_old:", self.vel_o)
+        return self.vel_o
 
     def pos_new(self):
-        x = self.pos + self.vel * self.dt * 20
+        x = self.pos + self.vel * self.dt
+        print("x:",x)
         return x
 
     def get_coords(self, planet):
@@ -45,11 +50,12 @@ class Calc:
         c = 0
         while True:
             self.a = self.acc()
-            if self.counter == 0:
+            if c == 0:
                 self.vel = self.vel + self.a * self.dt / 2
             else:
-                self.v = self.vel_new(t)
+                self.vel = self.vel_new()
             x = self.pos_new()
+            self.pos = x
 
             planet.set_coords(x[0], x[1], x[2])
             if not t % 31536000:

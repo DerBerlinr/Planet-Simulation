@@ -27,7 +27,7 @@ class Planet(Entity):
     def set_coords(self, x, y, z):  # set coordinates of planet
         self.x = x / 100000000000
         self.y = y / 10000000000
-        self.z = z / 1000000
+        self.z = z / 10000000000
 
     def get_coords(self):
         return self.coord_x, self.coord_y, self.coord_z
