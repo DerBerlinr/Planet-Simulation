@@ -53,8 +53,9 @@ class Calc:
 
             planet.set_coords(x[0], x[1], x[2])
             if not t % 31536000:
-                c += 1
+                print(t)
                 print(x[0], x[1], x[2], "Jahr: ", c)
+                c += 1
             if held_keys['shift'] and held_keys['q']:
                 exit()
             t += self.dt

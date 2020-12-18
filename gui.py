@@ -3,6 +3,7 @@ import calc as calc
 import numpy as np
 
 
+
 class GUI:
     def __init__(self):
         self.buttons = []
@@ -118,6 +119,12 @@ class FirstPersonController(Entity):
             # self.a.update_text(str(self.position[0]) + str(self.position[1]) + str(self.position[2]))
 
             # PLANET POS -----------------------------------------------------------
+            #g, r, d = Main.planet_list[0].get_coords
+            #Planet(planet_col=ursina.color.green, planet_name="", planet_diameter=.05,
+                        #planet_speed=0,
+                        #coord_x=g,
+                        #coord_y=r,
+                        #coord_z=d)
 
         # EXIT FPC -----------------------------------------------------------------
         if held_keys['escape']:
