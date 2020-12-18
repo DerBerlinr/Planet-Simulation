@@ -27,10 +27,10 @@ class Main:
                         coord_z=2510791.537005455)  # create a planet
         self.planet_list.append(planet)
 
-        planet2 = Planet(planet_col=ursina.color.red, planet_name='planet2', planet_diameter=.1,
-                         coord_x=140699825958.8049,
-                         coord_y=-54738590238.00282,
-                         coord_z=2510791.537005455)
+        planet2 = Planet(planet_col=ursina.color.red, planet_name='planet2', planet_diameter=.1, coord_x=140699825958.8049, coord_y=-54738590238.00282, coord_z=2510791.537005455)
+        planet2.set_coords(x=140699825958.8049,
+                           y=-54738590238.00282,
+                           z=2510791.537005455)
         # self.planet_list.append(planet2)
 
         Planet(planet_col=ursina.color.yellow, planet_name="sun", planet_diameter=.5)

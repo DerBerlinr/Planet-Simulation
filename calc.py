@@ -9,7 +9,7 @@ class Calc:
         self.mS = np.array([1.9885 * 10 ** 30, 1.9885 * 10 ** 30, 1.9885 * 10 ** 30])
         self.pos = np.array([posx, posy, posz])
         self.vel = np.array([velx, vely, velz])
-        self.dt = 1200
+        self.dt = 600
         self.a = None
         self.counter = 0
         self.v = None
@@ -42,6 +42,7 @@ class Calc:
     def get_coords(self, planet):
         # This function gets called as a thread
         t = 0
+        c = 0
         while True:
             self.a = self.acc()
             if self.counter == 0:
@@ -51,9 +52,9 @@ class Calc:
             x = self.pos_new()
 
             planet.set_coords(x[0], x[1], x[2])
-            if not t % 180000:
-                pass
-                # print(x[0] / 1000000000000, x[1] / 1000000000000, x[2] / 1000000000000)
+            if not t % 31536000:
+                c += 1
+                print(x[0], x[1], x[2], "Jahr: ", c)
             if held_keys['shift'] and held_keys['q']:
                 exit()
-            t += 60
+            t += self.dt
