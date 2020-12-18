@@ -9,40 +9,19 @@ class Calc:
         self.mS = np.array([1.9885 * 10 ** 30, 1.9885 * 10 ** 30, 1.9885 * 10 ** 30])
         self.pos = np.array([posx, posy, posz])
         self.vel = np.array([velx, vely, velz])
-        self.dt = 600
+        self.dt = 60
         self.a = None
         self.counter = 0
         self.v = None
         self.vel_o = 0
 
-    @staticmethod
-    def mul_vec(vec1, vec2):
-        # a simple function for multiplying vectors
-        x = vec1[0] * vec2[0]
-        y = vec1[1] * vec2[1]
-        z = vec1[2] * vec2[2]
-        return np.array([x, y, z])
-
     def acc(self):
-        # calculation of the acceleration
-        a = np.cross(self.mul_vec(self.G, self.mS), self.pos)*1/(np.linalg.norm(self.pos) ** 3)
-        print("a:",a)
-        return a
-
-    def vel_new(self):
-        v = self.vel_old() + self.a * self.dt
-        print("v:",v)
-        return v
-
-    def vel_old(self):
-        self.vel_o = self.vel
-        print("vel_old:", self.vel_o)
-        return self.vel_o
-
-    def pos_new(self):
-        x = self.pos + self.vel * self.dt
-        print("x:",x)
-        return x
+        vec = self.pos * -1
+        vecc = self.pos[0] ** 2 + self.pos[1] ** 2 + self.pos[2] ** 2
+        # G -> Gravitationskonstante
+        # mS -> Masse der Sonne
+        scalar = -self.G * self.mS / vecc
+        return vec / np.linalg.norm(vec) * scalar
 
     def get_coords(self, planet):
         # This function gets called as a thread
@@ -50,17 +29,17 @@ class Calc:
         c = 0
         while True:
             self.a = self.acc()
-            if c == 0:
+            if t == 0:
                 self.vel = self.vel + self.a * self.dt / 2
+                print("v:", self.vel)
             else:
-                self.vel = self.vel_new()
-            x = self.pos_new()
-            self.pos = x
+                self.vel = self.vel + self.a * self.dt
+            self.pos = self.pos + self.vel * self.dt
 
-            planet.set_coords(x[0], x[1], x[2])
+            planet.set_coords(self.pos[0], self.pos[1], self.pos[2])
             if not t % 31536000:
                 print(t)
-                print(x[0], x[1], x[2], "Jahr: ", c)
+                print(self.pos[0], self.pos[1], self.pos[2], "Jahr: ", c)
                 c += 1
             if held_keys['shift'] and held_keys['q']:
                 exit()

@@ -41,7 +41,7 @@ class Main:
         for i in self.planet_list:
             # For every planet, there is a thread, which calculates the current Position of its planet
             coord_x, coord_y, coord_z = i.get_coords()
-            calc = Calc(posx=coord_x, posy=coord_y, posz=coord_z)
+            calc = Calc(posx=coord_x, posy=coord_y, posz=coord_z, velx=i.planet_speed[0], vely=i.planet_speed[1], velz=i.planet_speed[2])
             temp = threading.Thread(target=calc.get_coords, args=(i,))
             temp.start()
 
