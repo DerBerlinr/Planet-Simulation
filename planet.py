@@ -7,7 +7,7 @@ class Planet(Button):
         super().__init__(
             collision=True,
             model='sphere',
-            texture=file_name,
+            texture=load_texture(file_name),
             parent = scene,
             position = [(coord_x, coord_y, coord_z)]
 
@@ -24,6 +24,10 @@ class Planet(Button):
         self.coord_y = coord_y
         self.coord_z = coord_z
 
+        self.x = 0
+        self.y = 0
+        self.z = 0
+
     def input(self, key):
         if self.hovered:
             if key == "left mouse down":
@@ -37,3 +41,11 @@ class Planet(Button):
 
     def get_coords(self):
         return self.coord_x, self.coord_y, self.coord_z
+
+class Sky(Entity):
+    def __init__(self):
+        super().__init__(
+            parent = scene,
+            model = sphere,
+            texture = load_texture('sky_texture.png')
+        )

@@ -3,7 +3,7 @@ import ursina
 import numpy as np
 from calc import *
 from gui import FirstPersonController
-from planet import Planet
+from planet import Planet, Sky
 import sqlite3
 
 
@@ -28,6 +28,8 @@ class Main:
         sun = Planet(file_name='/textures/sun', planet_name="sun", planet_diameter=2.5)
         c.execute('''INSERT INTO planets VALUES
             (?,?,?,0,0,0,0,0,0)''', (sun.planet_name, sun.planet_diameter, sun.planet_mass))
+
+        sky = Sky()
 
         planet5 = Planet(file_name='/textures/planet_1', planet_name="planet5", planet_diameter=1,
                         planet_speed=[10308.531985820431, 27640.154010970804, -0.7364511260199437],
