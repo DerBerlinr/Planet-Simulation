@@ -29,40 +29,82 @@ class GUI_Startup(Tk):
         self.bu3 = Button(rahmen1, text="viel", width=groesse, command=self.solar_sys)
         self.bu3.grid(row=3, column=0, sticky=E, padx=abstand_x, pady=abstand_y)
 
-
         self.planet_list = planetlist
+
+        self.conn = sqlite3.connect('example.db')
+        self.c = self.conn.cursor()
+        self.c.execute('''CREATE TABLE IF NOT EXISTS planets
+                        (name text, diameter real, mass real, velx real, vely real, velz real, posx real, posy real, posz real)''')
 
     def no_planets(self):
         pass
 
     def two_planets(self):
-        planet = Planet(planet_col=col.orange, planet_name="planet1", planet_diameter=1,
+        planet = Planet(planet_name="planet1", planet_diameter=1,
                         planet_speed=[10308.531985820431, 27640.154010970804, -0.7364511260199437],
                         coord_x=140699825958.8049,
                         coord_y=-54738590238.00282,
                         coord_z=2510791.537005455)  # create a planet
         self.planet_list.append(planet)
 
-        planet2 = Planet(planet_col=col.red, planet_name='planet2', planet_diameter=1,
+        planet2 = Planet(planet_name='planet2', planet_diameter=1,
                          coord_x=140699825958.8049, coord_y=-54738590238.00282, coord_z=2510791.537005455)
         planet2.set_coords(x=140699825958.8049,
                            y=-54738590238.00282,
                            z=2510791.537005455)
         self.planet_list.append(planet2)
 
-        conn = sqlite3.connect('example.db')
-        c = conn.cursor()
 
         for i in planet_list:
-            c.execute('''INSERT INTO planets VALUES
+            self.c.execute('''INSERT INTO planets VALUES
                         (?,?,?,?,?,?,?,?,?)''', (i.planet_name, i.planet_diameter, i.planet_mass, i.coord_x, i.coord_y, i.coord_z, i.planet_speed[0], i.planet_speed[1], i.planet_speed[2],))
+
+        self.conn.commit()
+        self.c.close()
 
         start = Main(self.planet_list)
 
-        self.quit()
 
     def solar_sys(self):
-        pass
+        planet = Planet(file_name='/textures/planet_1', planet_name="planet1", planet_diameter=1,
+                        planet_speed=[10308.531985820431, 27640.154010970804, -0.7364511260199437],
+                        coord_x=140699825958.8049,
+                        coord_y=-54738590238.00282,
+                        coord_z=2510791.537005455)  # create a planet
+        self.planet_list.append(planet)
+
+        planet2 = Planet(file_name='/textures/planet_2', planet_name='planet2', planet_diameter=1,
+                         planet_speed=[-10308.531985820431, -27640.154010970804, 0.7364511260199437],
+                         coord_x=140699825958.8049,
+                         coord_y=-50738590238.00282,
+                         coord_z=2510791.537005455)
+        self.planet_list.append(planet2)
+
+
+        planet3 = Planet(file_name='/textures/planet_3', planet_name='planet2', planet_diameter=1,
+                         planet_speed=[10308.531985820431, -27640.154010970804, 0.7364511260199437],
+                         coord_x=140699825958.8049,
+                         coord_y=-50738590238.00282,
+                         coord_z=2510791.537005455)
+        self.planet_list.append(planet3)
+
+        planet4 = Planet(file_name='/textures/planet_4', planet_name='planet2', planet_diameter=1,
+                         planet_speed=[-10308.531985820431, 27640.154010970804, 0.7364511260199437],
+                         coord_x=-140699825958.8049,
+                         coord_y=-50738590238.00282,
+                         coord_z=2510791.537005455)
+        self.planet_list.append(planet4)
+
+        for i in self.planet_list:
+            self.c.execute('''INSERT INTO planets VALUES (?,?,?,?,?,?,?,?,?)''',
+                        (i.planet_name, i.planet_diameter, i.planet_mass,
+                        i.coord_x, i.coord_y, i.coord_z,
+                        i.planet_speed[0], i.planet_speed[1], i.planet_speed[2],))
+
+        self.conn.commit()
+        self.c.close()
+
+        start = Main(self.planet_list)
 
 
 class GUI_add_Planet(Tk):

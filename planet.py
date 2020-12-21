@@ -14,6 +14,7 @@ class Planet(Entity):
         self.planet_speed = planet_speed
         self.planet_mass = planet_mass
         self.scale = Vec3(planet_diameter, planet_diameter, planet_diameter)
+        self.planet_diameter = planet_diameter
 
 
         self.coord_x = coord_x
