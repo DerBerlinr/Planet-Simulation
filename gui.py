@@ -1,8 +1,11 @@
+import ursina
+from direct.stdpy.file import execfile
 from ursina import *
 import calc as calc
 import numpy as np
 from planet import Planet
 #from tkinter_menu import GUI_Startup
+import threading
 
 
 class GUI:
@@ -28,8 +31,12 @@ class GUI:
         self.planet_data_temp = []
 
     def go_to_menu(self):
-        #GUI_Startup()
+        print("Anfang")
+        execfile('tkinter_menu.py')
         exit()
+        print("Ende")
+
+
 
 
     def reenter_game(self):
@@ -93,6 +100,8 @@ class GUI:
 class FirstPersonController(Entity):
     def __init__(self):
         super().__init__()
+
+
         self.speed = 5
 
         self.camera_pivot = Entity(parent=self, y=2)
@@ -144,4 +153,3 @@ class FirstPersonController(Entity):
             for i in self.gui.buttons_gm:
                 i.enabled = True
             mouse.locked = False
-

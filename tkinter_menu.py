@@ -2,9 +2,10 @@ from tkinter import *
 from planet import Planet
 import ursina.color as col
 from main import Main
+import sqlite3
 
 class GUI_Startup(Tk):
-    def __init__(self, planetlist):
+    def __init__(self, planetlist=[]):
         Tk.__init__(self)
 
         self.title("Main Menu")
@@ -12,7 +13,7 @@ class GUI_Startup(Tk):
         rahmen1 = Frame(self, relief=SUNKEN, borderwidth=2)
         rahmen1.pack()
 
-        farbe = "#878787"
+        farbe = "#878789"
 
         abstand_x = 3
         abstand_y = 3
@@ -28,10 +29,8 @@ class GUI_Startup(Tk):
         self.bu3 = Button(rahmen1, text="viel", width=groesse, command=self.solar_sys)
         self.bu3.grid(row=3, column=0, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        if planetlist:
-            self.planet_list = planetlist
-        else:
-            self.planet_list = []
+
+        self.planet_list = planetlist
 
     def no_planets(self):
         pass
@@ -49,7 +48,14 @@ class GUI_Startup(Tk):
         planet2.set_coords(x=140699825958.8049,
                            y=-54738590238.00282,
                            z=2510791.537005455)
-        # self.planet_list.append(planet2)
+        self.planet_list.append(planet2)
+
+        conn = sqlite3.connect('example.db')
+        c = conn.cursor()
+
+        for i in planet_list:
+            c.execute('''INSERT INTO planets VALUES
+                        (?,?,?,?,?,?,?,?,?)''', (i.planet_name, i.planet_diameter, i.planet_mass, i.coord_x, i.coord_y, i.coord_z, i.planet_speed[0], i.planet_speed[1], i.planet_speed[2],))
 
         start = Main(self.planet_list)
 
@@ -147,5 +153,5 @@ class GUI_add_Planet(Tk):
 
 
 if __name__ == '__main__':
-    gui = GUI_add_Planet()
+    gui = GUI_Startup()
     mainloop()

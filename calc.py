@@ -1,5 +1,6 @@
 import numpy as np
 from ursina import *
+import threading
 
 
 class Calc:

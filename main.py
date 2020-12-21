@@ -4,11 +4,16 @@ import numpy as np
 from calc import *
 from gui import FirstPersonController
 from planet import Planet
+import sqlite3
 
 
 class Main:
     def __init__(self, planet_list=[]):
         # gets called at beginning of program
+        conn = sqlite3.connect('example.db')
+        c = conn.cursor()
+        c.execute('''CREATE TABLE planets
+                        (name text, diameter real, mass real, velx real, vely real, velz real, posx real, posy real, posz real)''')
 
         self.app = ursina.Ursina()
 
@@ -20,7 +25,9 @@ class Main:
 
         self.planet_list = planet_list  # list of all planets in the simulation
 
-        Planet(planet_col=ursina.color.yellow, planet_name="sun", planet_diameter=2.5)
+        sun = Planet(planet_col=ursina.color.yellow, planet_name="sun", planet_diameter=2.5)
+        c.execute('''INSERT INTO planets VALUES
+                        (?,?,?,0,0,0,0,0,0)''', (sun.planet_name, sun.planet_diameter, sun.planet_mass))
 
         fpc = FirstPersonController()
 
