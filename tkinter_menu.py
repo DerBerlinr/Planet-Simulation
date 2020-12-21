@@ -1,6 +1,6 @@
 from tkinter import *
 from planet import Planet
-import ursina.color as col
+import ursina
 from main import Main
 import sqlite3
 
@@ -40,22 +40,24 @@ class GUI_Startup(Tk):
         pass
 
     def two_planets(self):
-        planet = Planet(planet_name="planet1", planet_diameter=1,
+        planet = Planet(file_name='/textures/planet_1',planet_name="planet1", planet_diameter=1,
                         planet_speed=[10308.531985820431, 27640.154010970804, -0.7364511260199437],
                         coord_x=140699825958.8049,
                         coord_y=-54738590238.00282,
                         coord_z=2510791.537005455)  # create a planet
         self.planet_list.append(planet)
 
-        planet2 = Planet(planet_name='planet2', planet_diameter=1,
-                         coord_x=140699825958.8049, coord_y=-54738590238.00282, coord_z=2510791.537005455)
-        planet2.set_coords(x=140699825958.8049,
-                           y=-54738590238.00282,
-                           z=2510791.537005455)
+        planet2 = Planet(file_name='/textures/planet_2',planet_name='planet2', planet_diameter=1,
+                         planet_speed=[10308.531985820431, -27640.154010970804, -0.7364511260199437],
+                         coord_x=140699825958.8049,
+                         coord_y=-54738590238.00282,
+                         coord_z=-2510791.537005455)  # create a planet
+
         self.planet_list.append(planet2)
 
 
-        for i in planet_list:
+        for i in self.planet_list:
+            print(i.planet_speed)
             self.c.execute('''INSERT INTO planets VALUES
                         (?,?,?,?,?,?,?,?,?)''', (i.planet_name, i.planet_diameter, i.planet_mass, i.coord_x, i.coord_y, i.coord_z, i.planet_speed[0], i.planet_speed[1], i.planet_speed[2],))
 

@@ -29,6 +29,13 @@ class Main:
         c.execute('''INSERT INTO planets VALUES
             (?,?,?,0,0,0,0,0,0)''', (sun.planet_name, sun.planet_diameter, sun.planet_mass))
 
+        planet5 = Planet(file_name='/textures/planet_1', planet_name="planet5", planet_diameter=1,
+                        planet_speed=[10308.531985820431, 27640.154010970804, -0.7364511260199437],
+                        coord_x=140699825958.8049,
+                        coord_y=-54738590238.00282,
+                        coord_z=2510791.537005455)  # create a planet
+        self.planet_list.append(planet5)
+
         fpc = FirstPersonController()
 
         for i in self.planet_list:
