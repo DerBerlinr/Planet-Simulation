@@ -7,6 +7,7 @@ import sqlite3
 class GUI_Startup(Tk):
     def __init__(self, planetlist=[]):
         Tk.__init__(self)
+        self.app = ursina.Ursina()
 
         self.title("Main Menu")
 
@@ -64,7 +65,7 @@ class GUI_Startup(Tk):
         self.conn.commit()
         self.c.close()
 
-        start = Main(self.planet_list)
+        start = Main(self.app, self.planet_list)
 
 
     def solar_sys(self):
@@ -106,7 +107,7 @@ class GUI_Startup(Tk):
         self.conn.commit()
         self.c.close()
 
-        start = Main(self.planet_list)
+        start = Main(self.app, self.planet_list)
 
 
 class GUI_add_Planet(Tk):

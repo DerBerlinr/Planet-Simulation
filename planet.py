@@ -1,5 +1,5 @@
 from ursina import *
-import time
+from datetime import datetime
 
 
 class Planet(Button):
@@ -7,12 +7,19 @@ class Planet(Button):
         super().__init__(
             collision=True,
             model='sphere',
-            texture=load_texture(file_name),
+            texture=file_name,
             parent = scene,
-            position = [(coord_x, coord_y, coord_z)]
+            position = [(coord_x, coord_y, coord_z)],
+            color = color.white
+
+
 
             # TODO: add Textures
         )
+        self.hud_coords = ''
+        self.hud_text_coords = Text(text=self.hud_coords, origin=(0, 18))
+        self.refresh_timer = datetime.now().microsecond
+        self.tooltip_input = "0"
         self.planet_name = planet_name
         self.planet_speed = planet_speed
         self.planet_mass = planet_mass
@@ -30,8 +37,13 @@ class Planet(Button):
 
     def input(self, key):
         if self.hovered:
-            if key == "left mouse down":
-                print("Click clack")
+            if key == 'left mouse down':
+                self.hud_coords = "x: "+str(round(self.x)) +"     y: "+ str(round(self.y)) +"     z: "+ str(round(self.z))
+                self.hud_text_coords.color = color.red
+
+
+
+
 
 
     def set_coords(self, x, y, z):  # set coordinates of planet
@@ -39,13 +51,27 @@ class Planet(Button):
         self.y = y / 10000000000
         self.z = z / 10000000000
 
+
+
     def get_coords(self):
+        '''current_time = datetime.now().microsecond'''
+        '''if self.refresh_timer + 1000 > current_time:
+            self.tooltip_input = str(round(self.x)) + str(round(self.y)) + str(round(self.z))
+            self.tooltip = Tooltip(self.tooltip_input)
+            self.tooltip = Tooltip(self.tooltip_input)
+            self.tooltip.update()
+            self.refresh_timer = current_time'''
+
         return self.coord_x, self.coord_y, self.coord_z
+
+
 
 class Sky(Entity):
     def __init__(self):
         super().__init__(
             parent = scene,
-            model = sphere,
-            texture = load_texture('sky_texture.png')
+            model = 'sphere',
+            texture = 'black.png',
+            scale = 150,
+            double_sided = True
         )

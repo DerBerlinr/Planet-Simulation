@@ -98,7 +98,8 @@ class GUI:
 
 
 class FirstPersonController(Entity):
-    def __init__(self):
+    def __init__(self, planet_list):
+        self.planet_list = planet_list
         super().__init__()
 
 
@@ -137,10 +138,15 @@ class FirstPersonController(Entity):
                                   ).normalized()
 
             self.position += self.direction / 2 * self.speed * time.dt
+
+
             # print(self.position)
             # self.a.update_text(str(self.position[0]) + str(self.position[1]) + str(self.position[2]))
 
             # PLANET POS -----------------------------------------------------------
+            for i in self.planet_list:
+                i.hud_text_coords.text = i.hud_coords
+
             # g, r, d = Main.planet_list[0].get_coords
             # Planet(planet_col=ursina.color.green, planet_name="", planet_diameter=.05,
             # planet_speed=0,

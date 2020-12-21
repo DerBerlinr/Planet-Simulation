@@ -7,14 +7,16 @@ from planet import Planet, Sky
 import sqlite3
 
 
+
 class Main:
-    def __init__(self, planet_list=[]):
+    def __init__(self,  app,  planet_list=[]):
         # gets called at beginning of program
         conn = sqlite3.connect('example.db')
         c = conn.cursor()
+        self.app = app
 
 
-        self.app = ursina.Ursina()
+        #self.app = ursina.Ursina()
 
         ursina.window.title = 'planet simulation'  # set meta data for app
         ursina.window.borderless = True
@@ -31,14 +33,7 @@ class Main:
 
         sky = Sky()
 
-        planet5 = Planet(file_name='/textures/planet_1', planet_name="planet5", planet_diameter=1,
-                        planet_speed=[10308.531985820431, 27640.154010970804, -0.7364511260199437],
-                        coord_x=140699825958.8049,
-                        coord_y=-54738590238.00282,
-                        coord_z=2510791.537005455)  # create a planet
-        self.planet_list.append(planet5)
-
-        fpc = FirstPersonController()
+        fpc = FirstPersonController(self.planet_list)
 
         for i in self.planet_list:
             # For every planet, there is a thread, which calculates the current Position of its planet
