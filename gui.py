@@ -1,29 +1,50 @@
+import ursina
+from direct.stdpy.file import execfile
 from ursina import *
 import calc as calc
 import numpy as np
-
+from planet import Planet
+#from tkinter_menu import GUI_Startup
+import threading
 
 
 class GUI:
     def __init__(self):
-        self.buttons = []
+
+        self.planet_list = []  # list of all planets in the simulation
+
+        # IN-GAME-MENU -------------------------------------------------------------------------------------------------
+        self.buttons_gm = []
 
         self.bu_reenter = Button(position=(0, .25, 0), text='Reenter Game', scale=(.5, .07))
-        self.buttons.append(self.bu_reenter)
+        self.buttons_gm.append(self.bu_reenter)
         self.bu_reenter.on_click = self.reenter_game
 
         self.bu_add = Button(position=(0, .15, 0), text='Add Planet', scale=(.5, .07))
-        self.buttons.append(self.bu_add)
+        self.buttons_gm.append(self.bu_add)
         self.bu_add.on_click = self.add_planet
+
+        self.bu_menu = Button(position=(0, -.15, 0), text='Go to Menu', scale=(.5, .07))
+        self.buttons_gm.append(self.bu_menu)
+        self.bu_menu.on_click = self.go_to_menu
 
         self.planet_data_temp = []
 
-    @staticmethod
-    def reenter_game():
+    def go_to_menu(self):
+        print("Anfang")
+        execfile('tkinter_menu.py')
+        exit()
+        print("Ende")
+
+
+
+
+    def reenter_game(self):
         mouse.locked = True
 
     def add_planet(self):
-        for i in self.buttons:
+        # TODO: fix lag
+        for i in self.buttons_gm:
             i.enabled = False
 
         name_field = InputField(name='name_field')
@@ -79,6 +100,8 @@ class GUI:
 class FirstPersonController(Entity):
     def __init__(self):
         super().__init__()
+
+
         self.speed = 5
 
         self.camera_pivot = Entity(parent=self, y=2)
@@ -93,13 +116,12 @@ class FirstPersonController(Entity):
         self.mouse_sensitivity = Vec2(40, 40)
         self.target_smoothing = 100
         self.smoothing = self.target_smoothing
-        self.a = Text(origin=(-1, -1))
 
         self.gui = GUI()
 
     def update(self):
         if mouse.locked:
-            for i in self.gui.buttons:
+            for i in self.gui.buttons_gm:
                 i.enabled = False
 
             # CAMERA ROTATION ------------------------------------------------------
@@ -119,15 +141,15 @@ class FirstPersonController(Entity):
             # self.a.update_text(str(self.position[0]) + str(self.position[1]) + str(self.position[2]))
 
             # PLANET POS -----------------------------------------------------------
-            #g, r, d = Main.planet_list[0].get_coords
-            #Planet(planet_col=ursina.color.green, planet_name="", planet_diameter=.05,
-                        #planet_speed=0,
-                        #coord_x=g,
-                        #coord_y=r,
-                        #coord_z=d)
+            # g, r, d = Main.planet_list[0].get_coords
+            # Planet(planet_col=ursina.color.green, planet_name="", planet_diameter=.05,
+            # planet_speed=0,
+            # coord_x=g,
+            # coord_y=r,
+            # coord_z=d)
 
         # EXIT FPC -----------------------------------------------------------------
         if held_keys['escape']:
-            for i in self.gui.buttons:
+            for i in self.gui.buttons_gm:
                 i.enabled = True
             mouse.locked = False

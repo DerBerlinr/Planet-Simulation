@@ -4,12 +4,16 @@ import numpy as np
 from calc import *
 from gui import FirstPersonController
 from planet import Planet
-import ursina.prefabs.sky as Sky
+import sqlite3
 
 
 class Main:
-    def __init__(self):
+    def __init__(self, planet_list=[]):
         # gets called at beginning of program
+        conn = sqlite3.connect('example.db')
+        c = conn.cursor()
+        c.execute('''CREATE TABLE planets
+                        (name text, diameter real, mass real, velx real, vely real, velz real, posx real, posy real, posz real)''')
 
         self.app = ursina.Ursina()
 
@@ -19,9 +23,8 @@ class Main:
         ursina.window.exit_button.visible = True
         ursina.window.fps_counter.enabled = True
 
-        self.planet_list = []  # list of all planets in the simulation
+        self.planet_list = planet_list  # list of all planets in the simulation
 
-        #Sky()
 
         planet = Planet(file_name='/textures/planet_1', planet_name="planet1", planet_diameter=1,
                         planet_speed=[10308.531985820431, 27640.154010970804, -0.7364511260199437],
@@ -60,8 +63,11 @@ class Main:
 
 
 
-        FirstPersonController()
+        sun = Planet(planet_col=ursina.color.yellow, planet_name="sun", planet_diameter=2.5)
+        c.execute('''INSERT INTO planets VALUES
+            (?,?,?,0,0,0,0,0,0)''', (sun.planet_name, sun.planet_diameter, sun.planet_mass))
 
+        fpc = FirstPersonController()
 
         for i in self.planet_list:
             # For every planet, there is a thread, which calculates the current Position of its planet
