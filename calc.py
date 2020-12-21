@@ -1,21 +1,27 @@
 import numpy as np
 from ursina import *
 import threading
+import sqlite3
 
 
 class Calc:
-    def __init__(self, posx=500000, posy=1000000000, posz=75000000, velx=-500, vely=1000, velz=-300):
+    def __init__(self, planet):
         # G -> gravitational force; mS -> Mass of Sun
         self.G = np.array([-6.67430 * 10 ** -11, -6.67430 * 10 ** -11, -6.67430 * 10 ** -11])
         self.mS = np.array([1.9885 * 10 ** 30, 1.9885 * 10 ** 30, 1.9885 * 10 ** 30])
+        posx, posy, posz = planet.get_coords()
         self.pos = np.array([posx, posy, posz])
-        #print("posx", posx)
+        velx, vely, velz = planet.get_vel()
         self.vel = np.array([velx, vely, velz])
         self.dt = 60
         self.a = None
         self.counter = 0
         self.v = None
         self.vel_o = 0
+
+        self.conn = sqlite3.connect('example.db')
+        self.c = conn.cursor()
+        self.c.execute('''CREATE TABLE IF NOT EXISTS ? (timestamp integer, velx real, vely real, velz real, posx real, posy real, posz real)''', (planet.planet_name))
 
     def acc(self):
         vec = self.pos * -1

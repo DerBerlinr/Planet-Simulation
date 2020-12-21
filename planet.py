@@ -16,8 +16,7 @@ class Planet(Button):
 
             # TODO: add Textures
         )
-        self.hud_coords = ''
-        self.hud_text_coords = Text(text=self.hud_coords, origin=(0, 18))
+
         self.refresh_timer = datetime.now().microsecond
         self.tooltip_input = "0"
         self.planet_name = planet_name
@@ -38,8 +37,8 @@ class Planet(Button):
     def input(self, key):
         if self.hovered:
             if key == 'left mouse down':
-                self.hud_coords = "x: "+str(round(self.x)) +"     y: "+ str(round(self.y)) +"     z: "+ str(round(self.z))
-                self.hud_text_coords.color = color.red
+                return True
+
 
 
 
@@ -63,6 +62,9 @@ class Planet(Button):
             self.refresh_timer = current_time'''
 
         return self.coord_x, self.coord_y, self.coord_z
+
+    def get_vel(self):
+        return self.speed[0], self.speed[1], self.speed[2]
 
 
 

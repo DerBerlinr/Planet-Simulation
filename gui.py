@@ -118,6 +118,9 @@ class FirstPersonController(Entity):
         self.target_smoothing = 100
         self.smoothing = self.target_smoothing
 
+        self.hud_coords = ''
+        self.hud_text_coords = Text(text=self.hud_coords, origin=(0, 18))
+
         self.gui = GUI()
 
     def update(self):
@@ -144,7 +147,11 @@ class FirstPersonController(Entity):
             # self.a.update_text(str(self.position[0]) + str(self.position[1]) + str(self.position[2]))
 
             # PLANET POS -----------------------------------------------------------
+            self.hud_coords = "x: " + str(round(self.x)) + "     y: " + str(round(self.y)) + "     z: " + str(
+                round(self.z))
+            self.hud_text_coords.color = color.red
             for i in self.planet_list:
+                if
                 i.hud_text_coords.text = i.hud_coords
 
             # g, r, d = Main.planet_list[0].get_coords
