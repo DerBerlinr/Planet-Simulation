@@ -26,7 +26,7 @@ class Calc:
         scalar = -self.G * self.mS / vecc
         return vec / np.linalg.norm(vec) * scalar
 
-    def get_coords(self, planet):
+    def get_coords(self, planet, planet_list):
         # This function gets called as a thread
         t = 0
         c = 0
@@ -47,3 +47,19 @@ class Calc:
             if held_keys['shift'] and held_keys['q']:
                 exit()
             t += self.dt
+
+        #---Collision---#
+            x_self, y_self, z_self = self.pos[0], self.pos[1], self.pos[2]
+            for i in range(len(planet_list)):
+                name1 = planet.planet_name
+                name2 = planet_list[i].planet_name
+                if planet.planet_name == planet_list[i].planet_name:
+                    pass
+                else:
+                    x_col, y_col, z_col = planet_list[i].get_coords()
+                    if abs((x_self - x_col)/10000000000) < planet_list[i].scale[0] + planet.scale[0] and abs((y_self - y_col)/10000000000) < planet_list[i].scale[0] + planet.scale[0] and abs((z_self - z_col)/10000000000) < planet_list[i].scale[0] + planet.scale[0]:
+                        #print("Collision!!!")
+                        pass
+
+
+

@@ -5,6 +5,7 @@ import time
 class Planet(Entity):
     def __init__(self, file_name, planet_name, planet_speed=1, planet_mass=1, planet_diameter=1, coord_x=0, coord_y=0, coord_z=0):
         super().__init__(
+            collider='sphere',
             collision=True,
             model='sphere',
             texture=file_name,
