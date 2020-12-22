@@ -10,13 +10,8 @@ import sqlite3
 
 class Main:
     def __init__(self,  app,  planet_list=[]):
-        # gets called at beginning of program
-        conn = sqlite3.connect('example.db')
-        c = conn.cursor()
+        # SET BASIC VARIABLES FOR ursina -------------------------------------------------------
         self.app = app
-
-
-        #self.app = ursina.Ursina()
 
         ursina.window.title = 'planet simulation'  # set meta data for app
         ursina.window.borderless = True
@@ -26,10 +21,20 @@ class Main:
 
         self.planet_list = planet_list  # list of all planets in the simulation
 
+        # CREATION OF SUN AND INSERTION INTO DATABASE ---------------------------------------------
+
+        conn = sqlite3.connect('example.db')
+        c = conn.cursor()
 
         sun = Planet(file_name='/textures/sun', planet_name="sun", planet_diameter=2.5)
-        c.execute('''INSERT INTO planets VALUES
-            (?,?,?,0,0,0,0,0,0)''', (sun.planet_name, sun.planet_diameter, sun.planet_mass))
+
+        self.c.execute('''INSERT INTO planets VALUES (0,?,?,?)''',
+                       (sun.planet_name, sun.planet_dsunameter, sun.planet_mass))
+
+        self.conn.commit()
+        self.c.close()
+
+        # CREATION OF SKY ----------------------------------------------------------------------
 
         sky = Sky()
 

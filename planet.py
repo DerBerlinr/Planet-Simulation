@@ -61,10 +61,22 @@ class Planet(Button):
             self.tooltip.update()
             self.refresh_timer = current_time'''
 
+        conn = sqlite3.connect('example.db')
+        c = conn.cursor()
+
+        self.c.execute('''CREATE TABLE IF NOT EXISTS pos 
+                          (plannr integer, time real, velx real, vely real, velz real, 
+                           posx real, posy real, posz real)''',
+                       ()
+                       )
+
+        self.conn.commit()
+        self.c.close()
+
         return self.coord_x, self.coord_y, self.coord_z
 
     def get_vel(self):
-        return self.speed[0], self.speed[1], self.speed[2]
+        return self.planet_speed[0], self.planet_speed[1], self.planet_speed[2]
 
 
 

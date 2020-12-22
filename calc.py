@@ -20,8 +20,8 @@ class Calc:
         self.vel_o = 0
 
         self.conn = sqlite3.connect('example.db')
-        self.c = conn.cursor()
-        self.c.execute('''CREATE TABLE IF NOT EXISTS ? (timestamp integer, velx real, vely real, velz real, posx real, posy real, posz real)''', (planet.planet_name))
+        self.c = self.conn.cursor()
+        self.c.execute('''CREATE TABLE IF NOT EXISTS planet1 (timestamp integer, velx real, vely real, velz real, posx real, posy real, posz real)''')
 
     def acc(self):
         vec = self.pos * -1

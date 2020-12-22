@@ -143,23 +143,22 @@ class FirstPersonController(Entity):
             self.position += self.direction / 2 * self.speed * time.dt
 
 
-            # print(self.position)
-            # self.a.update_text(str(self.position[0]) + str(self.position[1]) + str(self.position[2]))
-
             # PLANET POS -----------------------------------------------------------
+            try:
+                conn = sqlite3.connect('example.db')
+                c = conn.cursor()
+
+                self.c.execute('''SELECT pos.x FROM pos WHERE pos.plannr = ? AND pos.time = ?''', (,))
+
+                self.conn.commit()
+                self.c.close()
+            '''
             self.hud_coords = "x: " + str(round(self.x)) + "     y: " + str(round(self.y)) + "     z: " + str(
                 round(self.z))
             self.hud_text_coords.color = color.red
             for i in self.planet_list:
-                if
                 i.hud_text_coords.text = i.hud_coords
-
-            # g, r, d = Main.planet_list[0].get_coords
-            # Planet(planet_col=ursina.color.green, planet_name="", planet_diameter=.05,
-            # planet_speed=0,
-            # coord_x=g,
-            # coord_y=r,
-            # coord_z=d)
+            '''
 
         # EXIT FPC -----------------------------------------------------------------
         if held_keys['escape']:
