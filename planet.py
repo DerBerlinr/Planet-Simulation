@@ -1,5 +1,5 @@
 from ursina import *
-
+import time
 
 
 class Planet(Button):
@@ -41,6 +41,7 @@ class Planet(Button):
         if self.hovered:
             if key == 'left mouse down':
                 self.pressedd = True
+
 
     def set_coords(self, x, y, z, vx, vy, vz):  # set coordinates of planet
         self.x = x / 10000000000

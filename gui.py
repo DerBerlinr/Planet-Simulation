@@ -1,12 +1,10 @@
 from direct.stdpy.file import execfile
 from ursina import *
-import sqlite3
-import inspect
+from time import perf_counter
 
 
 class GUI:
     def __init__(self):
-
         self.planet_list = []  # list of all planets in the simulation
 
         # IN-GAME-MENU -------------------------------------------------------------------------------------------------
@@ -31,9 +29,6 @@ class GUI:
         execfile('tkinter_menu.py')
         exit()
         print("Ende")
-
-
-
 
     def reenter_game(self):
         mouse.locked = True
@@ -98,7 +93,6 @@ class FirstPersonController(Entity):
         self.planet_list = planet_list
         super().__init__()
 
-
         self.speed = 5
 
         self.camera_pivot = Entity(parent=self, y=2)
@@ -114,8 +108,14 @@ class FirstPersonController(Entity):
         self.target_smoothing = 100
         self.smoothing = self.target_smoothing
 
+        self.hud_name = ''
+        self.hud_text_name = Text(text=self.hud_name, origin=(0, 17))
+
         self.hud_coords = ''
         self.hud_text_coords = Text(text=self.hud_coords, origin=(0, 18))
+
+        self.hud_vel = ''
+        self.hud_text_vel = Text(text=self.hud_vel, origin=(0, 19))
 
         self.gui = GUI()
 
@@ -143,19 +143,40 @@ class FirstPersonController(Entity):
 
             self.position += self.direction / 2 * self.speed * time.dt
 
-
             # HUD ------------------------------------------------------------------
+            sel_list = []
             for i in self.planet_list:
                 if i.pressedd:
-                    self.sel_plan = i
+                    sel_list.append((i, perf_counter()))
+                    i.pressedd = False
+
+            if len(sel_list) > 1:
+                sel_list.pop(0)
+            elif len(sel_list) == 1:
+                self.sel_plan = sel_list[0][0]
+
+            px = 0
+            py = 0
+            pz = 0
+            vx = 0
+            vy = 0
+            vz = 0
             if self.check_instance(self.sel_plan):
-                akt_pos = self.sel_plan.poslist[self.time / 60]
-            '''
-            self.hud_coords = "x: " + str(round(x)) + "     y: " + str(round(self.y)) + "     z: " + str(round(self.z))
+                px, py, pz, vx, vy, vz = self.sel_plan.poslist[round(self.time / 60)]
+
+                self.hud_name = "name: " + self.sel_plan.planet_name
+                self.hud_text_name.color = color.red
+                self.hud_text_name.text = self.hud_name
+
+            self.hud_coords = "x: " + str(round(px)) + "     y: " + str(round(py)) + "     z: " + str(round(pz))
             self.hud_text_coords.color = color.red
-            for i in self.planet_list:
-                i.hud_text_coords.text = i.hud_coords
-            '''
+            self.hud_text_coords.text = self.hud_coords
+
+            self.hud_vel = "vx: " + str(round(vx)) + "    vy: " + str(round(vy)) + "    vz: " + str(round(vz))
+            self.hud_text_vel.color = color.red
+            self.hud_text_vel.text = self.hud_vel
+
+            # ----------------------------------------------------------------------
             self.time += self.dt
 
         # EXIT FPC -----------------------------------------------------------------
