@@ -19,10 +19,6 @@ class Calc:
         self.v = None
         self.vel_o = 0
 
-        self.conn = sqlite3.connect('example.db')
-        self.c = self.conn.cursor()
-        self.c.execute('''CREATE TABLE IF NOT EXISTS planet1 (timestamp integer, velx real, vely real, velz real, posx real, posy real, posz real)''')
-
     def acc(self):
         vec = self.pos * -1
         vecc = self.pos[0] ** 2 + self.pos[1] ** 2 + self.pos[2] ** 2
@@ -47,6 +43,22 @@ class Calc:
             self.pos = self.pos + self.vel * self.dt
 
             planet.set_coords(self.pos[0], self.pos[1], self.pos[2])
+
+            conn = sqlite3.connect('example.db')
+            c = conn.cursor()
+
+            c.execute('''CREATE TABLE IF NOT EXISTS pos 
+                    (plannr integer, time real, velx real, vely real, velz real,  posx real, posy real, posz real)''')
+
+            # TODO: error: Multiple Threads try to access database (Sol: only every x frames?)
+
+            c.execute('''INSERT INTO pos VALUES (?,?,?,?,?,?,?,?)''',
+                           (planet.plannr, QQQQQQQQQQ, self.vel[0], self.vel[1], self.vel[2],
+                            self.pos[0], self.pos[1], self.pos[2]))
+
+            conn.commit()
+            c.close()
+
             if not t % 31536000:
                 print(t)
                 print(self.pos[0], self.pos[1], self.pos[2], "Jahr: ", c, "Planet: ", planet.planet_name)

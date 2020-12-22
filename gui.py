@@ -1,11 +1,5 @@
-import ursina
 from direct.stdpy.file import execfile
 from ursina import *
-import calc as calc
-import numpy as np
-from planet import Planet
-#from tkinter_menu import GUI_Startup
-import threading
 
 
 class GUI:
@@ -143,15 +137,17 @@ class FirstPersonController(Entity):
             self.position += self.direction / 2 * self.speed * time.dt
 
 
-            # PLANET POS -----------------------------------------------------------
+            # HUD ------------------------------------------------------------------
             try:
                 conn = sqlite3.connect('example.db')
                 c = conn.cursor()
 
-                self.c.execute('''SELECT pos.x FROM pos WHERE pos.plannr = ? AND pos.time = ?''', (,))
+                self.c.execute('''SELECT pos.x FROM pos WHERE pos.plannr = ? AND pos.time = ?''', (selected_planet.plannr, QQQQQQQQQQ))
 
                 self.conn.commit()
                 self.c.close()
+            except:
+                pass
             '''
             self.hud_coords = "x: " + str(round(self.x)) + "     y: " + str(round(self.y)) + "     z: " + str(
                 round(self.z))

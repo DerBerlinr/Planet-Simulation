@@ -41,14 +41,14 @@ class GUI_Startup(Tk):
         pass
 
     def two_planets(self):
-        planet = Planet(file_name='/textures/planet_1',planet_name="planet1", planet_diameter=1,
+        planet = Planet(file_name='/textures/planet_1',planet_name="planet1", planet_diameter=1, plannr=1,
                         planet_speed=[10308.531985820431, 27640.154010970804, -0.7364511260199437],
                         coord_x=140699825958.8049,
                         coord_y=-54738590238.00282,
                         coord_z=2510791.537005455)  # create a planet
         self.planet_list.append(planet)
 
-        planet2 = Planet(file_name='/textures/planet_2',planet_name='planet2', planet_diameter=1,
+        planet2 = Planet(file_name='/textures/planet_2',planet_name='planet2', planet_diameter=1, plannr=2,
                          planet_speed=[10308.531985820431, -27640.154010970804, -0.7364511260199437],
                          coord_x=140699825958.8049,
                          coord_y=-54738590238.00282,
@@ -56,12 +56,10 @@ class GUI_Startup(Tk):
 
         self.planet_list.append(planet2)
 
-        counter = 1
         for i in self.planet_list:
             print(i.planet_speed)
             self.c.execute('''INSERT INTO planets VALUES (?,?,?,?)''',
-                           (counter, i.planet_name, i.planet_diameter, i.planet_mass,))
-            counter += 1
+                           (i.plannr, i.planet_name, i.planet_diameter, i.planet_mass,))
 
         self.conn.commit()
         self.c.close()

@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 class Planet(Button):
-    def __init__(self, file_name, planet_name, planet_speed=1, planet_mass=1, planet_diameter=1, coord_x=0, coord_y=0, coord_z=0):
+    def __init__(self, file_name, planet_name, plannr, planet_speed=1, planet_mass=1, planet_diameter=1, coord_x=0, coord_y=0, coord_z=0):
         super().__init__(
             collision=True,
             model='sphere',
@@ -16,7 +16,7 @@ class Planet(Button):
 
             # TODO: add Textures
         )
-
+        self.plannr = plannr
         self.refresh_timer = datetime.now().microsecond
         self.tooltip_input = "0"
         self.planet_name = planet_name
@@ -61,17 +61,6 @@ class Planet(Button):
             self.tooltip.update()
             self.refresh_timer = current_time'''
 
-        conn = sqlite3.connect('example.db')
-        c = conn.cursor()
-
-        self.c.execute('''CREATE TABLE IF NOT EXISTS pos 
-                          (plannr integer, time real, velx real, vely real, velz real, 
-                           posx real, posy real, posz real)''',
-                       ()
-                       )
-
-        self.conn.commit()
-        self.c.close()
 
         return self.coord_x, self.coord_y, self.coord_z
 

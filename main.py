@@ -26,13 +26,13 @@ class Main:
         conn = sqlite3.connect('example.db')
         c = conn.cursor()
 
-        sun = Planet(file_name='/textures/sun', planet_name="sun", planet_diameter=2.5)
+        sun = Planet(file_name='/textures/sun', planet_name="sun", planet_diameter=2.5, plannr=0)
 
-        self.c.execute('''INSERT INTO planets VALUES (0,?,?,?)''',
-                       (sun.planet_name, sun.planet_dsunameter, sun.planet_mass))
+        c.execute('''INSERT INTO planets VALUES (?,?,?,?)''',
+                       (sun.plannr, sun.planet_name, sun.planet_diameter, sun.planet_mass))
 
-        self.conn.commit()
-        self.c.close()
+        conn.commit()
+        c.close()
 
         # CREATION OF SKY ----------------------------------------------------------------------
 
