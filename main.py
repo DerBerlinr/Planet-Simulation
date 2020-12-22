@@ -21,18 +21,9 @@ class Main:
 
         self.planet_list = planet_list  # list of all planets in the simulation
 
-        # CREATION OF SUN AND INSERTION INTO DATABASE ---------------------------------------------
-
-        conn = sqlite3.connect('example.db')
-        c = conn.cursor()
+        # CREATION OF SUN  ---------------------------------------------------------------------
 
         sun = Planet(file_name='/textures/sun', planet_name="sun", planet_diameter=2.5, plannr=0)
-
-        c.execute('''INSERT INTO planets VALUES (?,?,?,?)''',
-                       (sun.plannr, sun.planet_name, sun.planet_diameter, sun.planet_mass))
-
-        conn.commit()
-        c.close()
 
         # CREATION OF SKY ----------------------------------------------------------------------
 

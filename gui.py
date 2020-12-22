@@ -149,15 +149,7 @@ class FirstPersonController(Entity):
                 if i.pressedd:
                     self.sel_plan = i
             if self.check_instance(self.sel_plan):
-                conn = sqlite3.connect('example.db')
-                c = conn.cursor()
-
-                c.execute('''SELECT posx FROM pos WHERE pos.plannr = ? AND pos.time = ?''', (self.sel_plan.plannr, self.time))
-                print("fetchall: ", c.fetchall())
-                #x = c.fetchall()
-
-                conn.commit()
-                c.close()
+                akt_pos = self.sel_plan.poslist[self.time / 60]
             '''
             self.hud_coords = "x: " + str(round(x)) + "     y: " + str(round(self.y)) + "     z: " + str(round(self.z))
             self.hud_text_coords.color = color.red

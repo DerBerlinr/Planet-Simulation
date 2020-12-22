@@ -24,6 +24,8 @@ class Planet(Button):
         self.scale = Vec3(planet_diameter, planet_diameter, planet_diameter)
         self.planet_diameter = planet_diameter
 
+        self.poslist = [] # (time, x, y, z, velx, vely, velz)
+
 
         self.coord_x = coord_x
         self.coord_y = coord_y
@@ -40,10 +42,11 @@ class Planet(Button):
             if key == 'left mouse down':
                 self.pressedd = True
 
-    def set_coords(self, x, y, z):  # set coordinates of planet
+    def set_coords(self, x, y, z, vx, vy, vz):  # set coordinates of planet
         self.x = x / 10000000000
         self.y = y / 10000000000
         self.z = z / 10000000000
+        self.poslist.append((x, y, z, vx, vy, vz))
 
     def get_coords(self):
         return self.coord_x, self.coord_y, self.coord_z

@@ -2,7 +2,6 @@ from tkinter import *
 from planet import Planet
 import ursina
 from main import Main
-import sqlite3
 
 class GUI_Startup(Tk):
     def __init__(self, planetlist=[]):
@@ -32,10 +31,6 @@ class GUI_Startup(Tk):
 
         self.planet_list = planetlist
 
-        self.conn = sqlite3.connect('example.db')
-        self.c = self.conn.cursor()
-        self.c.execute('''CREATE TABLE IF NOT EXISTS planets
-                        (plannr integer, name text, diameter real, mass real)''')
 
     def no_planets(self):
         pass
@@ -55,14 +50,6 @@ class GUI_Startup(Tk):
                          coord_z=-2510791.537005455)  # create a planet
 
         self.planet_list.append(planet2)
-
-        for i in self.planet_list:
-            #print(i.planet_speed)
-            self.c.execute('''INSERT INTO planets VALUES (?,?,?,?)''',
-                           (i.plannr, i.planet_name, i.planet_diameter, i.planet_mass,))
-
-        self.conn.commit()
-        self.c.close()
 
         start = Main(self.app, self.planet_list)
 
@@ -96,13 +83,6 @@ class GUI_Startup(Tk):
                          coord_y=-50738590238.00282,
                          coord_z=2510791.537005455)
         self.planet_list.append(planet4)
-        counter = 1
-        for i in self.planet_list:
-            self.c.execute('''INSERT INTO planets VALUES (?,?,?)''',
-                        (i.planet_name, i.planet_diameter, i.planet_mass,))
-
-        self.conn.commit()
-        self.c.close()
 
         start = Main(self.app, self.planet_list)
 
