@@ -1,5 +1,7 @@
 from direct.stdpy.file import execfile
 from ursina import *
+import sqlite3
+import inspect
 
 
 class GUI:
@@ -117,6 +119,11 @@ class FirstPersonController(Entity):
 
         self.gui = GUI()
 
+        self.time = 0
+        self.dt = 60
+
+        self.sel_plan = 0
+
     def update(self):
         if mouse.locked:
             for i in self.gui.buttons_gm:
@@ -138,26 +145,32 @@ class FirstPersonController(Entity):
 
 
             # HUD ------------------------------------------------------------------
-            try:
+            for i in self.planet_list:
+                if i.pressedd:
+                    self.sel_plan = i
+            if self.check_instance(self.sel_plan):
                 conn = sqlite3.connect('example.db')
                 c = conn.cursor()
 
-                self.c.execute('''SELECT pos.x FROM pos WHERE pos.plannr = ? AND pos.time = ?''', (selected_planet.plannr, QQQQQQQQQQ))
+                c.execute('''SELECT posx FROM pos WHERE pos.plannr = ? AND pos.time = ?''', (self.sel_plan.plannr, self.time))
+                print("fetchall: ", c.fetchall())
+                #x = c.fetchall()
 
-                self.conn.commit()
-                self.c.close()
-            except:
-                pass
+                conn.commit()
+                c.close()
             '''
-            self.hud_coords = "x: " + str(round(self.x)) + "     y: " + str(round(self.y)) + "     z: " + str(
-                round(self.z))
+            self.hud_coords = "x: " + str(round(x)) + "     y: " + str(round(self.y)) + "     z: " + str(round(self.z))
             self.hud_text_coords.color = color.red
             for i in self.planet_list:
                 i.hud_text_coords.text = i.hud_coords
             '''
+            self.time += self.dt
 
         # EXIT FPC -----------------------------------------------------------------
         if held_keys['escape']:
             for i in self.gui.buttons_gm:
                 i.enabled = True
             mouse.locked = False
+
+    def check_instance(self, obj):
+        return hasattr(obj, '__dict__')

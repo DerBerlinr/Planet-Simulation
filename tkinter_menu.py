@@ -57,7 +57,7 @@ class GUI_Startup(Tk):
         self.planet_list.append(planet2)
 
         for i in self.planet_list:
-            print(i.planet_speed)
+            #print(i.planet_speed)
             self.c.execute('''INSERT INTO planets VALUES (?,?,?,?)''',
                            (i.plannr, i.planet_name, i.planet_diameter, i.planet_mass,))
 

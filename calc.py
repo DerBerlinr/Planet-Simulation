@@ -1,6 +1,6 @@
 import numpy as np
 from ursina import *
-import threading
+from time import perf_counter
 import sqlite3
 
 
@@ -32,7 +32,9 @@ class Calc:
     def get_coords(self, planet):
         # This function gets called as a thread
         t = 0
-        c = 0
+        counter = 0
+        cc = 0
+        anfangszeit = 0
         while True:
             self.a = self.acc()
             if t == 0:
@@ -42,27 +44,36 @@ class Calc:
                 self.vel = self.vel + self.a * self.dt
             self.pos = self.pos + self.vel * self.dt
 
-            planet.set_coords(self.pos[0], self.pos[1], self.pos[2])
+            t1_start = perf_counter()
+            if anfangszeit == 0:
+                anfangszeit = t1_start
 
-            conn = sqlite3.connect('example.db')
-            c = conn.cursor()
+            if anfangszeit + 0.05 < t1_start:
+                planet.set_coords(self.pos[0], self.pos[1], self.pos[2])
+                if cc == 50:
+                    conn = sqlite3.connect('example.db')
+                    c = conn.cursor()
 
-            c.execute('''CREATE TABLE IF NOT EXISTS pos 
-                    (plannr integer, time real, velx real, vely real, velz real,  posx real, posy real, posz real)''')
+                    c.execute('''CREATE TABLE IF NOT EXISTS pos 
+                            (plannr integer, time real, velx real, vely real, velz real, posx real, posy real, posz real)''')
 
-            # TODO: error: Multiple Threads try to access database (Sol: only every x frames?)
+                    # TODO: error: Multiple Threads try to access database (Sol: only every x frames?)
 
-            c.execute('''INSERT INTO pos VALUES (?,?,?,?,?,?,?,?)''',
-                           (planet.plannr, QQQQQQQQQQ, self.vel[0], self.vel[1], self.vel[2],
-                            self.pos[0], self.pos[1], self.pos[2]))
+                    c.execute('''INSERT INTO pos VALUES (?,?,?,?,?,?,?,?)''',
+                                   (planet.plannr, t, self.vel[0], self.vel[1], self.vel[2],
+                                    self.pos[0], self.pos[1], self.pos[2]))
 
-            conn.commit()
-            c.close()
+                    conn.commit()
+                    c.close()
+                    anfangszeit = t1_start
+
+                else:
+                    cc += 1
 
             if not t % 31536000:
-                print(t)
-                print(self.pos[0], self.pos[1], self.pos[2], "Jahr: ", c, "Planet: ", planet.planet_name)
-                c += 1
+                #print(t)
+                #print(self.pos[0], self.pos[1], self.pos[2], "Jahr: ", counter, "Planet: ", planet.planet_name)
+                counter += 1
             if held_keys['shift'] and held_keys['q']:
                 exit()
             t += self.dt
