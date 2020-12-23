@@ -44,9 +44,6 @@ class Planet(Button):
 
 
     def set_coords(self, x, y, z, vx, vy, vz):  # set coordinates of planet
-        self.x = x / 10000000000
-        self.y = y / 10000000000
-        self.z = z / 10000000000
         self.poslist.append((x, y, z, vx, vy, vz))
 
     def get_coords(self):
@@ -61,7 +58,7 @@ class Sky(Entity):
         super().__init__(
             parent = scene,
             model = 'sphere',
-            texture = '/textures/black.png',
+            color = color.dark_gray,
             scale = 150,
             double_sided = True
         )

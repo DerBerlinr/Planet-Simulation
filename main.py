@@ -16,7 +16,7 @@ class Main:
         ursina.window.title = 'planet simulation'  # set meta data for app
         ursina.window.borderless = True
         ursina.window.fullscreen = True
-        ursina.window.exit_button.visible = True
+        ursina.window.exit_button.visible = False
         ursina.window.fps_counter.enabled = True
 
         self.planet_list = planet_list  # list of all planets in the simulation

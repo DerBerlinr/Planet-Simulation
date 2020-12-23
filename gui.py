@@ -4,23 +4,26 @@ from time import perf_counter
 
 
 class GUI:
-    def __init__(self):
+    def __init__(self, fpc):
         self.planet_list = []  # list of all planets in the simulation
 
         # IN-GAME-MENU -------------------------------------------------------------------------------------------------
         self.buttons_gm = []
 
-        self.bu_reenter = Button(position=(0, .25, 0), text='Reenter Game', scale=(.5, .07))
+        self.bu_reenter = Button(position=(0, .25), text='Reenter Game', scale=(.5, .07))
         self.buttons_gm.append(self.bu_reenter)
         self.bu_reenter.on_click = self.reenter_game
 
-        self.bu_add = Button(position=(0, .15, 0), text='Add Planet', scale=(.5, .07))
-        self.buttons_gm.append(self.bu_add)
-        self.bu_add.on_click = self.add_planet
-
-        self.bu_menu = Button(position=(0, -.15, 0), text='Go to Menu', scale=(.5, .07))
+        self.bu_menu = Button(position=(0, .15), text='Go to Menu', scale=(.5, .07))
         self.buttons_gm.append(self.bu_menu)
         self.bu_menu.on_click = self.go_to_menu
+
+        # Time Menu -------------------------------------------------------------------------------
+
+        self.dt_slider = Slider(position=(-.2, -.15), min=-6000, max=6000, default=3000, step=60, height=Text.size, text='Velocity:', dynamic=False)
+        self.buttons_gm.append(self.dt_slider)
+
+        # --------------------------------------------------------------------------------------------------------------
 
         self.planet_data_temp = []
 
@@ -32,45 +35,6 @@ class GUI:
 
     def reenter_game(self):
         mouse.locked = True
-
-    def add_planet(self):
-        # TODO: fix lag
-        for i in self.buttons_gm:
-            i.enabled = False
-
-        name_field = InputField(name='name_field')
-        mass_field = InputField(name='mass_field')
-        speed_field = InputField(name='speed_field')
-        pos_x_field = InputField(name='pos_x_field')
-        pos_y_field = InputField(name='pos_y_field')
-        pos_z_field = InputField(name='pos_z_field')
-
-        self.planet_data_temp.append(name_field)
-        self.planet_data_temp.append(mass_field)
-        self.planet_data_temp.append(speed_field)
-        self.planet_data_temp.append(pos_x_field)
-        self.planet_data_temp.append(pos_y_field)
-        self.planet_data_temp.append(pos_z_field)
-
-        win = WindowPanel(
-            title='add planet',
-            content=(
-                Text('name:'),
-                name_field,
-                Text('mass in kg:'),
-                mass_field,
-                Text('speed in m/s:'),
-                speed_field,
-                Text('x-position:'),
-                pos_x_field,
-                Text('y-position:'),
-                pos_y_field,
-                Text('z-position:'),
-                pos_z_field,
-                Button(text='Submit', color=color.azure, on_click=self.submit_planet_data)
-            ),
-        )
-        self.planet_data_temp.append(win)
 
     @staticmethod
     def submit_planet_data():
@@ -93,11 +57,11 @@ class FirstPersonController(Entity):
         self.planet_list = planet_list
         super().__init__()
 
-        self.speed = 5
+        # CAMERA -------------------------------------------------------------------------------------------------------
 
+        self.speed = 5
         self.camera_pivot = Entity(parent=self, y=2)
         self.cursor = Entity(parent=camera.ui, model='quad', color=color.pink, scale=.008, rotation_z=45)
-
         camera.parent = self.camera_pivot
         camera.position = (0, 0, 0)
         camera.rotation = (0, 0, 0)
@@ -108,6 +72,8 @@ class FirstPersonController(Entity):
         self.target_smoothing = 100
         self.smoothing = self.target_smoothing
 
+        # HUD ----------------------------------------------------------------------------------------------------------
+
         self.hud_name = ''
         self.hud_text_name = Text(text=self.hud_name, origin=(0, 17))
 
@@ -117,15 +83,23 @@ class FirstPersonController(Entity):
         self.hud_vel = ''
         self.hud_text_vel = Text(text=self.hud_vel, origin=(0, 19))
 
-        self.gui = GUI()
-
         self.time = 0
-        self.dt = 60
+        self.dt = 6000
 
         self.sel_plan = 0
 
+
+        self.gui = GUI(self)
+
+        self.count = 0
+
     def update(self):
         if mouse.locked:
+            if self.count == 10:
+                print(self.time, "\t", round(self.gui.dt_slider.value))
+                self.count = 0
+            else:
+                self.count += 1
             for i in self.gui.buttons_gm:
                 i.enabled = False
 
@@ -143,41 +117,49 @@ class FirstPersonController(Entity):
 
             self.position += self.direction / 2 * self.speed * time.dt
 
-            # HUD ------------------------------------------------------------------
-            sel_list = []
-            for i in self.planet_list:
-                if i.pressedd:
-                    sel_list.append((i, perf_counter()))
-                    i.pressedd = False
+                # PLANET POSITION ------------------------------------------------------
+            if not (round(self.gui.dt_slider.value) == 0 or (self.time == 0 and round(self.gui.dt_slider.value) <= 0)):
+                for i in self.planet_list:
+                    i.x = i.poslist[round(self.time / 60)][0] / 10000000000
+                    i.y = i.poslist[round(self.time / 60)][1] / 10000000000
+                    i.z = i.poslist[round(self.time / 60)][2] / 10000000000
 
-            if len(sel_list) > 1:
-                sel_list.pop(0)
-            elif len(sel_list) == 1:
-                self.sel_plan = sel_list[0][0]
+                # HUD ------------------------------------------------------------------
+                sel_list = []
+                for i in self.planet_list:
+                    if i.pressedd:
+                        sel_list.append((i, perf_counter()))
+                        i.pressedd = False
 
-            px = 0
-            py = 0
-            pz = 0
-            vx = 0
-            vy = 0
-            vz = 0
-            if self.check_instance(self.sel_plan):
-                px, py, pz, vx, vy, vz = self.sel_plan.poslist[round(self.time / 60)]
+                if len(sel_list) > 1:
+                    sel_list.pop(0)
+                elif len(sel_list) == 1:
+                    self.sel_plan = sel_list[0][0]
 
-                self.hud_name = "name: " + self.sel_plan.planet_name
-                self.hud_text_name.color = color.red
-                self.hud_text_name.text = self.hud_name
+                px = 0
+                py = 0
+                pz = 0
+                vx = 0
+                vy = 0
+                vz = 0
+                if self.check_instance(self.sel_plan):
+                    px, py, pz, vx, vy, vz = self.sel_plan.poslist[round(self.time / 60)]
 
-            self.hud_coords = "x: " + str(round(px)) + "     y: " + str(round(py)) + "     z: " + str(round(pz))
-            self.hud_text_coords.color = color.red
-            self.hud_text_coords.text = self.hud_coords
+                    self.hud_name = "name: " + self.sel_plan.planet_name
+                    self.hud_text_name.color = color.red
+                    self.hud_text_name.text = self.hud_name
 
-            self.hud_vel = "vx: " + str(round(vx)) + "    vy: " + str(round(vy)) + "    vz: " + str(round(vz))
-            self.hud_text_vel.color = color.red
-            self.hud_text_vel.text = self.hud_vel
+                self.hud_coords = "x: " + str(round(px)) + "     y: " + str(round(py)) + "     z: " + str(round(pz))
+                self.hud_text_coords.color = color.red
+                self.hud_text_coords.text = self.hud_coords
+
+                self.hud_vel = "vx: " + str(round(vx)) + "    vy: " + str(round(vy)) + "    vz: " + str(round(vz))
+                self.hud_text_vel.color = color.red
+                self.hud_text_vel.text = self.hud_vel
 
             # ----------------------------------------------------------------------
-            self.time += self.dt
+            if not (self.time == 0 and round(self.gui.dt_slider.value) <= 0):
+                self.time += round(self.gui.dt_slider.value)
 
         # EXIT FPC -----------------------------------------------------------------
         if held_keys['escape']:
@@ -187,3 +169,4 @@ class FirstPersonController(Entity):
 
     def check_instance(self, obj):
         return hasattr(obj, '__dict__')
+
