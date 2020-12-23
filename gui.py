@@ -4,13 +4,15 @@ from time import perf_counter
 
 
 class GUI:
-    def __init__(self, fpc):
-        self.planet_list = []  # list of all planets in the simulation
+    def __init__(self, fpc, planet_list):
+
+        self.planet_list = planet_list  # list of all planets in the simulation
+        self.fpc = fpc
 
         # IN-GAME-MENU -------------------------------------------------------------------------------------------------
         self.buttons_gm = []
 
-        self.bu_reenter = Button(position=(0, .25), text='Reenter Game', scale=(.5, .07))
+        self.bu_reenter = Button(position=(0, .25), text='Return to Simulation', scale=(.5, .07))
         self.buttons_gm.append(self.bu_reenter)
         self.bu_reenter.on_click = self.reenter_game
 
@@ -20,12 +22,27 @@ class GUI:
 
         # Time Menu -------------------------------------------------------------------------------
 
-        self.dt_slider = Slider(position=(-.2, -.15), min=-6000, max=6000, default=3000, step=60, height=Text.size, text='Velocity:', dynamic=False)
+        self.dt_slider = Slider(position=(-.2, -.15), min=-6000, max=6000, default=3000, step=60, height=Text.size, text='Speed:', dynamic=False)
         self.buttons_gm.append(self.dt_slider)
+        '''
+        self.time_input_label = Text(text="Set time to:", position=(0, -.25))
+        self.buttons_gm.append(self.time_input_label)
 
+        self.time_input = prefabs.input_field.InputField(position=(0, -.35), scale=(.5, .07))
+        self.buttons_gm.append(self.time_input)
+
+        self.bu_time_input_submit = Button(position=(0, -.45), text='Jump to given time', scale=(.5, .07))
+        self.buttons_gm.append(self.bu_time_input_submit)
+        self.bu_time_input_submit.on_click = self.time_input_submit
+        '''
         # --------------------------------------------------------------------------------------------------------------
 
         self.planet_data_temp = []
+    '''
+    def time_input_submit(self):
+        if self.time_input.text > 0 and self.time_input.text < len(self.planet_list[0].poslist):
+            self.fpc.time = int(self.time_input.text) - int(self.time_input.text) % 60 
+    '''
 
     def go_to_menu(self):
         print("Anfang")
@@ -89,14 +106,14 @@ class FirstPersonController(Entity):
         self.sel_plan = 0
 
 
-        self.gui = GUI(self)
+        self.gui = GUI(self, planet_list)
 
         self.count = 0
 
     def update(self):
         if mouse.locked:
             if self.count == 10:
-                print(self.time, "\t", round(self.gui.dt_slider.value))
+                # print(self.time, "\t", round(self.gui.dt_slider.value))
                 self.count = 0
             else:
                 self.count += 1
