@@ -118,7 +118,7 @@ class FirstPersonController(Entity):
             self.position += self.direction / 2 * self.speed * time.dt
 
                 # PLANET POSITION ------------------------------------------------------
-            if not (round(self.gui.dt_slider.value) == 0 or (self.time == 0 and round(self.gui.dt_slider.value) <= 0)):
+            if not (round(self.gui.dt_slider.value) == 0 or (self.time <= 0 and round(self.gui.dt_slider.value) <= 0)):
                 for i in self.planet_list:
                     i.x = i.poslist[round(self.time / 60)][0] / 10000000000
                     i.y = i.poslist[round(self.time / 60)][1] / 10000000000
@@ -158,7 +158,7 @@ class FirstPersonController(Entity):
                 self.hud_text_vel.text = self.hud_vel
 
             # ----------------------------------------------------------------------
-            if not (self.time == 0 and round(self.gui.dt_slider.value) <= 0):
+            if not (self.time <= 0 and round(self.gui.dt_slider.value) <= 0):
                 self.time += round(self.gui.dt_slider.value)
 
         # EXIT FPC -----------------------------------------------------------------
