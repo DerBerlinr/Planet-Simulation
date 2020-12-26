@@ -3,15 +3,18 @@ from planet import Planet
 import ursina
 from main import Main
 from functools import partial
+from PIL import Image, ImageTk
 
 class GUI_Startup(Tk):
     def __init__(self, planetlist=[]):
-        Tk.__init__(self)
+        self.root = Tk()
         self.app = ursina.Ursina()
 
-        self.title("Main Menu")
+        Overview = GUI_Planet_Overview
 
-        rahmen1 = Frame(self, relief=SUNKEN, borderwidth=2)
+        self.root.title("Main Menu")
+
+        rahmen1 = Frame(self.root, relief=SUNKEN, borderwidth=2)
         rahmen1.pack()
 
         farbe = "#878789"
@@ -30,11 +33,16 @@ class GUI_Startup(Tk):
         self.bu3 = Button(rahmen1, text="viel", width=groesse, command=self.solar_sys)
         self.bu3.grid(row=3, column=0, sticky=E, padx=abstand_x, pady=abstand_y)
 
+        self.bu4 = Button(rahmen1, text="planet overview", width=groesse, command=Overview)
+        self.bu4.grid(row=5, column=0, sticky=E, padx=abstand_x, pady=abstand_y)
+
         self.planet_list = planetlist
 
 
     def own_planets(self):
         pass
+
+
 
     def two_planets(self):
         planet = Planet(file_name='/textures/planet_1',planet_name="planet1", planet_diameter=1, plannr=1,
@@ -184,13 +192,16 @@ class GUI_add_Planet(Tk):
 
 class GUI_Planet_Overview(Tk):
     def __init__(self, planetlist=[]):
-        Tk.__init__(self)
-        self.app = ursina.Ursina()
+        root2=Toplevel()
+        #self.app = ursina.Ursina()
 
-        self.title("Planet Overview")
+        root2.title("Planet Overview")
 
-        rahmen1 = Frame(self, relief=SUNKEN, borderwidth=2)
+        rahmen1 = Frame(root2, relief=SUNKEN, borderwidth=7)
         rahmen1.pack()
+
+        root2.columnconfigure(0, weight=1)
+        root2.columnconfigure(1, weight=2)
 
         farbe = "#878789"
 
@@ -199,32 +210,107 @@ class GUI_Planet_Overview(Tk):
 
         groesse = 20
 
+
         while len(planetlist) < 8:
             planetlist.append(None)
 
-        bu_1 = Button(rahmen1, image="", width=groesse, command=partial(self.plan,planetlist[1]))
-        bu_1.grid(row=1, column=0, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_2 = Button(rahmen1, image="", width=groesse, command=partial(self.plan,planetlist[2]))
+        self.la11_text = StringVar()
+        self.la11_text.set("-----------------------------")
+        self.la11 = Label(rahmen1, textvariable=self.la11_text, width=groesse, bg=farbe, justify=CENTER)
+        self.la11.grid(row=2, column=0, sticky=E, padx=abstand_x, pady=abstand_y)
+
+        self.la12_text = StringVar()
+        self.la12_text.set("-----------------------------")
+        self.la12 = Label(rahmen1, textvariable=self.la12_text, width=groesse, bg=farbe, justify=CENTER)
+        self.la12.grid(row=2, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
+
+        self.la13_text = StringVar()
+        self.la13_text.set("-----------------------------")
+        self.la13 = Label(rahmen1, textvariable=self.la13_text, width=groesse, bg=farbe, justify=CENTER)
+        self.la13.grid(row=2, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
+
+        self.la14_text = StringVar()
+        self.la14_text.set("-----------------------------")
+        self.la14 = Label(rahmen1, textvariable=self.la14_text, width=groesse, bg=farbe, justify=CENTER)
+        self.la14.grid(row=2, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
+
+        self.la15_text = StringVar()
+        self.la15_text.set("-----------------------------")
+        self.la15 = Label(rahmen1, textvariable=self.la15_text, width=groesse, bg=farbe, justify=CENTER)
+        self.la15.grid(row=2, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
+
+        self.la16_text = StringVar()
+        self.la16_text.set("Planet Overview1")
+        self.la16 = Label(rahmen1, textvariable=self.la16_text, width=groesse, justify=CENTER)
+        self.la16.grid(row=1, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
+
+        self.la17_text = StringVar()
+        self.la17_text.set("Planet Overview2")
+        self.la17 = Label(rahmen1, textvariable=self.la17_text, width=groesse, fg='#F0F0F0', justify=CENTER)
+        self.la17.grid(row=0, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
+
+        self.la18_text = StringVar()
+        self.la18_text.set("Planet Overview2")
+        self.la18 = Label(rahmen1, textvariable=self.la18_text, width=groesse, fg='#F0F0F0', justify=CENTER)
+        self.la18.grid(row=3, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
+
+        self.la19_text = StringVar()
+        self.la19_text.set("Planet Overview2")
+        self.la19 = Label(rahmen1, textvariable=self.la19_text, width=groesse, fg='#F0F0F0', justify=CENTER)
+        self.la19.grid(row=4, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
+
+        self.la20_text = StringVar()
+        self.la20_text.set("Planet Overview2")
+        self.la20 = Label(rahmen1, textvariable=self.la20_text, width=groesse, fg='#F0F0F0', justify=CENTER)
+        self.la20.grid(row=5, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
+
+
+
+
+
+
+
+
+
+        load = Image.open("textures/rendered_planet_2_scaled.png")        #code snippet from https://pythonbasics.org/tkinter-image/
+        render = ImageTk.PhotoImage(load)
+
+        img = Label(root2, image=render)
+        img.image = render
+        img.place(x=20, y=10)
+
+
+
+
+
+
+
+        bu_1 = Button(rahmen1, text="add planet", width=groesse, command=partial(self.plan,planetlist[0]))
+        bu_1.grid(row=3, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
+        ''''
+        bu_2 = Button(rahmen1, image="", width=groesse, command=partial(self.plan,planetlist[1]))
         bu_2.grid(row=2, column=0, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_3 = Button(rahmen1, image="", width=groesse, command=partial(self.plan,planetlist[3]))
+        bu_3 = Button(rahmen1, image="", width=groesse, command=partial(self.plan,planetlist[2]))
         bu_3.grid(row=3, column=0, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_4 = Button(rahmen1, image="", width=groesse, command=partial(self.plan,planetlist[4]))
+        bu_4 = Button(rahmen1, image="", width=groesse, command=partial(self.plan,planetlist[3]))
         bu_4.grid(row=4, column=0, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_5 = Button(rahmen1, image="", width=groesse, command=partial(self.plan,planetlist[5]))
+        bu_5 = Button(rahmen1, image="", width=groesse, command=partial(self.plan,planetlist[4]))
         bu_5.grid(row=1, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_6 = Button(rahmen1, image="", width=groesse, command=partial(self.plan,planetlist[6]))
+        bu_6 = Button(rahmen1, image="", width=groesse, command=partial(self.plan,planetlist[5]))
         bu_6.grid(row=2, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_7 = Button(rahmen1, image="", width=groesse, command=partial(self.plan,planetlist[7]))
+        bu_7 = Button(rahmen1, image="", width=groesse, command=partial(self.plan,planetlist[6]))
         bu_7.grid(row=3, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_8 = Button(rahmen1, image="", width=groesse, command=partial(self.plan,planetlist[8]))
+        bu_8 = Button(rahmen1, image="", width=groesse, command=partial(self.plan,planetlist[7]))
         bu_8.grid(row=4, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
+        '''''
+
 
     def plan(self, planet):
         if planet == None:
