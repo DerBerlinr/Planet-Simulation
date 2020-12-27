@@ -1,0 +1,25 @@
+----------------------------------------------------------------------------
+
+NOTE:
+The help file contains information that can be useful for customizing
+a setup and that can especially be helpful when creating your own planets.
+
+----------------------------------------------------------------------------
+
+IMPORTANT:
+When setting a start position for your planets mind that all coordinates must 
+contain the factor *10^10 or a value that is close to this factor to ensure 
+that the planet is in range of the displayed area of the simulation.
+
+When setting a size-diameter for the planet-size note that the sun has a 
+diameter of 2.5, to make the simulation more realistic the entered value 
+should be lower than this value.
+
+----------------------------------------------------------------------------
+
+TIPS:
+We recommend setting the velocity to a value with the factor 10^4, lower values
+will result in a slower visualised simulation, higher values might result in 
+the planet leaving the displayed area of the simulation.
+
+----------------------------------------------------------------------------

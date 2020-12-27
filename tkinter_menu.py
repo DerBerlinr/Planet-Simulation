@@ -6,6 +6,8 @@ import ursina
 from main import Main
 from functools import partial
 from PIL import Image, ImageTk
+import os
+from filelock import *
 
 
 class GUI_Startup(Tk):
@@ -467,10 +469,10 @@ class GUI_Planet_Overview(Tk):
         self.la38 = Label(rahmen1, textvariable=self.la38_text, width=groesse, fg='#F0F0F0', justify=CENTER)
         self.la38.grid(row=19, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu1 = Button(rahmen1, text="Return", width=groesse, command=self.return_to_gui())
+        self.bu1 = Button(rahmen1, text="Return", width=groesse, command=self.return_to_gui)
         self.bu1.grid(row=24, column=4, padx=abstand_x, pady=abstand_y)
 
-        self.bu2 = Button(rahmen1, text="Help", width=groesse, command=self.help())
+        self.bu2 = Button(rahmen1, text="Help", width=groesse, command=self.help)
         self.bu2.grid(row=24, column=0, padx=abstand_x, pady=abstand_y)
 
         self.la39_text = StringVar()
@@ -637,10 +639,10 @@ class GUI_Planet_Overview(Tk):
 
 
     def return_to_gui(self):
-        pass
+        print("return")
 
     def help(self):
-        print("help")
+        os.system('start " " help.txt')
 
     def plan(self, planet):
         if planet == None:
