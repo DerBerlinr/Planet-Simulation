@@ -173,11 +173,11 @@ class GUI_Startup(Tk):
 
 class GUI_add_Planet(Tk):
     def __init__(self, pn, overview, name="", mass="", vx="", vy="", vz="", x="", y="", z=""):
-        Tk.__init__(self)
+        root1 = Toplevel()
 
-        self.title("Add Planet")
+        root1.title("Add Planet")
 
-        rahmen1 = Frame(self, relief=SUNKEN, borderwidth=2)
+        rahmen1 = Frame(root1, relief=SUNKEN, borderwidth=2)
         rahmen1.pack()
 
         farbe = "light grey"
