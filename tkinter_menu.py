@@ -608,39 +608,39 @@ class GUI_Planet_Overview(Tk):
         bu_1.grid(row=5, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_3 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=partial(self.plan, (self.planetlist[1], 1)))
+                      command=lambda: self.plan(self.planetlist[1], 1))
         bu_3.grid(row=9, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_5 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=partial(self.plan, (self.planetlist[2], 2)))
+                      command=lambda: self.plan(self.planetlist[2], 2))
         bu_5.grid(row=13, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_7 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=partial(self.plan, (self.planetlist[3], 3)))
+                      command=lambda: self.plan(self.planetlist[3], 3))
         bu_7.grid(row=17, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_2 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=partial(self.plan, (self.planetlist[4], 4)))
+                      command=lambda: self.plan(self.planetlist[4], 4))
         bu_2.grid(row=5, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_4 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=partial(self.plan, (self.planetlist[5], 5)))
+                      command=lambda: self.plan(self.planetlist[5], 5))
         bu_4.grid(row=9, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_6 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=partial(self.plan, (self.planetlist[6], 6)))
+                      command=lambda: self.plan(self.planetlist[6], 6))
         bu_6.grid(row=13, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_8 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=partial(self.plan, (self.planetlist[7], 7)))
+                      command=lambda: self.plan(self.planetlist[7], 7))
         bu_8.grid(row=17, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_9 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=partial(self.plan, (self.planetlist[8], 8)))
+                      command=lambda: self.plan(self.planetlist[8], 8))
         bu_9.grid(row=21, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_10 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                       command=partial(self.plan, (self.planetlist[9], 9)))
+                       command=lambda: self.plan(self.planetlist[9], 9))
         bu_10.grid(row=21, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
     def return_to_gui(self):
