@@ -3,7 +3,7 @@ import time
 
 
 class Planet(Button):
-    def __init__(self, file_name, planet_name, plannr, planet_speed=1, planet_mass=1, planet_diameter=1, coord_x=0, coord_y=0, coord_z=0):
+    def __init__(self, file_name, planet_name, plannr, vel_x=0, vel_y=0, vel_z=0, planet_mass=1, planet_diameter=1, coord_x=0, coord_y=0, coord_z=0):
         super().__init__(
             collision=True,
             model='sphere',
@@ -19,7 +19,6 @@ class Planet(Button):
         self.plannr = plannr
         self.tooltip_input = "0"
         self.planet_name = planet_name
-        self.planet_speed = planet_speed
         self.planet_mass = planet_mass
         self.scale = Vec3(planet_diameter, planet_diameter, planet_diameter)
         self.planet_diameter = planet_diameter
@@ -30,6 +29,10 @@ class Planet(Button):
         self.coord_x = coord_x
         self.coord_y = coord_y
         self.coord_z = coord_z
+
+        self.vel_x = vel_x
+        self.vel_y = vel_y
+        self.vel_z = vel_z
 
         self.x = 0
         self.y = 0
@@ -50,7 +53,7 @@ class Planet(Button):
         return self.coord_x, self.coord_y, self.coord_z
 
     def get_vel(self):
-        return self.planet_speed[0], self.planet_speed[1], self.planet_speed[2]
+        return self.vel_x, self.vel_y, self.vel_z
 
 
 class Sky(Entity):
