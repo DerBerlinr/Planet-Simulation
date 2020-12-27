@@ -13,6 +13,8 @@ class GUI_Startup(Tk):
         Overview = GUI_Planet_Overview
 
         self.root.title("Main Menu")
+        self.root.geometry("580x260")
+        self.root.resizable(False, False)
 
         rahmen1 = Frame(self.root, relief=SUNKEN, borderwidth=2)
         rahmen1.pack()
@@ -22,21 +24,92 @@ class GUI_Startup(Tk):
         abstand_x = 3
         abstand_y = 3
 
-        groesse = 20
+        groesse = 25
 
-        self.bu1 = Button(rahmen1, text="Own config", width=groesse, command=self.own_planets)
-        self.bu1.grid(row=1, column=0, sticky=E, padx=abstand_x, pady=abstand_y)
+        self.bu1 = Button(rahmen1, text="Run Custom setup", width=groesse, command=self.own_planets)
+        self.bu1.grid(row=4, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu2 = Button(rahmen1, text="2 Planets", width=groesse, command=self.two_planets)
-        self.bu2.grid(row=2, column=0, sticky=E, padx=abstand_x, pady=abstand_y)
+        self.bu2 = Button(rahmen1, text="Run Pre-setup (2 Planets)", width=groesse, command=self.two_planets)
+        self.bu2.grid(row=6, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu3 = Button(rahmen1, text="viel", width=groesse, command=self.solar_sys)
-        self.bu3.grid(row=3, column=0, sticky=E, padx=abstand_x, pady=abstand_y)
+        self.bu3 = Button(rahmen1, text="Run Pre-setup (4 Planets)", width=groesse, command=self.solar_sys)
+        self.bu3.grid(row=6, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu4 = Button(rahmen1, text="planet overview", width=groesse, command=Overview)
-        self.bu4.grid(row=5, column=0, sticky=E, padx=abstand_x, pady=abstand_y)
+        self.bu4 = Button(rahmen1, text="Customize Planets", width=groesse, command=Overview)
+        self.bu4.grid(row=4, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
+
+        self.bu5 = Button(rahmen1, text="Exit", width=groesse, command=self.exit)
+        self.bu5.grid(row=9, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
+
+        self.bu6 = Button(rahmen1, text="Copyright", width=groesse, command=self.copyright)
+        self.bu6.grid(row=9, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
+
+
+        self.la1_text = StringVar()
+        self.la1_text.set("Create a Custom Simulation:")
+        self.la1 = Label(rahmen1, textvariable=self.la1_text, width=groesse, justify=CENTER)
+        self.la1.grid(row=4, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
+
+        self.la2_text = StringVar()
+        self.la2_text.set("Run a Pre-setup Simulation:")
+        self.la2 = Label(rahmen1, textvariable=self.la2_text, width=groesse, justify=CENTER)
+        self.la2.grid(row=6, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
+
+
+
+
+
+
+
+        self.la12_text = StringVar()
+        self.la12_text.set("-----------------------------------------")
+        self.la12 = Label(rahmen1, textvariable=self.la12_text, width=groesse,  justify=CENTER)
+        self.la12.grid(row=2, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
+
+        self.la13_text = StringVar()
+        self.la13_text.set("-----------------------------------------")
+        self.la13 = Label(rahmen1, textvariable=self.la13_text, width=groesse,  justify=CENTER)
+        self.la13.grid(row=2, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
+
+        self.la14_text = StringVar()
+        self.la14_text.set("-----------------------------------------")
+        self.la14 = Label(rahmen1, textvariable=self.la14_text, width=groesse,  justify=CENTER)
+        self.la14.grid(row=2, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
+
+
+
+        self.la16_text = StringVar()
+        self.la16_text.set("Initialise a Simulation")
+        self.la16 = Label(rahmen1, textvariable=self.la16_text,bg = "light grey", width=groesse, justify=CENTER)
+        self.la16.grid(row=1, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
+
+        self.la17_text = StringVar()
+        self.la17_text.set("-")
+        self.la17 = Label(rahmen1, textvariable=self.la17_text, width=groesse, fg='#F0F0F0', justify=CENTER)
+        self.la17.grid(row=3, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
+
+        self.la18_text = StringVar()
+        self.la18_text.set("-")
+        self.la18 = Label(rahmen1, textvariable=self.la18_text, width=groesse, fg='#F0F0F0', justify=CENTER)
+        self.la18.grid(row=5, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
+
+        self.la19_text = StringVar()
+        self.la19_text.set("-")
+        self.la19 = Label(rahmen1, textvariable=self.la19_text, width=groesse, fg='#F0F0F0', justify=CENTER)
+        self.la19.grid(row=7, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
+
+        self.la20_text = StringVar()
+        self.la20_text.set("-")
+        self.la20 = Label(rahmen1, textvariable=self.la20_text, width=groesse, fg='#F0F0F0', justify=CENTER)
+        self.la20.grid(row=8, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.planet_list = planetlist
+
+    def exit(self):
+        exit()
+
+    def copyright(self):
+        print("Copyright")
 
 
     def own_planets(self):
@@ -195,7 +268,9 @@ class GUI_Planet_Overview(Tk):
         root2=Toplevel()
         #self.app = ursina.Ursina()
 
-        root2.title("Planet Overview")
+        root2.title("Customize Planets")
+        root2.geometry("780x720")
+        root2.resizable(False, False)
 
         rahmen1 = Frame(root2, relief=SUNKEN, borderwidth=7)
         rahmen1.pack()
@@ -217,32 +292,32 @@ class GUI_Planet_Overview(Tk):
 
         self.la11_text = StringVar()
         self.la11_text.set("-----------------------------")
-        self.la11 = Label(rahmen1, textvariable=self.la11_text, width=groesse, bg=farbe, justify=CENTER)
+        self.la11 = Label(rahmen1, textvariable=self.la11_text, width=groesse,  justify=CENTER)
         self.la11.grid(row=2, column=0, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la12_text = StringVar()
         self.la12_text.set("-----------------------------")
-        self.la12 = Label(rahmen1, textvariable=self.la12_text, width=groesse, bg=farbe, justify=CENTER)
+        self.la12 = Label(rahmen1, textvariable=self.la12_text, width=groesse,  justify=CENTER)
         self.la12.grid(row=2, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la13_text = StringVar()
         self.la13_text.set("-----------------------------")
-        self.la13 = Label(rahmen1, textvariable=self.la13_text, width=groesse, bg=farbe, justify=CENTER)
+        self.la13 = Label(rahmen1, textvariable=self.la13_text, width=groesse,  justify=CENTER)
         self.la13.grid(row=2, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la14_text = StringVar()
         self.la14_text.set("-----------------------------")
-        self.la14 = Label(rahmen1, textvariable=self.la14_text, width=groesse, bg=farbe, justify=CENTER)
+        self.la14 = Label(rahmen1, textvariable=self.la14_text, width=groesse,  justify=CENTER)
         self.la14.grid(row=2, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la15_text = StringVar()
         self.la15_text.set("-----------------------------")
-        self.la15 = Label(rahmen1, textvariable=self.la15_text, width=groesse, bg=farbe, justify=CENTER)
+        self.la15 = Label(rahmen1, textvariable=self.la15_text, width=groesse,  justify=CENTER)
         self.la15.grid(row=2, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la16_text = StringVar()
         self.la16_text.set("Planet Overview")
-        self.la16 = Label(rahmen1, textvariable=self.la16_text, width=groesse, justify=CENTER)
+        self.la16 = Label(rahmen1, textvariable=self.la16_text,bg = "light grey", width=groesse, justify=CENTER)
         self.la16.grid(row=1, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la17_text = StringVar()
@@ -251,7 +326,7 @@ class GUI_Planet_Overview(Tk):
         self.la17.grid(row=0, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la18_text = StringVar()
-        self.la18_text.set("-2")
+        self.la18_text.set("-")
         self.la18 = Label(rahmen1, textvariable=self.la18_text, width=groesse, fg='#F0F0F0', justify=CENTER)
         self.la18.grid(row=3, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
@@ -357,6 +432,9 @@ class GUI_Planet_Overview(Tk):
 
         self.bu1 = Button(rahmen1, text="Return", width=groesse, command=self.return_to_gui())
         self.bu1.grid(row=24, column=4, padx=abstand_x, pady=abstand_y)
+
+        self.bu2 = Button(rahmen1, text="Help", width=groesse, command=self.help())
+        self.bu2.grid(row=24, column=0, padx=abstand_x, pady=abstand_y)
 
         self.la39_text = StringVar()
         self.la39_text.set("Status")
@@ -523,6 +601,9 @@ class GUI_Planet_Overview(Tk):
 
     def return_to_gui(self):
         pass
+
+    def help(self):
+        print("help")
 
     def plan(self, planet):
         if planet == None:
