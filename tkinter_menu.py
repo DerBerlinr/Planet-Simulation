@@ -7,7 +7,6 @@ from main import Main
 from functools import partial
 from PIL import Image, ImageTk
 import os
-from filelock import *
 
 
 class GUI_Startup(Tk):
@@ -270,12 +269,12 @@ class GUI_add_Planet(Tk):
                 # fn -> file_name
                 fn = "textures/rendered_sun_scaled.png"
             else:
-                fn = "textures/rendered_planet" + str(plannr) + "_scaled.png"
+                fn = "textures/rendered_planet" + str(self.pn) + "_scaled.png"
 
-            self.planet = Planet(file_name=fn, planet_name=name, plannr=plannr, planet_mass=mass,
+            self.planet = Planet(file_name=fn, planet_name=name, plannr=self.pn, planet_mass=mass,
                                 vel_x=vx, vel_y=vy, vel_z=vz, coord_x=x, coord_y=y, coord_z=z)
 
-            self.overview.planetlist[plannr - 1] = self.planet
+            self.overview.planetlist[self.pn - 1] = self.planet
 
 
 class GUI_Planet_Overview(Tk):
