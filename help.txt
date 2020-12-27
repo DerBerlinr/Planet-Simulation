@@ -1,8 +1,8 @@
 ----------------------------------------------------------------------------
 
 NOTE:
-The help file contains information that can be useful for customizing
-a setup and that can especially be helpful when creating your own planets.
+The help file contains useful information for customizing
+a setup. That is especially helpful when creating your own planets.
 
 ----------------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ should be lower than this value.
 
 TIPS:
 We recommend setting the velocity to a value with the factor 10^4, lower values
-will result in a slower visualised simulation, higher values might result in 
-the planet leaving the displayed area of the simulation.
+will result in a slower visualised simulation. Higher values might result in 
+the planets leaving the displayed area of the simulation.
 
 ----------------------------------------------------------------------------

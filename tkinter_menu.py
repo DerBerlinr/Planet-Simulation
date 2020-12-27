@@ -186,7 +186,7 @@ class GUI_add_Planet(Tk):
         rahmen1 = Frame(self, relief=SUNKEN, borderwidth=2)
         rahmen1.pack()
 
-        farbe = "#878787"
+        farbe = "light grey"
 
         abstand_x = 3
         abstand_y = 3
@@ -214,7 +214,7 @@ class GUI_add_Planet(Tk):
         self.en2.grid(row=1, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la3_text = StringVar()
-        self.la3_text.set("Speed in m/s (x;y;z):")
+        self.la3_text.set("Velocity in m/s (x;y;z):")
         self.la3 = Label(rahmen1, textvariable=self.la3_text, width=groesse, bg=farbe, justify=CENTER)
         self.la3.grid(row=2, column=0, sticky=E, padx=abstand_x, pady=abstand_y)
 
