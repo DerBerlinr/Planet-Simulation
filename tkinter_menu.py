@@ -1,9 +1,12 @@
+#from tkinter import ttk
 from tkinter import *
+#from tkinter.ttk import *
 from planet import Planet
 import ursina
 from main import Main
 from functools import partial
 from PIL import Image, ImageTk
+
 
 class GUI_Startup(Tk):
     def __init__(self, planetlist=[]):
@@ -277,6 +280,9 @@ class GUI_Planet_Overview(Tk):
 
         root2.columnconfigure(0, weight=1)
         root2.columnconfigure(1, weight=2)
+
+        #style = ttk.Style()
+        #style.configure(fg="light green")
 
         farbe = "#878789"
 
