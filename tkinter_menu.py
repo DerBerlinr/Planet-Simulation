@@ -251,7 +251,7 @@ class GUI_add_Planet(Tk):
         self.bu1 = Button(rahmen1, text="Submit", width=groesse + 3, command=self.submit)
         self.bu1.grid(row=4, column=1, padx=abstand_x, pady=abstand_y)
 
-        self.bu1 = Button(rahmen1, text="Submit", width=groesse + 3, command=self.clear)
+        self.bu1 = Button(rahmen1, text="Clear", width=groesse + 3, command=self.clear)
         self.bu1.grid(row=4, column=0, padx=abstand_x, pady=abstand_y)
 
 
@@ -285,9 +285,11 @@ class GUI_add_Planet(Tk):
 
 
 class GUI_Planet_Overview(Tk):
+    lock = 0
     def __init__(self, planetlist=[]):
         root2 = Toplevel()
         # self.app = ursina.Ursina()
+
 
         root2.title("Customize Planets")
         root2.geometry("780x720")
@@ -299,33 +301,38 @@ class GUI_Planet_Overview(Tk):
         root2.columnconfigure(0, weight=1)
         root2.columnconfigure(1, weight=2)
 
-        col_positive = 'light green'
-        col_negative = 'indian red'
+        if GUI_Planet_Overview.lock == 0:
+            print("locked")
 
-        state_plan1 = col_positive
-        state_plan2 = col_positive
-        state_plan3 = col_positive
-        state_plan4 = col_positive
-        state_plan5 = col_negative
-        state_plan6 = col_negative
-        state_plan7 = col_negative
-        state_plan8 = col_negative
-        state_plan9 = col_negative
-        state_plan10 = col_negative
+            self.col_positive = 'light green'
+            self.col_negative = 'indian red'
 
-        txt_positive = 'Added'
-        txt_negative = 'Not Added'
+            self.state_plan1 = self.col_positive
+            self.state_plan2 = self.col_positive
+            self.state_plan3 = self.col_positive
+            self.state_plan4 = self.col_positive
+            self.state_plan5 = self.col_negative
+            self.state_plan6 = self.col_negative
+            self.state_plan7 = self.col_negative
+            self.state_plan8 = self.col_negative
+            self.state_plan9 = self.col_negative
+            self.state_plan10 = self.col_negative
 
-        text_plan1 = txt_positive
-        text_plan2 = txt_positive
-        text_plan3 = txt_positive
-        text_plan4 = txt_positive
-        text_plan5 = txt_negative
-        text_plan6 = txt_negative
-        text_plan7 = txt_negative
-        text_plan8 = txt_negative
-        text_plan9 = txt_negative
-        text_plan10 = txt_negative
+            self.txt_positive = 'Active'
+            self.txt_negative = 'Inactive'
+
+            self.text_plan1 = self.txt_positive
+            self.text_plan2 = self.txt_positive
+            self.text_plan3 = self.txt_positive
+            self.text_plan4 = self.txt_positive
+            self.text_plan5 = self.txt_negative
+            self.text_plan6 = self.txt_negative
+            self.text_plan7 = self.txt_negative
+            self.text_plan8 = self.txt_negative
+            self.text_plan9 = self.txt_negative
+            self.text_plan10 = self.txt_negative
+
+            GUI_Planet_Overview.lock = 1
 
         farbe = "#878789"
 
@@ -389,10 +396,9 @@ class GUI_Planet_Overview(Tk):
         self.la20 = Label(rahmen1, textvariable=self.la20_text, width=groesse, fg='#F0F0F0', justify=CENTER)
         self.la20.grid(row=5, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.la21_text = StringVar()
-        self.la21_text.set(text_plan1)
-        self.la21 = Label(rahmen1, textvariable=self.la21_text, width=groesse, bg=state_plan1, justify=CENTER)
-        self.la21.grid(row=4, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
+        
+        self.bu21 = Button(rahmen1, text=self.text_plan1, width=groesse, bg=self.state_plan1, justify=CENTER, command = self.activ_plan1)
+        self.bu21.grid(row=4, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la22_text = StringVar()
         self.la22_text.set("-")
@@ -409,20 +415,16 @@ class GUI_Planet_Overview(Tk):
         self.la24 = Label(rahmen1, textvariable=self.la24_text, width=groesse, fg='#F0F0F0', justify=CENTER)
         self.la24.grid(row=8, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.la25_text = StringVar()
-        self.la25_text.set(text_plan3)
-        self.la25 = Label(rahmen1, textvariable=self.la25_text, width=groesse, bg=state_plan3, justify=CENTER)
-        self.la25.grid(row=8, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
+        self.bu22 = Button(rahmen1, text=self.text_plan3, width=groesse, bg=self.state_plan3, justify=CENTER, command=self.activ_plan3)
+        self.bu22.grid(row=8, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.la26_text = StringVar()
-        self.la26_text.set(text_plan5)
-        self.la26 = Label(rahmen1, textvariable=self.la26_text, width=groesse, bg=state_plan5, justify=CENTER)
-        self.la26.grid(row=12, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
+        self.bu23 = Button(rahmen1, text=self.text_plan5, width=groesse, bg=self.state_plan5, justify=CENTER,
+                           command=self.activ_plan5)
+        self.bu23.grid(row=12, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.la27_text = StringVar()
-        self.la27_text.set(text_plan7)
-        self.la27 = Label(rahmen1, textvariable=self.la27_text, width=groesse, bg=state_plan7, justify=CENTER)
-        self.la27.grid(row=16, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
+        self.bu24 = Button(rahmen1, text=self.text_plan7, width=groesse, bg=self.state_plan7, justify=CENTER,
+                           command=self.activ_plan7)
+        self.bu24.grid(row=16, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la28_text = StringVar()
         self.la28_text.set("-")
@@ -485,35 +487,29 @@ class GUI_Planet_Overview(Tk):
         self.bu2 = Button(rahmen1, text="Help", width=groesse, command=self.help)
         self.bu2.grid(row=24, column=0, padx=abstand_x, pady=abstand_y)
 
-        self.la39_text = StringVar()
-        self.la39_text.set(text_plan2)
-        self.la39 = Label(rahmen1, textvariable=self.la39_text, width=groesse, bg=state_plan2, justify=CENTER)
-        self.la39.grid(row=4, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
+        self.bu25 = Button(rahmen1, text=self.text_plan2, width=groesse, bg=self.state_plan2, justify=CENTER,
+                           command=self.activ_plan2)
+        self.bu25.grid(row=4, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.la40_text = StringVar()
-        self.la40_text.set(text_plan4)
-        self.la40 = Label(rahmen1, textvariable=self.la40_text, width=groesse, bg=state_plan4, justify=CENTER)
-        self.la40.grid(row=8, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
+        self.bu26 = Button(rahmen1, text=self.text_plan4, width=groesse, bg=self.state_plan4, justify=CENTER,
+                           command=self.activ_plan4)
+        self.bu26.grid(row=8, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.la41_text = StringVar()
-        self.la41_text.set(text_plan6)
-        self.la41 = Label(rahmen1, textvariable=self.la41_text, width=groesse, bg=state_plan6, justify=CENTER)
-        self.la41.grid(row=12, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
+        self.bu27 = Button(rahmen1, text=self.text_plan6, width=groesse, bg=self.state_plan6, justify=CENTER,
+                           command=self.activ_plan6)
+        self.bu27.grid(row=12, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.la42_text = StringVar()
-        self.la42_text.set(text_plan8)
-        self.la42 = Label(rahmen1, textvariable=self.la42_text, width=groesse, bg=state_plan8, justify=CENTER)
-        self.la42.grid(row=16, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
+        self.bu28 = Button(rahmen1, text=self.text_plan8, width=groesse, bg=self.state_plan8, justify=CENTER,
+                           command=self.activ_plan8)
+        self.bu28.grid(row=16, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.la43_text = StringVar()
-        self.la43_text.set(text_plan9)
-        self.la43 = Label(rahmen1, textvariable=self.la43_text, width=groesse, bg=state_plan9, justify=CENTER)
-        self.la43.grid(row=20, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
+        self.bu29 = Button(rahmen1, text=self.text_plan9, width=groesse, bg=self.state_plan9, justify=CENTER,
+                           command=self.activ_plan9)
+        self.bu29.grid(row=20, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.la44_text = StringVar()
-        self.la44_text.set(text_plan10)
-        self.la44 = Label(rahmen1, textvariable=self.la44_text, width=groesse, bg=state_plan10, justify=CENTER)
-        self.la44.grid(row=20, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
+        self.bu30 = Button(rahmen1, text=self.text_plan10, width=groesse, bg=self.state_plan10, justify=CENTER,
+                           command=self.activ_plan10)
+        self.bu30.grid(row=20, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la45_text = StringVar()
         self.la45_text.set("-")
@@ -642,6 +638,81 @@ class GUI_Planet_Overview(Tk):
         bu_10 = Button(rahmen1, text="Edit planet", image="", width=groesse,
                        command=lambda: self.plan(self.planetlist[9], 9))
         bu_10.grid(row=21, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
+
+    def activ_plan1(self):
+        pass
+
+    def activ_plan2(self):
+        if self.text_plan1 == self.txt_positive:
+            self.bu25.config(text = self.txt_negative, bg = self.col_negative)
+            self.text_plan1 = self.txt_negative
+        else:
+            self.bu25.config(text=self.txt_positive, bg=self.col_positive)
+            self.text_plan1 = self.txt_positive
+
+    def activ_plan3(self):
+        if self.text_plan2 == self.txt_positive:
+            self.bu22.config(text = self.txt_negative, bg = self.col_negative)
+            self.text_plan2 = self.txt_negative
+        else:
+            self.bu22.config(text=self.txt_positive, bg=self.col_positive)
+            self.text_plan2 = self.txt_positive
+
+    def activ_plan4(self):
+        if self.text_plan3 == self.txt_positive:
+            self.bu26.config(text = self.txt_negative, bg = self.col_negative)
+            self.text_plan3 = self.txt_negative
+        else:
+            self.bu26.config(text=self.txt_positive, bg=self.col_positive)
+            self.text_plan3 = self.txt_positive
+
+    def activ_plan5(self):
+        if self.text_plan4 == self.txt_positive:
+            self.bu23.config(text = self.txt_negative, bg = self.col_negative)
+            self.text_plan4 = self.txt_negative
+        else:
+            self.bu23.config(text=self.txt_positive, bg=self.col_positive)
+            self.text_plan4 = self.txt_positive
+
+    def activ_plan6(self):
+        if self.text_plan5 == self.txt_positive:
+            self.bu27.config(text = self.txt_negative, bg = self.col_negative)
+            self.text_plan5 = self.txt_negative
+        else:
+            self.bu27.config(text=self.txt_positive, bg=self.col_positive)
+            self.text_plan5 = self.txt_positive
+
+    def activ_plan7(self):
+        if self.text_plan6 == self.txt_positive:
+            self.bu24.config(text = self.txt_negative, bg = self.col_negative)
+            self.text_plan6 = self.txt_negative
+        else:
+            self.bu24.config(text=self.txt_positive, bg=self.col_positive)
+            self.text_plan6 = self.txt_positive
+
+    def activ_plan8(self):
+        if self.text_plan7 == self.txt_positive:
+            self.bu28.config(text = self.txt_negative, bg = self.col_negative)
+            self.text_plan7 = self.txt_negative
+        else:
+            self.bu28.config(text=self.txt_positive, bg=self.col_positive)
+            self.text_plan7 = self.txt_positive
+
+    def activ_plan9(self):
+        if self.text_plan8 == self.txt_positive:
+            self.bu29.config(text = self.txt_negative, bg = self.col_negative)
+            self.text_plan8 = self.txt_negative
+        else:
+            self.bu29.config(text=self.txt_positive, bg=self.col_positive)
+            self.text_plan8 = self.txt_positive
+
+    def activ_plan10(self):
+        if self.text_plan9 == self.txt_positive:
+            self.bu30.config(text = self.txt_negative, bg = self.col_negative)
+            self.text_plan9 = self.txt_negative
+        else:
+            self.bu30.config(text=self.txt_positive, bg=self.col_positive)
+            self.text_plan9 = self.txt_positive
 
     def return_to_gui(self):
         print("return")
