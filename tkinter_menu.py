@@ -29,6 +29,9 @@ class GUI_Startup(Tk):
 
         groesse = 25
 
+
+
+
         self.bu1 = Button(rahmen1, text="Run Custom setup", width=groesse, command=self.own_planets)
         self.bu1.grid(row=4, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
@@ -83,7 +86,7 @@ class GUI_Startup(Tk):
 
         self.la16_text = StringVar()
         self.la16_text.set("Initialise a Simulation")
-        self.la16 = Label(rahmen1, textvariable=self.la16_text,bg = "light grey", width=groesse, justify=CENTER)
+        self.la16 = Label(rahmen1, textvariable=self.la16_text, bg = "light grey", width=groesse, justify=CENTER)
         self.la16.grid(row=1, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la17_text = StringVar()
@@ -281,8 +284,36 @@ class GUI_Planet_Overview(Tk):
         root2.columnconfigure(0, weight=1)
         root2.columnconfigure(1, weight=2)
 
-        #style = ttk.Style()
-        #style.configure(fg="light green")
+        col_positive = 'light green'
+        col_negative = 'indian red'
+
+        state_plan1 = col_positive
+        state_plan2 = col_positive
+        state_plan3 = col_positive
+        state_plan4 = col_positive
+        state_plan5 = col_negative
+        state_plan6 = col_negative
+        state_plan7 = col_negative
+        state_plan8 = col_negative
+        state_plan9 = col_negative
+        state_plan10 = col_negative
+
+
+        txt_positive = 'Added'
+        txt_negative = 'Not Added'
+
+        text_plan1 = txt_positive
+        text_plan2 = txt_positive
+        text_plan3 = txt_positive
+        text_plan4 = txt_positive
+        text_plan5 = txt_negative
+        text_plan6 = txt_negative
+        text_plan7 = txt_negative
+        text_plan8 = txt_negative
+        text_plan9 = txt_negative
+        text_plan10 = txt_negative
+
+
 
         farbe = "#878789"
 
@@ -347,8 +378,8 @@ class GUI_Planet_Overview(Tk):
         self.la20.grid(row=5, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la21_text = StringVar()
-        self.la21_text.set("Status")
-        self.la21 = Label(rahmen1, textvariable=self.la21_text, width=groesse, bg="light green", justify=CENTER)
+        self.la21_text.set(text_plan1)
+        self.la21 = Label(rahmen1, textvariable=self.la21_text, width=groesse, bg=state_plan1, justify=CENTER)
         self.la21.grid(row=4, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la22_text = StringVar()
@@ -367,18 +398,18 @@ class GUI_Planet_Overview(Tk):
         self.la24.grid(row=8, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la25_text = StringVar()
-        self.la25_text.set("Status")
-        self.la25 = Label(rahmen1, textvariable=self.la25_text, width=groesse, bg="light green", justify=CENTER)
+        self.la25_text.set(text_plan3)
+        self.la25 = Label(rahmen1, textvariable=self.la25_text, width=groesse, bg=state_plan3, justify=CENTER)
         self.la25.grid(row=8, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la26_text = StringVar()
-        self.la26_text.set("Status")
-        self.la26 = Label(rahmen1, textvariable=self.la26_text, width=groesse, bg="indian red", justify=CENTER)
+        self.la26_text.set(text_plan5)
+        self.la26 = Label(rahmen1, textvariable=self.la26_text, width=groesse, bg=state_plan5, justify=CENTER)
         self.la26.grid(row=12, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la27_text = StringVar()
-        self.la27_text.set("Status")
-        self.la27 = Label(rahmen1, textvariable=self.la27_text, width=groesse, bg="indian red", justify=CENTER)
+        self.la27_text.set(text_plan7)
+        self.la27 = Label(rahmen1, textvariable=self.la27_text, width=groesse, bg=state_plan7, justify=CENTER)
         self.la27.grid(row=16, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la28_text = StringVar()
@@ -443,33 +474,33 @@ class GUI_Planet_Overview(Tk):
         self.bu2.grid(row=24, column=0, padx=abstand_x, pady=abstand_y)
 
         self.la39_text = StringVar()
-        self.la39_text.set("Status")
-        self.la39 = Label(rahmen1, textvariable=self.la39_text, width=groesse, bg="light green", justify=CENTER)
+        self.la39_text.set(text_plan2)
+        self.la39 = Label(rahmen1, textvariable=self.la39_text, width=groesse, bg=state_plan2, justify=CENTER)
         self.la39.grid(row=4, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la40_text = StringVar()
-        self.la40_text.set("Status")
-        self.la40 = Label(rahmen1, textvariable=self.la40_text, width=groesse, bg="indian red", justify=CENTER)
+        self.la40_text.set(text_plan4)
+        self.la40 = Label(rahmen1, textvariable=self.la40_text, width=groesse, bg=state_plan4, justify=CENTER)
         self.la40.grid(row=8, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la41_text = StringVar()
-        self.la41_text.set("Status")
-        self.la41 = Label(rahmen1, textvariable=self.la41_text, width=groesse, bg="indian red", justify=CENTER)
+        self.la41_text.set(text_plan6)
+        self.la41 = Label(rahmen1, textvariable=self.la41_text, width=groesse, bg=state_plan6, justify=CENTER)
         self.la41.grid(row=12, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la42_text = StringVar()
-        self.la42_text.set("Status")
-        self.la42 = Label(rahmen1, textvariable=self.la42_text, width=groesse, bg="indian red", justify=CENTER)
+        self.la42_text.set(text_plan8)
+        self.la42 = Label(rahmen1, textvariable=self.la42_text, width=groesse, bg=state_plan8, justify=CENTER)
         self.la42.grid(row=16, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la43_text = StringVar()
-        self.la43_text.set("Status")
-        self.la43 = Label(rahmen1, textvariable=self.la43_text, width=groesse, bg="indian red", justify=CENTER)
+        self.la43_text.set(text_plan9)
+        self.la43 = Label(rahmen1, textvariable=self.la43_text, width=groesse, bg=state_plan9, justify=CENTER)
         self.la43.grid(row=20, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la44_text = StringVar()
-        self.la44_text.set("Status")
-        self.la44 = Label(rahmen1, textvariable=self.la44_text, width=groesse, bg="indian red", justify=CENTER)
+        self.la44_text.set(text_plan10)
+        self.la44 = Label(rahmen1, textvariable=self.la44_text, width=groesse, bg=state_plan10, justify=CENTER)
         self.la44.grid(row=20, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la45_text = StringVar()
@@ -574,34 +605,34 @@ class GUI_Planet_Overview(Tk):
 
 
 
-        bu_1 = Button(rahmen1, text="Add planet", width=groesse, command=partial(self.plan,planetlist[0]))
+        bu_1 = Button(rahmen1, text="Edit planet", width=groesse, command=partial(self.plan,planetlist[0]))
         bu_1.grid(row=5, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_3 = Button(rahmen1, text="Add planet", image="", width=groesse, command=partial(self.plan,planetlist[1]))
+        bu_3 = Button(rahmen1, text="Edit planet", image="", width=groesse, command=partial(self.plan,planetlist[1]))
         bu_3.grid(row=9, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_5 = Button(rahmen1, text="Add planet", image="", width=groesse, command=partial(self.plan,planetlist[2]))
+        bu_5 = Button(rahmen1, text="Edit planet", image="", width=groesse, command=partial(self.plan,planetlist[2]))
         bu_5.grid(row=13, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_7 = Button(rahmen1, text="Add planet", image="", width=groesse, command=partial(self.plan,planetlist[3]))
+        bu_7 = Button(rahmen1, text="Edit planet", image="", width=groesse, command=partial(self.plan,planetlist[3]))
         bu_7.grid(row=17, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_2 = Button(rahmen1, text="Add planet", image="", width=groesse, command=partial(self.plan,planetlist[4]))
+        bu_2 = Button(rahmen1, text="Edit planet", image="", width=groesse, command=partial(self.plan,planetlist[4]))
         bu_2.grid(row=5, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_4 = Button(rahmen1, text="Add planet", image="", width=groesse, command=partial(self.plan,planetlist[5]))
+        bu_4 = Button(rahmen1, text="Edit planet", image="", width=groesse, command=partial(self.plan,planetlist[5]))
         bu_4.grid(row=9, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_6 = Button(rahmen1, text="Add planet", image="", width=groesse, command=partial(self.plan,planetlist[6]))
+        bu_6 = Button(rahmen1, text="Edit planet", image="", width=groesse, command=partial(self.plan,planetlist[6]))
         bu_6.grid(row=13, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_8 = Button(rahmen1, text="Add planet", image="", width=groesse, command=partial(self.plan,planetlist[7]))
+        bu_8 = Button(rahmen1, text="Edit planet", image="", width=groesse, command=partial(self.plan,planetlist[7]))
         bu_8.grid(row=17, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_9 = Button(rahmen1, text="Add planet", image="", width=groesse, command=partial(self.plan, planetlist[8]))
+        bu_9 = Button(rahmen1, text="Edit planet", image="", width=groesse, command=partial(self.plan, planetlist[8]))
         bu_9.grid(row=21, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_10 = Button(rahmen1, text="Add planet", image="", width=groesse, command=partial(self.plan, planetlist[9]))
+        bu_10 = Button(rahmen1, text="Edit planet", image="", width=groesse, command=partial(self.plan, planetlist[9]))
         bu_10.grid(row=21, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
 
