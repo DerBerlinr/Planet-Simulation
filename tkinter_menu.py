@@ -216,17 +216,17 @@ class GUI_add_Planet(Tk):
         self.en3_1_text = StringVar()
         self.en3_1_text.set(vx)
         self.en3_1 = Entry(rahmen1, width=round(groesse / 3), textvariable=self.en3_1_text)
-        self.en3_1.grid(row=3, column=1, sticky=W, padx=abstand_x, pady=abstand_y)
+        self.en3_1.grid(row=2, column=1, sticky=W, padx=abstand_x, pady=abstand_y)
 
         self.en3_2_text = StringVar()
         self.en3_2_text.set(vy)
         self.en3_2 = Entry(rahmen1, width=round(groesse / 3), textvariable=self.en3_2_text)
-        self.en3_2.grid(row=3, column=1, padx=abstand_x, pady=abstand_y)
+        self.en3_2.grid(row=2, column=1, padx=abstand_x, pady=abstand_y)
 
         self.en3_3_text = StringVar()
         self.en3_3_text.set(vz)
         self.en3_3 = Entry(rahmen1, width=round(groesse / 3), textvariable=self.en3_3_text)
-        self.en3_3.grid(row=3, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
+        self.en3_3.grid(row=2, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la4_text = StringVar()
         self.la4_text.set("Position (x;y;z):")
@@ -251,9 +251,16 @@ class GUI_add_Planet(Tk):
         self.bu1 = Button(rahmen1, text="Submit", width=groesse + 3, command=self.submit)
         self.bu1.grid(row=4, column=1, padx=abstand_x, pady=abstand_y)
 
+        self.bu1 = Button(rahmen1, text="Submit", width=groesse + 3, command=self.clear)
+        self.bu1.grid(row=4, column=0, padx=abstand_x, pady=abstand_y)
+
 
         self.planet_list = []
 
+    def clear(self):
+        print("clear")
+
+        
     def submit(self):
         if self.en1_text.get() and self.en2_text and self.en3_text and self.en4_1_text and self.en4_2_text and self.en4_3_text:
             name = self.en1_text.get()
