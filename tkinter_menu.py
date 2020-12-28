@@ -292,6 +292,8 @@ class GUI_add_Planet(Tk):
                             vel_x=vx, vel_y=vy, vel_z=vz, coord_x=x, coord_y=y, coord_z=z)
 
             self.overview.planetlist[self.pn - 1] = self.planet
+            self.overview.planetlist_all[self.pn - 1] = self.planet
+
 
 
 class GUI_Planet_Overview(Tk):
@@ -312,38 +314,7 @@ class GUI_Planet_Overview(Tk):
         root2.columnconfigure(0, weight=1)
         root2.columnconfigure(1, weight=2)
 
-        if GUI_Planet_Overview.lock == 0:
-            print("locked")
 
-            self.col_positive = 'light green'
-            self.col_negative = 'indian red'
-
-            self.state_plan1 = self.col_positive
-            self.state_plan2 = self.col_positive
-            self.state_plan3 = self.col_positive
-            self.state_plan4 = self.col_positive
-            self.state_plan5 = self.col_negative
-            self.state_plan6 = self.col_negative
-            self.state_plan7 = self.col_negative
-            self.state_plan8 = self.col_negative
-            self.state_plan9 = self.col_negative
-            self.state_plan10 = self.col_negative
-
-            self.txt_positive = 'Active'
-            self.txt_negative = 'Inactive'
-
-            self.text_plan1 = self.txt_positive
-            self.text_plan2 = self.txt_positive
-            self.text_plan3 = self.txt_positive
-            self.text_plan4 = self.txt_positive
-            self.text_plan5 = self.txt_negative
-            self.text_plan6 = self.txt_negative
-            self.text_plan7 = self.txt_negative
-            self.text_plan8 = self.txt_negative
-            self.text_plan9 = self.txt_negative
-            self.text_plan10 = self.txt_negative
-
-            GUI_Planet_Overview.lock = 1
 
         farbe = "#878789"
 
@@ -355,7 +326,44 @@ class GUI_Planet_Overview(Tk):
         while len(planetlist) < 10:
             planetlist.append(None)
 
-        self.planetlist = planetlist
+
+        temp = planetlist[:]
+
+        self.planetlist = temp[:]
+        self.planetlist_all = temp[:]
+
+        if GUI_Planet_Overview.lock == 0:
+
+            self.col_positive = 'light green'
+            self.col_negative = 'indian red'
+
+            self.state_plan1 = self.col_positive
+            self.state_plan2 = self.col_negative
+            self.state_plan3 = self.col_negative
+            self.state_plan4 = self.col_negative
+            self.state_plan5 = self.col_negative
+            self.state_plan6 = self.col_negative
+            self.state_plan7 = self.col_negative
+            self.state_plan8 = self.col_negative
+            self.state_plan9 = self.col_negative
+            self.state_plan10 = self.col_negative
+
+            self.txt_positive = 'Active'
+            self.txt_negative = 'Inactive'
+
+            self.text_plan1 = self.txt_positive
+            self.text_plan2 = self.txt_negative
+            self.text_plan3 = self.txt_negative
+            self.text_plan4 = self.txt_negative
+            self.text_plan5 = self.txt_negative
+            self.text_plan6 = self.txt_negative
+            self.text_plan7 = self.txt_negative
+            self.text_plan8 = self.txt_negative
+            self.text_plan9 = self.txt_negative
+            self.text_plan10 = self.txt_negative
+
+            GUI_Planet_Overview.lock = 1
+
 
         self.la11_text = StringVar()
         self.la11_text.set("-----------------------------")
@@ -611,44 +619,46 @@ class GUI_Planet_Overview(Tk):
 
         # BUTTONS ------------------------------------------------------------------------------------------------------
         bu_1 = Button(rahmen1, text="Edit planet", width=groesse,
-                      command=lambda: self.plan(self.planetlist[0], 0))
+                      command=lambda: self.plan(self.planetlist[0], 1))
         bu_1.grid(row=5, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_3 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=lambda: self.plan(self.planetlist[1], 1))
+                      command=lambda: self.plan(self.planetlist[2], 3))
         bu_3.grid(row=9, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_5 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=lambda: self.plan(self.planetlist[2], 2))
+                      command=lambda: self.plan(self.planetlist[4], 5))
         bu_5.grid(row=13, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_7 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=lambda: self.plan(self.planetlist[3], 3))
+                      command=lambda: self.plan(self.planetlist[6], 7))
         bu_7.grid(row=17, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_2 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=lambda: self.plan(self.planetlist[4], 4))
+                      command=lambda: self.plan(self.planetlist[1], 2))
         bu_2.grid(row=5, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_4 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=lambda: self.plan(self.planetlist[5], 5))
+                      command=lambda: self.plan(self.planetlist[3], 4))
         bu_4.grid(row=9, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_6 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=lambda: self.plan(self.planetlist[6], 6))
+                      command=lambda: self.plan(self.planetlist[5], 6))
         bu_6.grid(row=13, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_8 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=lambda: self.plan(self.planetlist[7], 7))
+                      command=lambda: self.plan(self.planetlist[7], 8))
         bu_8.grid(row=17, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_9 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=lambda: self.plan(self.planetlist[8], 8))
+                      command=lambda: self.plan(self.planetlist[8], 9))
         bu_9.grid(row=21, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_10 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                       command=lambda: self.plan(self.planetlist[9], 9))
+                       command=lambda: self.plan(self.planetlist[9], 10))
         bu_10.grid(row=21, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
+
+
 
     def activ_plan1(self):
         pass
@@ -657,87 +667,94 @@ class GUI_Planet_Overview(Tk):
         if self.text_plan1 == self.txt_positive:
             self.bu25.config(text = self.txt_negative, bg = self.col_negative)
             self.text_plan1 = self.txt_negative
-            self.planetlist[1] == None
-            print("1")
+            self.planetlist[1] = None
         else:
-            print(self.planetlist)
+
             self.bu25.config(text=self.txt_positive, bg=self.col_positive)
             self.text_plan1 = self.txt_positive
-            self.planetlist[1] = Planet(file_name='/textures/planet_1', planet_name="planet1", planet_diameter=1, plannr=1,
-                        vel_x=10308.531985820431,
-                        vel_y=27640.154010970804,
-                        vel_z=-0.7364511260199437,
-                        coord_x=140699825958.8049,
-                        coord_y=-54738590238.00282,
-                        coord_z=2510791.537005455)  # create a planet
-            print(self.planetlist)
+            self.planetlist[1] = self.planetlist_all[1]
 
     def activ_plan3(self):
         if self.text_plan2 == self.txt_positive:
             self.bu22.config(text = self.txt_negative, bg = self.col_negative)
             self.text_plan2 = self.txt_negative
+            self.planetlist[2] = None
         else:
             self.bu22.config(text=self.txt_positive, bg=self.col_positive)
             self.text_plan2 = self.txt_positive
+            self.planetlist[2] = self.planetlist_all[2]
 
     def activ_plan4(self):
         if self.text_plan3 == self.txt_positive:
             self.bu26.config(text = self.txt_negative, bg = self.col_negative)
             self.text_plan3 = self.txt_negative
+            self.planetlist[3] = None
         else:
             self.bu26.config(text=self.txt_positive, bg=self.col_positive)
             self.text_plan3 = self.txt_positive
+            self.planetlist[3] = self.planetlist_all[3]
 
     def activ_plan5(self):
         if self.text_plan4 == self.txt_positive:
             self.bu23.config(text = self.txt_negative, bg = self.col_negative)
             self.text_plan4 = self.txt_negative
+            self.planetlist[4] = None
         else:
             self.bu23.config(text=self.txt_positive, bg=self.col_positive)
             self.text_plan4 = self.txt_positive
+            self.planetlist[4] = self.planetlist_all[4]
 
     def activ_plan6(self):
         if self.text_plan5 == self.txt_positive:
             self.bu27.config(text = self.txt_negative, bg = self.col_negative)
             self.text_plan5 = self.txt_negative
+            self.planetlist[5] = None
         else:
             self.bu27.config(text=self.txt_positive, bg=self.col_positive)
             self.text_plan5 = self.txt_positive
+            self.planetlist[5] = self.planetlist_all[5]
 
     def activ_plan7(self):
         if self.text_plan6 == self.txt_positive:
             self.bu24.config(text = self.txt_negative, bg = self.col_negative)
             self.text_plan6 = self.txt_negative
+            self.planetlist[6] = None
         else:
             self.bu24.config(text=self.txt_positive, bg=self.col_positive)
             self.text_plan6 = self.txt_positive
+            self.planetlist[6] = self.planetlist_all[6]
 
     def activ_plan8(self):
         if self.text_plan7 == self.txt_positive:
             self.bu28.config(text = self.txt_negative, bg = self.col_negative)
             self.text_plan7 = self.txt_negative
+            self.planetlist[7] = None
         else:
             self.bu28.config(text=self.txt_positive, bg=self.col_positive)
             self.text_plan7 = self.txt_positive
+            self.planetlist[7] = self.planetlist_all[7]
 
     def activ_plan9(self):
         if self.text_plan8 == self.txt_positive:
             self.bu29.config(text = self.txt_negative, bg = self.col_negative)
             self.text_plan8 = self.txt_negative
+            self.planetlist[8] = None
         else:
             self.bu29.config(text=self.txt_positive, bg=self.col_positive)
             self.text_plan8 = self.txt_positive
+            self.planetlist[8] = self.planetlist_all[8]
 
     def activ_plan10(self):
         if self.text_plan9 == self.txt_positive:
             self.bu30.config(text = self.txt_negative, bg = self.col_negative)
             self.text_plan9 = self.txt_negative
+            self.planetlist[9] = None
         else:
             self.bu30.config(text=self.txt_positive, bg=self.col_positive)
             self.text_plan9 = self.txt_positive
+            self.planetlist[9] = self.planetlist_all[9]
 
     def return_to_gui(self):
-        print("aus overview", self.planetlist)
         self.mm.planetlist = self.planetlist
 
     def help(self):
