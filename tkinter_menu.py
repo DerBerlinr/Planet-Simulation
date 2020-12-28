@@ -270,6 +270,8 @@ class GUI_add_Planet(Tk):
 
         self.planet_list = []
 
+
+
     def clear(self):
         # TODO: Add functionality
         pass
@@ -288,6 +290,9 @@ class GUI_add_Planet(Tk):
 
             fn = "textures/planet_" + str(self.pn) + ".png"
 
+            self.overview.data_list[self.pn-1] = str(name)+"#"+str(mass)+"#"+str(vx)+"#"+str(vy)+"#"+str(vz)+"#"+str(x)+"#"+str(y)+"#"+str(z)
+
+
             self.planet = Planet(file_name=fn, planet_name=name, plannr=self.pn, planet_mass=mass,
                             vel_x=vx, vel_y=vy, vel_z=vz, coord_x=x, coord_y=y, coord_z=z)
 
@@ -305,7 +310,7 @@ class GUI_Planet_Overview(Tk):
 
 
         root2.title("Customize Planets")
-        root2.geometry("780x720")
+        root2.geometry("785x745")
         root2.resizable(False, False)
 
         rahmen1 = Frame(root2, relief=SUNKEN, borderwidth=7)
@@ -325,6 +330,11 @@ class GUI_Planet_Overview(Tk):
 
         while len(planetlist) < 10:
             planetlist.append(None)
+
+        self.data_list = []
+
+        while len(self.data_list) < 10:
+            self.data_list.append(None)
 
 
         temp = planetlist[:]
@@ -756,6 +766,19 @@ class GUI_Planet_Overview(Tk):
 
     def return_to_gui(self):
         self.mm.planet_list = self.planetlist[:]
+
+        f = open('planet_data.txt', 'w').close()
+        f = open("planet_data.txt", "a")
+
+        for i in range(len(self.data_list)-1):
+            if self.data_list[i] == None:
+                f.write(str(i+1)+"\n")
+            else:
+                print(self.data_list[i])
+                f.write(self.data_list[i]+"\n")
+
+
+        f.close()
 
     def help(self):
         os.system('start " " help.txt')
