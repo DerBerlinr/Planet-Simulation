@@ -148,28 +148,28 @@ class FirstPersonController(Entity):
 
             self.position += self.direction / 2 * self.speed * time.dt
 
-            if self.time >= 6000:
-                # PLANET POSITION ------------------------------------------------------
-                if not (round(self.gui.dt_slider.value) == 0 or (self.time <= 0 and round(self.gui.dt_slider.value) <= 0)):
-                    for i in self.planet_list:
-                        i.x = i.poslist[round(self.time / 60)][0] / 10000000000
-                        i.y = i.poslist[round(self.time / 60)][1] / 10000000000
-                        i.z = i.poslist[round(self.time / 60)][2] / 10000000000
+            # PLANET POSITION ------------------------------------------------------
+            if not (round(self.gui.dt_slider.value) == 0 or (self.time <= 0 and round(self.gui.dt_slider.value) <= 0)):
+                for i in self.planet_list:
+                    i.x = i.poslist[round(self.time / 60)][0] / 10000000000
+                    i.y = i.poslist[round(self.time / 60)][1] / 10000000000
+                    i.z = i.poslist[round(self.time / 60)][2] / 10000000000
 
-                        # TRACES -----------------------------------------------------------
-                        # Code by Petter Amland (modified by Erik Haarländer)
-                        if self.time == 0:
-                            self.lines[i.plannr-1].model.vertices.pop(0)
-                        if self.trace_time >= .025:
-                            self.trace_time = 0
-                            if self.trace_counter == 100:
-                                self.lines[i.plannr-1].model.vertices.pop(0)
-                                self.trace_counter = 0
-                            else:
-                                self.trace_counter += 1
-                            self.lines[i.plannr-1].model.vertices.append(Vec3(i.x, i.y, i.z))
-                            self.lines[i.plannr-1].model.generate()
-                        self.trace_time += time.dt
+                    # TRACES -----------------------------------------------------------
+                    # Code by Petter Amland (modified by Erik Haarländer)
+                    if self.time == 0:
+                        print("plannr: ", i.plannr)
+                        self.lines[i.plannr-2].model.vertices.pop(0)
+                    if self.trace_time >= .025:
+                        self.trace_time = 0
+                        if self.trace_counter == 100:
+                            self.lines[i.plannr-2].model.vertices.pop(0)
+                            self.trace_counter = 0
+                        else:
+                            self.trace_counter += 1
+                        self.lines[i.plannr-2].model.vertices.append(Vec3(i.x, i.y, i.z))
+                        self.lines[i.plannr-2].model.generate()
+                    self.trace_time += time.dt
 
                 # HUD ------------------------------------------------------------------
                 
