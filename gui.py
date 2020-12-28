@@ -110,6 +110,22 @@ class FirstPersonController(Entity):
 
         self.count = 0
 
+        # Code by Petter Amland (modified by Erik Haarländer)
+        self.lines = []
+        for i in self.planet_list:
+            line_renderer = Entity(
+                model=Mesh(
+                    vertices=[Vec3(0, 0, 0) for i in range(6)],
+                    colors=[lerp(color.clear, color.white, i / 6 * 2) for i in range(6)],
+                    mode='line',
+                    thickness=5,
+                    static=False
+                )
+            )
+            self.lines.append(line_renderer)
+        self.trace_time = 0
+        self.trace_counter = 0
+
     def update(self):
         if mouse.locked:
             if self.count == 10:
@@ -135,12 +151,26 @@ class FirstPersonController(Entity):
             self.position += self.direction / 2 * self.speed * time.dt
 
             # PLANET POSITION ------------------------------------------------------
-            print(self.time)
             if not (round(self.gui.dt_slider.value) == 0 or (self.time <= 0 and round(self.gui.dt_slider.value) <= 0)):
                 for i in self.planet_list:
                     i.x = i.poslist[round(self.time / 60)][0] / 10000000000
                     i.y = i.poslist[round(self.time / 60)][1] / 10000000000
                     i.z = i.poslist[round(self.time / 60)][2] / 10000000000
+
+                    # TRACE ------------------------------------------------------------
+                    # Code by Petter Amland (modified by Erik Haarländer)
+                    if self.time == 0:
+                        self.lines[i.plannr-1].model.vertices.pop(0)
+                    if self.trace_time >= .025:
+                        self.trace_time = 0
+                        if self.trace_counter == 100:
+                            self.lines[i.plannr-1].model.vertices.pop(0)
+                            self.trace_counter = 0
+                        else:
+                            self.trace_counter += 1
+                        self.lines[i.plannr-1].model.vertices.append(Vec3(i.x, i.y, i.z))
+                        self.lines[i.plannr-1].model.generate()
+                    self.trace_time += time.dt
 
                 # HUD ------------------------------------------------------------------
                 

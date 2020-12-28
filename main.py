@@ -1,10 +1,8 @@
 import threading
 import ursina
-import numpy as np
 from calc import *
 from gui import FirstPersonController
 from planet import Planet, Sky
-import sqlite3
 
 
 

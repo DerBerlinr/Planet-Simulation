@@ -1,10 +1,7 @@
-# from tkinter import ttk
 from tkinter import *
-# from tkinter.ttk import *
 from planet import Planet
 import ursina
 from main import Main
-from functools import partial
 from PIL import Image, ImageTk
 import os
 
@@ -146,7 +143,7 @@ class GUI_Startup(Tk):
 
     def solar_sys(self):
         self.planet_list = []
-        planet = Planet(file_name='/textures/planet_1', planet_name="planet1", planet_diameter=1,
+        planet = Planet(file_name='/textures/planet_1', planet_name="planet1", planet_diameter=1, plannr=1,
                         vel_x=10308.531985820431,
                         vel_y=27640.154010970804,
                         vel_z=-0.7364511260199437,
@@ -155,7 +152,7 @@ class GUI_Startup(Tk):
                         coord_z=2510791.537005455)  # create a planet
         self.planet_list.append(planet)
 
-        planet2 = Planet(file_name='/textures/planet_2', planet_name='planet2', planet_diameter=1,
+        planet2 = Planet(file_name='/textures/planet_2', planet_name='planet2', planet_diameter=1, plannr=2,
                          vel_x=-10308.531985820431,
                          vel_y=-27640.154010970804,
                          vel_z=0.7364511260199437,
@@ -164,7 +161,7 @@ class GUI_Startup(Tk):
                          coord_z=2510791.537005455)
         self.planet_list.append(planet2)
 
-        planet3 = Planet(file_name='/textures/planet_3', planet_name='planet3', planet_diameter=1,
+        planet3 = Planet(file_name='/textures/planet_3', planet_name='planet3', planet_diameter=1, plannr=3,
                          vel_x=10308.531985820431,
                          vel_y=-27640.154010970804,
                          vel_z=0.7364511260199437,
@@ -173,7 +170,7 @@ class GUI_Startup(Tk):
                          coord_z=2510791.537005455)
         self.planet_list.append(planet3)
 
-        planet4 = Planet(file_name='/textures/planet_4', planet_name='planet4', planet_diameter=1,
+        planet4 = Planet(file_name='/textures/planet_4', planet_name='planet4', planet_diameter=1, plannr=4,
                          vel_x=-10308.531985820431,
                          vel_y=27640.154010970804,
                          vel_z=0.7364511260199437,
