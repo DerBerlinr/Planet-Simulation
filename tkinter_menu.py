@@ -660,9 +660,20 @@ class GUI_Planet_Overview(Tk):
         if self.text_plan1 == self.txt_positive:
             self.bu25.config(text = self.txt_negative, bg = self.col_negative)
             self.text_plan1 = self.txt_negative
+            self.planetlist[1] == None
+            print("1")
         else:
+            print(self.planetlist)
             self.bu25.config(text=self.txt_positive, bg=self.col_positive)
             self.text_plan1 = self.txt_positive
+            self.planetlist[1] = Planet(file_name='/textures/planet_1', planet_name="planet1", planet_diameter=1, plannr=1,
+                        vel_x=10308.531985820431,
+                        vel_y=27640.154010970804,
+                        vel_z=-0.7364511260199437,
+                        coord_x=140699825958.8049,
+                        coord_y=-54738590238.00282,
+                        coord_z=2510791.537005455)  # create a planet
+            print(self.planetlist)
 
     def activ_plan3(self):
         if self.text_plan2 == self.txt_positive:
