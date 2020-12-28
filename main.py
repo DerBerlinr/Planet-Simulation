@@ -29,10 +29,10 @@ class Main:
 
         fpc = FirstPersonController(self.planet_list)
 
-        for i in self.planet_list:
+        for planet in self.planet_list:
             # For every planet, there is a thread, which calculates the current Position of its planet
-            calc = Calc(i)
-            temp = threading.Thread(target=calc.get_coords, args=(i,))
+            calc = Calc(planet)
+            temp = threading.Thread(target=calc.get_coords, args=(planet,))
             temp.start()
 
 

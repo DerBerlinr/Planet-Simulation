@@ -101,7 +101,8 @@ class GUI_Startup(Tk):
         exit()
 
     def copyright(self):
-        print("Copyright")
+        # TODO: add functionality
+        pass
 
     def own_planets(self):
         # list(filter(lambda a: a == None, self.planet_list)) # Removes all None-items from list
@@ -116,7 +117,6 @@ class GUI_Startup(Tk):
                 temp.append(element)
             c += 1
         return temp
-
 
     def two_planets(self):
         self.planet_list = []
@@ -271,11 +271,11 @@ class GUI_add_Planet(Tk):
         self.planet_list = []
 
     def clear(self):
-        print("clear")
+        # TODO: Add functionality
+        pass
 
 
     def submit(self):
-        print(self.pn)
         if self.pn != 0:
             name = self.en1_text.get()
             mass = self.en2_text.get()
@@ -664,98 +664,98 @@ class GUI_Planet_Overview(Tk):
         pass
 
     def activ_plan2(self):
-        if self.text_plan1 == self.txt_positive:
+        if self.text_plan2 == self.txt_positive:
             self.bu25.config(text = self.txt_negative, bg = self.col_negative)
-            self.text_plan1 = self.txt_negative
+            self.text_plan2 = self.txt_negative
             self.planetlist[1] = None
         else:
 
             self.bu25.config(text=self.txt_positive, bg=self.col_positive)
-            self.text_plan1 = self.txt_positive
+            self.text_plan2 = self.txt_positive
             self.planetlist[1] = self.planetlist_all[1]
 
     def activ_plan3(self):
-        if self.text_plan2 == self.txt_positive:
+        if self.text_plan3 == self.txt_positive:
             self.bu22.config(text = self.txt_negative, bg = self.col_negative)
-            self.text_plan2 = self.txt_negative
+            self.text_plan3 = self.txt_negative
             self.planetlist[2] = None
         else:
             self.bu22.config(text=self.txt_positive, bg=self.col_positive)
-            self.text_plan2 = self.txt_positive
+            self.text_plan3 = self.txt_positive
             self.planetlist[2] = self.planetlist_all[2]
 
     def activ_plan4(self):
-        if self.text_plan3 == self.txt_positive:
+        if self.text_plan4 == self.txt_positive:
             self.bu26.config(text = self.txt_negative, bg = self.col_negative)
-            self.text_plan3 = self.txt_negative
+            self.text_plan4 = self.txt_negative
             self.planetlist[3] = None
         else:
             self.bu26.config(text=self.txt_positive, bg=self.col_positive)
-            self.text_plan3 = self.txt_positive
+            self.text_plan4 = self.txt_positive
             self.planetlist[3] = self.planetlist_all[3]
 
     def activ_plan5(self):
-        if self.text_plan4 == self.txt_positive:
+        if self.text_plan5 == self.txt_positive:
             self.bu23.config(text = self.txt_negative, bg = self.col_negative)
-            self.text_plan4 = self.txt_negative
+            self.text_plan5 = self.txt_negative
             self.planetlist[4] = None
         else:
             self.bu23.config(text=self.txt_positive, bg=self.col_positive)
-            self.text_plan4 = self.txt_positive
+            self.text_plan5 = self.txt_positive
             self.planetlist[4] = self.planetlist_all[4]
 
     def activ_plan6(self):
-        if self.text_plan5 == self.txt_positive:
+        if self.text_plan6 == self.txt_positive:
             self.bu27.config(text = self.txt_negative, bg = self.col_negative)
-            self.text_plan5 = self.txt_negative
+            self.text_plan6 = self.txt_negative
             self.planetlist[5] = None
         else:
             self.bu27.config(text=self.txt_positive, bg=self.col_positive)
-            self.text_plan5 = self.txt_positive
+            self.text_plan6 = self.txt_positive
             self.planetlist[5] = self.planetlist_all[5]
 
     def activ_plan7(self):
-        if self.text_plan6 == self.txt_positive:
+        if self.text_plan7 == self.txt_positive:
             self.bu24.config(text = self.txt_negative, bg = self.col_negative)
-            self.text_plan6 = self.txt_negative
+            self.text_plan7 = self.txt_negative
             self.planetlist[6] = None
         else:
             self.bu24.config(text=self.txt_positive, bg=self.col_positive)
-            self.text_plan6 = self.txt_positive
+            self.text_plan7 = self.txt_positive
             self.planetlist[6] = self.planetlist_all[6]
 
     def activ_plan8(self):
-        if self.text_plan7 == self.txt_positive:
+        if self.text_plan8 == self.txt_positive:
             self.bu28.config(text = self.txt_negative, bg = self.col_negative)
-            self.text_plan7 = self.txt_negative
+            self.text_plan8 = self.txt_negative
             self.planetlist[7] = None
         else:
             self.bu28.config(text=self.txt_positive, bg=self.col_positive)
-            self.text_plan7 = self.txt_positive
+            self.text_plan8 = self.txt_positive
             self.planetlist[7] = self.planetlist_all[7]
 
     def activ_plan9(self):
-        if self.text_plan8 == self.txt_positive:
+        if self.text_plan9 == self.txt_positive:
             self.bu29.config(text = self.txt_negative, bg = self.col_negative)
-            self.text_plan8 = self.txt_negative
+            self.text_plan9 = self.txt_negative
             self.planetlist[8] = None
         else:
             self.bu29.config(text=self.txt_positive, bg=self.col_positive)
-            self.text_plan8 = self.txt_positive
+            self.text_plan9 = self.txt_positive
             self.planetlist[8] = self.planetlist_all[8]
 
     def activ_plan10(self):
-        if self.text_plan9 == self.txt_positive:
+        if self.text_plan10 == self.txt_positive:
             self.bu30.config(text = self.txt_negative, bg = self.col_negative)
-            self.text_plan9 = self.txt_negative
+            self.text_plan10 = self.txt_negative
             self.planetlist[9] = None
         else:
             self.bu30.config(text=self.txt_positive, bg=self.col_positive)
-            self.text_plan9 = self.txt_positive
+            self.text_plan10 = self.txt_positive
             self.planetlist[9] = self.planetlist_all[9]
 
     def return_to_gui(self):
-        self.mm.planetlist = self.planetlist
+        self.mm.planet_list = self.planetlist[:]
 
     def help(self):
         os.system('start " " help.txt')
