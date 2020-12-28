@@ -135,7 +135,7 @@ class FirstPersonController(Entity):
             self.position += self.direction / 2 * self.speed * time.dt
 
             # PLANET POSITION ------------------------------------------------------
-            '''
+            print(self.time)
             if not (round(self.gui.dt_slider.value) == 0 or (self.time <= 0 and round(self.gui.dt_slider.value) <= 0)):
                 for i in self.planet_list:
                     i.x = i.poslist[round(self.time / 60)][0] / 10000000000
@@ -175,7 +175,6 @@ class FirstPersonController(Entity):
                 self.hud_vel = "vx: " + str(round(vx)) + "    vy: " + str(round(vy)) + "    vz: " + str(round(vz))
                 self.hud_text_vel.color = color.red
                 self.hud_text_vel.text = self.hud_vel
-                '''
             # ----------------------------------------------------------------------
             if not (self.time <= 0 and round(self.gui.dt_slider.value) <= 0):
                 self.time += round(self.gui.dt_slider.value)

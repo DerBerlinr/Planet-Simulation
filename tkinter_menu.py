@@ -39,7 +39,7 @@ class GUI_Startup(Tk):
         self.bu3 = Button(rahmen1, text="Run Pre-setup (4 Planets)", width=groesse, command=self.solar_sys)
         self.bu3.grid(row=6, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu4 = Button(rahmen1, text="Customize Planets", width=groesse, command=Overview)
+        self.bu4 = Button(rahmen1, text="Customize Planets", width=groesse, command=lambda: Overview(planetlist=planetlist, mm=self))
         self.bu4.grid(row=4, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.bu5 = Button(rahmen1, text="Exit", width=groesse, command=self.exit)
@@ -107,9 +107,22 @@ class GUI_Startup(Tk):
         print("Copyright")
 
     def own_planets(self):
-        pass
+        # list(filter(lambda a: a == None, self.planet_list)) # Removes all None-items from list
+        self.planet_list = self.rem_none(self.planet_list)
+        Main(self.app, self.planet_list)
+
+    def rem_none(self, i):
+        c = 0
+        temp = []
+        for element in i:
+            if element != None:
+                temp.append(element)
+            c += 1
+        return temp
+
 
     def two_planets(self):
+        self.planet_list = []
         planet = Planet(file_name='/textures/planet_1', planet_name="planet1", planet_diameter=1, plannr=1,
                         vel_x=10308.531985820431,
                         vel_y=27640.154010970804,
@@ -132,6 +145,7 @@ class GUI_Startup(Tk):
         start = Main(self.app, self.planet_list)
 
     def solar_sys(self):
+        self.planet_list = []
         planet = Planet(file_name='/textures/planet_1', planet_name="planet1", planet_diameter=1,
                         vel_x=10308.531985820431,
                         vel_y=27640.154010970804,
@@ -176,6 +190,8 @@ class GUI_add_Planet(Tk):
         root1 = Toplevel()
 
         root1.title("Add Planet")
+
+        self.pn = pn
 
         rahmen1 = Frame(root1, relief=SUNKEN, borderwidth=2)
         rahmen1.pack()
@@ -260,9 +276,10 @@ class GUI_add_Planet(Tk):
     def clear(self):
         print("clear")
 
-        
+
     def submit(self):
-        if self.en1_text.get() and self.en2_text and self.en3_text and self.en4_1_text and self.en4_2_text and self.en4_3_text:
+        print(self.pn)
+        if self.pn != 0:
             name = self.en1_text.get()
             mass = self.en2_text.get()
             vx = self.en3_1_text.get()
@@ -272,23 +289,20 @@ class GUI_add_Planet(Tk):
             y = self.en4_2_text.get()
             z = self.en4_3_text.get()
 
-            if self.pn == 0:
-                # fn -> file_name
-                fn = "textures/rendered_sun_scaled.png"
-            else:
-                fn = "textures/rendered_planet" + str(self.pn) + "_scaled.png"
+            fn = "textures/planet_" + str(self.pn) + ".png"
 
             self.planet = Planet(file_name=fn, planet_name=name, plannr=self.pn, planet_mass=mass,
-                                vel_x=vx, vel_y=vy, vel_z=vz, coord_x=x, coord_y=y, coord_z=z)
+                            vel_x=vx, vel_y=vy, vel_z=vz, coord_x=x, coord_y=y, coord_z=z)
 
             self.overview.planetlist[self.pn - 1] = self.planet
 
 
 class GUI_Planet_Overview(Tk):
     lock = 0
-    def __init__(self, planetlist=[]):
+    def __init__(self, mm, planetlist=[]):
         root2 = Toplevel()
         # self.app = ursina.Ursina()
+        self.mm = mm # Main-menu
 
 
         root2.title("Customize Planets")
@@ -396,7 +410,7 @@ class GUI_Planet_Overview(Tk):
         self.la20 = Label(rahmen1, textvariable=self.la20_text, width=groesse, fg='#F0F0F0', justify=CENTER)
         self.la20.grid(row=5, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        
+
         self.bu21 = Button(rahmen1, text=self.text_plan1, width=groesse, bg=self.state_plan1, justify=CENTER, command = self.activ_plan1)
         self.bu21.grid(row=4, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
@@ -715,7 +729,8 @@ class GUI_Planet_Overview(Tk):
             self.text_plan9 = self.txt_positive
 
     def return_to_gui(self):
-        print("return")
+        print("aus overview", self.planetlist)
+        self.mm.planetlist = self.planetlist
 
     def help(self):
         os.system('start " " help.txt')
