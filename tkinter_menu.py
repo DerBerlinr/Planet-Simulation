@@ -105,6 +105,7 @@ class GUI_Startup(Tk):
         pass
 
     def own_planets(self):
+        # TODO: fix textures
         # list(filter(lambda a: a == None, self.planet_list)) # Removes all None-items from list
         self.planet_list = self.rem_none(self.planet_list)
         Main(self.app, self.planet_list)
