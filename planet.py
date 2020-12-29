@@ -11,10 +11,6 @@ class Planet(Button):
             parent = scene,
             position = [(coord_x, coord_y, coord_z)],
             color = color.white
-
-
-
-            # TODO: add Textures
         )
         self.plannr = plannr
         self.tooltip_input = "0"

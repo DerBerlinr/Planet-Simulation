@@ -11,8 +11,6 @@ class GUI_Startup(Tk):
         self.root = Tk()
         self.app = ursina.Ursina()
 
-        Overview = GUI_Planet_Overview
-
         self.root.title("Main Menu")
         self.root.geometry("580x260")
         self.root.resizable(False, False)
@@ -36,7 +34,7 @@ class GUI_Startup(Tk):
         self.bu3 = Button(rahmen1, text="Run Pre-setup (4 Planets)", width=groesse, command=self.solar_sys)
         self.bu3.grid(row=6, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu4 = Button(rahmen1, text="Customize Planets", width=groesse, command=lambda: Overview(planetlist=planetlist, mm=self))
+        self.bu4 = Button(rahmen1, text="Customize Planets", width=groesse, command=self.ov)
         self.bu4.grid(row=4, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.bu5 = Button(rahmen1, text="Exit", width=groesse, command=self.exit)
@@ -99,6 +97,18 @@ class GUI_Startup(Tk):
 
     def exit(self):
         exit()
+
+    def ov(self):
+        # opens planet overview
+        # TODO: fix open toplevel 2nd time
+        try:
+            a = self.ov.farbe
+            try:
+                self.ov.root2.lift()
+            except:
+                self.ov.deiconfy()
+        except:
+            self.ov = GUI_Planet_Overview(self, self.planet_list)
 
     def copyright(self):
         # TODO: add functionality
@@ -186,7 +196,7 @@ class GUI_add_Planet(Tk):
     def __init__(self, pn, overview, name="", mass="", vx="", vy="", vz="", x="", y="", z=""):
         root1 = Toplevel()
 
-        root1.title("Add Planet")
+        root1.title("Edit planet: " + name)
 
         self.pn = pn
 
@@ -307,11 +317,16 @@ class GUI_add_Planet(Tk):
             self.overview.planetlist[self.pn - 1] = self.planet
             self.overview.planetlist_all[self.pn - 1] = self.planet
 
+        self.overview.root2.lift()
+
+
+
 
 
 class GUI_Planet_Overview(Tk):
     lock = 0
     def __init__(self, mm, planetlist=[]):
+        print(planetlist, mm)
         root2 = Toplevel()
         # self.app = ursina.Ursina()
         self.mm = mm # Main-menu
@@ -807,6 +822,7 @@ class GUI_Planet_Overview(Tk):
             else:
                 print(self.data_list[i])
                 f.write(self.data_list[i]+"\n")
+        self.mm.root.lift()
 
 
         f.close()
