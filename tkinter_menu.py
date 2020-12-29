@@ -194,13 +194,14 @@ class GUI_Startup(Tk):
 
 class GUI_add_Planet(Tk):
     def __init__(self, pn, overview, name="Planet", mass="10000", vx="-10300", vy="0", vz="27640", x="-14070000000", y="-50740000000", z="2510800"):
-        root1 = Toplevel()
+        self.root = Toplevel()
+        self.lock = False
 
-        root1.title("Edit planet: " + name)
+        self.root.title("Edit planet: " + name)
 
         self.pn = pn
 
-        rahmen1 = Frame(root1, relief=SUNKEN, borderwidth=2)
+        rahmen1 = Frame(self.root, relief=SUNKEN, borderwidth=2)
         rahmen1.pack()
 
         farbe = "light grey"
@@ -271,7 +272,7 @@ class GUI_add_Planet(Tk):
         self.en4_3 = Entry(rahmen1, width=round(groesse / 3), textvariable=self.en4_3_text)
         self.en4_3.grid(row=3, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu1 = Button(rahmen1, text="Submit", width=groesse + 3, command=self.submit)
+        self.bu1 = Button(rahmen1, text="Submit", width=groesse + 3, command=lambda: self.submit(1))
         self.bu1.grid(row=4, column=1, padx=abstand_x, pady=abstand_y)
 
         self.bu1 = Button(rahmen1, text="Clear", width=groesse + 3, command=self.clear)
@@ -323,7 +324,7 @@ class GUI_add_Planet(Tk):
         self.submit()
 
 
-    def submit(self):
+    def submit(self, button=0):
         # TODO: add check if input correct
         if self.pn != 0:
             name = self.en1_text.get()
@@ -345,6 +346,8 @@ class GUI_add_Planet(Tk):
 
             self.overview.planetlist[self.pn - 1] = self.planet
             self.overview.planetlist_all[self.pn - 1] = self.planet
+            if button == 1:
+                self.root.destroy()
 
 
 
