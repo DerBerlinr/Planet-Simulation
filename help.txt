@@ -1,8 +1,14 @@
 ----------------------------------------------------------------------------
 
 USAGE:
-To create a planet, click on 'Edit Planet' and then submit the changes. 
-Enable it by clicking on the red button.
+All planets are already created and have preset data.
+The preset data is identical, mind that the planets might cover eachother!
+You can use the "Edit planet"-button to edit the planets data and submit the
+changes by pressing "Submit".
+You can toggle the planets display status by clicking the red/green buttons
+next to the planets.
+In case of low FPS, lower the amount of planets.
+Save the entire Custom System by pressing "Save Changes".
 
 ----------------------------------------------------------------------------
 

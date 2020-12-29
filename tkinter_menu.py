@@ -287,6 +287,9 @@ class GUI_add_Planet(Tk):
             self.en4_1_text.set(x)
             self.en4_2_text.set(y)
             self.en4_3_text.set(z)
+
+            self.submit()
+            
         else:
             data_texture, data_name, data_mass, data_vx, data_vy, data_vz, data_x, data_y, data_z = self.overview.lines[self.pn-1].split("#")
 
@@ -298,6 +301,8 @@ class GUI_add_Planet(Tk):
             self.en4_1_text.set(data_x)
             self.en4_2_text.set(data_y)
             self.en4_3_text.set(data_z)
+
+            self.submit()
 
 
 
@@ -330,7 +335,7 @@ class GUI_add_Planet(Tk):
             y = self.en4_2_text.get()
             z = self.en4_3_text.get()
 
-            fn = "textures/planet_" + str(self.pn) + ".jpg"
+            fn = "textures/planet_" + str(self.pn-1) + ".jpg"
 
             self.overview.data_list[self.pn-1] = str(fn)+"#"+str(name)+"#"+str(mass)+"#"+str(vx)+"#"+str(vy)+"#"+str(vz)+"#"+str(x)+"#"+str(y)+"#"+str(z)
 
@@ -368,7 +373,7 @@ class GUI_Planet_Overview(Tk):
 
 
 
-        farbe = "#878789"
+        farbe = "light grey"
 
         abstand_x = 3
         abstand_y = 3
@@ -441,8 +446,8 @@ class GUI_Planet_Overview(Tk):
             GUI_Planet_Overview.lock = 1
 
         self.la1_text = StringVar()
-        self.la1_text.set("Read Help if not working")
-        self.la1 = Label(rahmen1, textvariable=self.la1_text, width=groesse, justify=CENTER, )
+        self.la1_text.set("Read Help for Usage")
+        self.la1 = Label(rahmen1, textvariable=self.la1_text, bg=farbe,  width=groesse, justify=CENTER, )
         self.la1.grid(row=1, column=0, sticky=E, padx=abstand_x, pady=abstand_y)
 
 
