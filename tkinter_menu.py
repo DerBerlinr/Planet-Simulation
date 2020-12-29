@@ -105,7 +105,6 @@ class GUI_Startup(Tk):
         pass
 
     def own_planets(self):
-        # TODO: fix textures
         # list(filter(lambda a: a == None, self.planet_list)) # Removes all None-items from list
         self.planet_list = self.rem_none(self.planet_list)
         Main(self.app, self.planet_list)
@@ -274,11 +273,19 @@ class GUI_add_Planet(Tk):
 
 
     def clear(self):
-        # TODO: Add functionality
-        pass
+        self.en1_text.set("")
+        self.en2_text.set("")
+        self.en3_1_text.set("")
+        self.en3_2_text.set("")
+        self.en3_3_text.set("")
+        self.en4_1_text.set("")
+        self.en4_2_text.set("")
+        self.en4_3_text.set("")
+        self.submit()
 
 
     def submit(self):
+        # TODO: add check if input correct
         if self.pn != 0:
             name = self.en1_text.get()
             mass = self.en2_text.get()
@@ -289,7 +296,7 @@ class GUI_add_Planet(Tk):
             y = self.en4_2_text.get()
             z = self.en4_3_text.get()
 
-            fn = "textures/planet_" + str(self.pn) + ".png"
+            fn = "textures/planet_" + str(self.pn) + ".jpg"
 
             self.overview.data_list[self.pn-1] = str(name)+"#"+str(mass)+"#"+str(vx)+"#"+str(vy)+"#"+str(vz)+"#"+str(x)+"#"+str(y)+"#"+str(z)
 
