@@ -193,7 +193,7 @@ class GUI_Startup(Tk):
 
 
 class GUI_add_Planet(Tk):
-    def __init__(self, pn, overview, name="", mass="", vx="", vy="", vz="", x="", y="", z=""):
+    def __init__(self, pn, overview, name="Planet", mass="10000", vx="-10300", vy="0", vz="27640", x="-14070000000", y="-50740000000", z="2510800"):
         root1 = Toplevel()
 
         root1.title("Edit planet: " + name)
@@ -279,14 +279,14 @@ class GUI_add_Planet(Tk):
 
 
         if self.overview.lines[self.pn-1] == str(self.pn):
-            self.en1_text.set("")
-            self.en2_text.set("")
-            self.en3_1_text.set("")
-            self.en3_2_text.set("")
-            self.en3_3_text.set("")
-            self.en4_1_text.set("")
-            self.en4_2_text.set("")
-            self.en4_3_text.set("")
+            self.en1_text.set(name)
+            self.en2_text.set(mass)
+            self.en3_1_text.set(vx)
+            self.en3_2_text.set(vy)
+            self.en3_3_text.set(vz)
+            self.en4_1_text.set(x)
+            self.en4_2_text.set(y)
+            self.en4_3_text.set(z)
         else:
             data_texture, data_name, data_mass, data_vx, data_vy, data_vz, data_x, data_y, data_z = self.overview.lines[self.pn-1].split("#")
 
@@ -836,7 +836,7 @@ class GUI_Planet_Overview(Tk):
         f = open('planet_data.txt', 'w').close()
         f = open("planet_data.txt", "a")
 
-        for i in range(len(self.data_list)-1):
+        for i in range(len(self.data_list)):
             if self.data_list[i] == None:
                 f.write(str(i+1)+"\n")
             else:

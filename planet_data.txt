@@ -1,9 +1,10 @@
 1
-textures/planet_2.jpg#test#asd#asd#asd#asd#asd#asd#asd
+textures/planet_2.jpg#Planet#10000#-10300#0#27640#-14070000000#-50740000000#2510800
 3
 4
 5
-6
+textures/planet_6.jpg#Planet#10000#-10300#0#27640#-14070000000#50740000000#2510800
 7
 8
 9
+10
