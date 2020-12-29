@@ -110,7 +110,6 @@ class FirstPersonController(Entity):
         self.count = 0
 
         # Code by Petter Amland (modified by Erik Haarländer)
-        self.lines = []
         for i in self.planet_list:
             line_renderer = Entity(
                 model=Mesh(
@@ -121,7 +120,7 @@ class FirstPersonController(Entity):
                     static=False
                 )
             )
-            self.lines.append(line_renderer)
+            i.trace = line_renderer
         self.trace_time = 0
         self.trace_counter = 0
 
@@ -159,16 +158,16 @@ class FirstPersonController(Entity):
                     # Code by Petter Amland (modified by Erik Haarländer)
                     if self.time == 0:
                         print("plannr: ", i.plannr)
-                        self.lines[i.plannr-2].model.vertices.pop(0)
+                        i.trace.model.vertices.pop(0)
                     if self.trace_time >= .025:
                         self.trace_time = 0
                         if self.trace_counter == 100:
-                            self.lines[i.plannr-2].model.vertices.pop(0)
+                            i.trace.model.vertices.pop(0)
                             self.trace_counter = 0
                         else:
                             self.trace_counter += 1
-                        self.lines[i.plannr-2].model.vertices.append(Vec3(i.x, i.y, i.z))
-                        self.lines[i.plannr-2].model.generate()
+                        i.trace.model.vertices.append(Vec3(i.x, i.y, i.z))
+                        i.trace.model.generate()
                     self.trace_time += time.dt
 
                 # HUD ------------------------------------------------------------------

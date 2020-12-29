@@ -12,6 +12,7 @@ class Planet(Button):
             position = [(coord_x, coord_y, coord_z)],
             color = color.white
         )
+        self.trace = None
         self.plannr = plannr
         self.tooltip_input = "0"
         self.planet_name = planet_name
