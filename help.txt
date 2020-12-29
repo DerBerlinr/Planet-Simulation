@@ -1,3 +1,8 @@
+----------------------------------------------------------------------------
+
+USAGE:
+To create a planet, click on 'Edit Planet' and then submit the changes. 
+Enable it by clicking on the red button.
 
 ----------------------------------------------------------------------------
 
