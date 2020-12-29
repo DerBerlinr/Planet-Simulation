@@ -298,7 +298,7 @@ class GUI_add_Planet(Tk):
 
             fn = "textures/planet_" + str(self.pn) + ".jpg"
 
-            self.overview.data_list[self.pn-1] = str(name)+"#"+str(mass)+"#"+str(vx)+"#"+str(vy)+"#"+str(vz)+"#"+str(x)+"#"+str(y)+"#"+str(z)
+            self.overview.data_list[self.pn-1] = str(fn)+"#"+str(name)+"#"+str(mass)+"#"+str(vx)+"#"+str(vy)+"#"+str(vz)+"#"+str(x)+"#"+str(y)+"#"+str(z)
 
 
             self.planet = Planet(file_name=fn, planet_name=name, plannr=self.pn, planet_mass=mass,
@@ -315,6 +315,7 @@ class GUI_Planet_Overview(Tk):
         root2 = Toplevel()
         # self.app = ursina.Ursina()
         self.mm = mm # Main-menu
+        f = open("planet_data.txt", "r")
 
 
         root2.title("Customize Planets")
@@ -339,6 +340,7 @@ class GUI_Planet_Overview(Tk):
         while len(planetlist) < 10:
             planetlist.append(None)
 
+
         self.data_list = []
 
         while len(self.data_list) < 10:
@@ -350,7 +352,28 @@ class GUI_Planet_Overview(Tk):
         self.planetlist = temp[:]
         self.planetlist_all = temp[:]
 
+        f = open("planet_data.txt", "r")
+        lines = [line.rstrip('\n') for line in f]
+        print(lines)
+        for i in range(len(lines) - 1):
+            if str(i + 1) == lines[i]:
+                print("keine Daten!")
+            else:
+                print("DATEN!")
+                data_texture, data_name, data_mass, data_vx, data_vy, data_vz, data_x, data_y, data_z = lines[i].split("#")
+                print(data_texture, data_name, data_mass, data_vx, data_vy, data_vz, data_x, data_y, data_z)
+
+                self.planet = Planet(file_name=data_texture, planet_name=data_name, plannr=i, planet_mass=data_mass,
+                                    vel_x=data_vx, vel_y=data_vy, vel_z=data_vz, coord_x=data_x, coord_y=data_y, coord_z=data_z)
+
+                self.planetlist[i - 1] = self.planet
+                self.planetlist_all[i - 1] = self.planet
+
+        f.close()
+
         if GUI_Planet_Overview.lock == 0:
+
+
 
             self.col_positive = 'light green'
             self.col_negative = 'indian red'
