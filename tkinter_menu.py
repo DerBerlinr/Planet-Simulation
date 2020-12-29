@@ -26,7 +26,7 @@ class GUI_Startup(Tk):
         groesse = 25
 
         self.bu1 = Button(rahmen1, text="Run Custom setup", width=groesse, command=self.own_planets)
-        self.bu1.grid(row=4, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
+        self.bu1.grid(row=4, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.bu2 = Button(rahmen1, text="Run Pre-setup (2 Planets)", width=groesse, command=self.two_planets)
         self.bu2.grid(row=6, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
@@ -35,7 +35,7 @@ class GUI_Startup(Tk):
         self.bu3.grid(row=6, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.bu4 = Button(rahmen1, text="Customize Planets", width=groesse, command=self.ov)
-        self.bu4.grid(row=4, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
+        self.bu4.grid(row=4, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.bu5 = Button(rahmen1, text="Exit", width=groesse, command=self.exit)
         self.bu5.grid(row=9, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
