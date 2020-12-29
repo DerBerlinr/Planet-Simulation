@@ -317,7 +317,6 @@ class GUI_add_Planet(Tk):
             self.overview.planetlist[self.pn - 1] = self.planet
             self.overview.planetlist_all[self.pn - 1] = self.planet
 
-        self.overview.root2.lift()
 
 
 
