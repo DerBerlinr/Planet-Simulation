@@ -1,5 +1,5 @@
 1
-2
+textures/planet_2.jpg#test#asd#asd#asd#asd#asd#asd#asd
 3
 4
 5

@@ -278,6 +278,30 @@ class GUI_add_Planet(Tk):
         self.bu1.grid(row=4, column=0, padx=abstand_x, pady=abstand_y)
 
 
+        if self.overview.lines[self.pn-1] == str(self.pn):
+            self.en1_text.set("")
+            self.en2_text.set("")
+            self.en3_1_text.set("")
+            self.en3_2_text.set("")
+            self.en3_3_text.set("")
+            self.en4_1_text.set("")
+            self.en4_2_text.set("")
+            self.en4_3_text.set("")
+        else:
+            data_texture, data_name, data_mass, data_vx, data_vy, data_vz, data_x, data_y, data_z = self.overview.lines[self.pn-1].split("#")
+
+            self.en1_text.set(data_name)
+            self.en2_text.set(data_mass)
+            self.en3_1_text.set(data_vx)
+            self.en3_2_text.set(data_vy)
+            self.en3_3_text.set(data_vz)
+            self.en4_1_text.set(data_x)
+            self.en4_2_text.set(data_y)
+            self.en4_3_text.set(data_z)
+
+
+
+
         self.planet_list = []
 
 
@@ -367,15 +391,12 @@ class GUI_Planet_Overview(Tk):
         self.planetlist_all = temp[:]
 
         f = open("planet_data.txt", "r")
-        lines = [line.rstrip('\n') for line in f]
-        print(lines)
-        for i in range(len(lines) - 1):
-            if str(i + 1) == lines[i]:
-                print("keine Daten!")
+        self.lines = [line.rstrip('\n') for line in f]
+        for i in range(len(self.lines) - 1):
+            if str(i + 1) == self.lines[i]:
+                pass
             else:
-                print("DATEN!")
-                data_texture, data_name, data_mass, data_vx, data_vy, data_vz, data_x, data_y, data_z = lines[i].split("#")
-                print(data_texture, data_name, data_mass, data_vx, data_vy, data_vz, data_x, data_y, data_z)
+                data_texture, data_name, data_mass, data_vx, data_vy, data_vz, data_x, data_y, data_z = self.lines[i].split("#")
 
                 self.planet = Planet(file_name=data_texture, planet_name=data_name, plannr=i, planet_mass=data_mass,
                                     vel_x=data_vx, vel_y=data_vy, vel_z=data_vz, coord_x=data_x, coord_y=data_y, coord_z=data_z)
