@@ -193,7 +193,7 @@ class GUI_Startup(Tk):
 
 
 class GUI_add_Planet(Tk):
-    def __init__(self, pn, overview, name="Planet", mass="10000", vx="-10300", vy="0", vz="27640", x="-14070000000", y="-50740000000", z="2510800"):
+    def __init__(self, pn, overview, name="Planet", mass="10000", vx="-30000", vy="30000", vz="30000", x="-16070000000", y="-65040000000", z="3500800"):
         self.root = Toplevel()
         self.lock = False
 
