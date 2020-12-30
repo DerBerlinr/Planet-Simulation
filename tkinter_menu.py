@@ -26,7 +26,7 @@ class GUI_Startup(Tk):
         groesse = 25
 
         self.bu1 = Button(rahmen1, text="Run Custom setup", width=groesse, command=self.own_planets)
-        self.bu1.grid(row=4, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
+        self.bu1.grid(row=4, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.bu2 = Button(rahmen1, text="Run Pre-setup (2 Planets)", width=groesse, command=self.two_planets)
         self.bu2.grid(row=6, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
@@ -35,7 +35,7 @@ class GUI_Startup(Tk):
         self.bu3.grid(row=6, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.bu4 = Button(rahmen1, text="Customize Planets", width=groesse, command=self.ov)
-        self.bu4.grid(row=4, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
+        self.bu4.grid(row=4, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.bu5 = Button(rahmen1, text="Exit", width=groesse, command=self.exit)
         self.bu5.grid(row=9, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
@@ -194,13 +194,14 @@ class GUI_Startup(Tk):
 
 class GUI_add_Planet(Tk):
     def __init__(self, pn, overview, name="Planet", mass="10000", vx="-10300", vy="0", vz="27640", x="-14070000000", y="-50740000000", z="2510800"):
-        root1 = Toplevel()
+        self.root = Toplevel()
+        self.lock = False
 
-        root1.title("Edit planet: " + name)
+        self.root.title("Edit planet: " + name)
 
         self.pn = pn
 
-        rahmen1 = Frame(root1, relief=SUNKEN, borderwidth=2)
+        rahmen1 = Frame(self.root, relief=SUNKEN, borderwidth=2)
         rahmen1.pack()
 
         farbe = "light grey"
@@ -271,7 +272,7 @@ class GUI_add_Planet(Tk):
         self.en4_3 = Entry(rahmen1, width=round(groesse / 3), textvariable=self.en4_3_text)
         self.en4_3.grid(row=3, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu1 = Button(rahmen1, text="Submit", width=groesse + 3, command=self.submit)
+        self.bu1 = Button(rahmen1, text="Submit", width=groesse + 3, command=lambda: self.submit(1))
         self.bu1.grid(row=4, column=1, padx=abstand_x, pady=abstand_y)
 
         self.bu1 = Button(rahmen1, text="Clear", width=groesse + 3, command=self.clear)
@@ -287,6 +288,9 @@ class GUI_add_Planet(Tk):
             self.en4_1_text.set(x)
             self.en4_2_text.set(y)
             self.en4_3_text.set(z)
+
+            self.submit()
+            
         else:
             data_texture, data_name, data_mass, data_vx, data_vy, data_vz, data_x, data_y, data_z = self.overview.lines[self.pn-1].split("#")
 
@@ -298,6 +302,8 @@ class GUI_add_Planet(Tk):
             self.en4_1_text.set(data_x)
             self.en4_2_text.set(data_y)
             self.en4_3_text.set(data_z)
+
+            self.submit()
 
 
 
@@ -318,7 +324,7 @@ class GUI_add_Planet(Tk):
         self.submit()
 
 
-    def submit(self):
+    def submit(self, button=0):
         # TODO: add check if input correct
         if self.pn != 0:
             name = self.en1_text.get()
@@ -330,7 +336,7 @@ class GUI_add_Planet(Tk):
             y = self.en4_2_text.get()
             z = self.en4_3_text.get()
 
-            fn = "textures/planet_" + str(self.pn) + ".jpg"
+            fn = "textures/planet_" + str(self.pn-1) + ".jpg"
 
             self.overview.data_list[self.pn-1] = str(fn)+"#"+str(name)+"#"+str(mass)+"#"+str(vx)+"#"+str(vy)+"#"+str(vz)+"#"+str(x)+"#"+str(y)+"#"+str(z)
 
@@ -340,6 +346,8 @@ class GUI_add_Planet(Tk):
 
             self.overview.planetlist[self.pn - 1] = self.planet
             self.overview.planetlist_all[self.pn - 1] = self.planet
+            if button == 1:
+                self.root.destroy()
 
 
 
@@ -368,7 +376,7 @@ class GUI_Planet_Overview(Tk):
 
 
 
-        farbe = "#878789"
+        farbe = "light grey"
 
         abstand_x = 3
         abstand_y = 3
@@ -441,8 +449,8 @@ class GUI_Planet_Overview(Tk):
             GUI_Planet_Overview.lock = 1
 
         self.la1_text = StringVar()
-        self.la1_text.set("Read Help if not working")
-        self.la1 = Label(rahmen1, textvariable=self.la1_text, width=groesse, justify=CENTER, )
+        self.la1_text.set("Read Help for Usage")
+        self.la1 = Label(rahmen1, textvariable=self.la1_text, bg=farbe,  width=groesse, justify=CENTER, )
         self.la1.grid(row=1, column=0, sticky=E, padx=abstand_x, pady=abstand_y)
 
 
