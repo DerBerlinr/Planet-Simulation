@@ -13,7 +13,10 @@ You need to install various dependencies to get this simulation going.
         
         pip install ursina
 
-3) Now you just need to execute the file "tkinter_menu.py" with python and you are good to go
+3) To start the program, type
+      
+         python tkinter_menu.py
+   in the Project-Directoy
 
 ----------------------------------------------------------------------------
 

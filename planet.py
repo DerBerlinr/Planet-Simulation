@@ -37,6 +37,8 @@ class Planet(Button):
 
         self.pressedd = False
 
+        self.counter = 0
+
     def input(self, key):
         if self.hovered:
             if key == 'left mouse down':
@@ -44,7 +46,14 @@ class Planet(Button):
 
 
     def set_coords(self, x, y, z, vx, vy, vz):  # set coordinates of planet
-        self.poslist.append((x, y, z, vx, vy, vz))
+        if self.counter == 4:
+            if len(self.poslist) > 1000000:
+                self.poslist[0] = None
+            self.poslist.append((x, y, z, vx, vy, vz))
+            self.counter = 0
+        else:
+            self.counter += 1
+
 
     def get_coords(self):
         return self.coord_x, self.coord_y, self.coord_z

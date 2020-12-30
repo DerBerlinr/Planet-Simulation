@@ -22,7 +22,7 @@ class GUI:
 
         # Time Menu -------------------------------------------------------------------------------
 
-        self.dt_slider = Slider(position=(-.2, -.15), min=-6000, max=6000, default=3000, step=60, height=Text.size, text='Speed:', dynamic=False)
+        self.dt_slider = Slider(position=(-.2, -.15), min=-12000, max=12000, default=3000, step=240, height=Text.size, text='Speed:', dynamic=False)
         self.buttons_gm.append(self.dt_slider)
         '''
         self.time_input_label = Text(text="Set time to:", position=(0, -.25))
