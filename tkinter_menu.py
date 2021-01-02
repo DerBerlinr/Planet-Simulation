@@ -112,7 +112,7 @@ class GUI_Startup(Tk):
 
     def copyright(self):
         # TODO: add functionality
-        pass
+        os.system('start " " license.txt')
 
     def own_planets(self):
         # list(filter(lambda a: a == None, self.planet_list)) # Removes all None-items from list
