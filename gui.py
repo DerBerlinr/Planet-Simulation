@@ -1,13 +1,14 @@
-from direct.stdpy.file import execfile
 from ursina import *
 from time import perf_counter
 
 
-class GUI:
-    def __init__(self, fpc, planet_list):
+class Menu:
+    # Menu of the simulation
+    def __init__(self, sim, planet_list):
 
-        self.planet_list = planet_list  # list of all planets in the simulation
-        self.fpc = fpc
+        self.planet_list = planet_list
+        # list of all planets in the simulation
+        self.sim = sim
 
         # IN-GAME-MENU -------------------------------------------------------------------------------------------------
         self.buttons_gm = []
@@ -16,54 +17,20 @@ class GUI:
         self.buttons_gm.append(self.bu_reenter)
         self.bu_reenter.on_click = self.reenter_game
 
-
         # Time Menu -------------------------------------------------------------------------------
-
         self.dt_slider = Slider(position=(-.2, -.15), min=-6000, max=6000, default=3000, step=240, height=Text.size, text='Speed:', dynamic=False)
         self.buttons_gm.append(self.dt_slider)
-        '''
-        self.time_input_label = Text(text="Set time to:", position=(0, -.25))
-        self.buttons_gm.append(self.time_input_label)
-
-        self.time_input = prefabs.input_field.InputField(position=(0, -.35), scale=(.5, .07))
-        self.buttons_gm.append(self.time_input)
-
-        self.bu_time_input_submit = Button(position=(0, -.45), text='Jump to given time', scale=(.5, .07))
-        self.buttons_gm.append(self.bu_time_input_submit)
-        self.bu_time_input_submit.on_click = self.time_input_submit
-        '''
         # --------------------------------------------------------------------------------------------------------------
 
         self.planet_data_temp = []
-    '''
-    def time_input_submit(self):
-        if self.time_input.text > 0 and self.time_input.text < len(self.planet_list[0].poslist):
-            self.fpc.time = int(self.time_input.text) - int(self.time_input.text) % 60 
-    '''
-
-
 
     def reenter_game(self):
+        # unlocks locked camera when in simulation menu
         mouse.locked = True
 
-    @staticmethod
-    def submit_planet_data():
-        """
-        name = planet_data_temp[0].text
-        mass = int(planet_data_temp[1].text)
-        speed = int(planet_data_temp[2].text)
-        pos_x = int(planet_data_temp[3].text)
-        pos_y = int(planet_data_temp[4].text)
-        pos_z = int(planet_data_temp[5].text)
-        temp = Planet(color=color.blue, name=name, speed=speed, mass=mass, x=pos_x, y=pos_y, z=pos_z)
-        planet_data_temp[6].close()
-        mouse.locked = True
-        """
-        exit()
-
-
-class FirstPersonController(Entity):
+class Simulation(Entity):
     def __init__(self, planet_list):
+        # visuals for ursina, defines camera, HUD, traces, planet positions
         self.planet_list = planet_list
         super().__init__()
 
@@ -99,32 +66,33 @@ class FirstPersonController(Entity):
         self.sel_plan = 0
 
 
-        self.gui = GUI(self, planet_list)
+        self.menu = Menu(self, planet_list)
 
         self.count = 0
 
         # Code by Petter Amland (modified by Erik Haarländer)
-        for i in self.planet_list:
+        for planet in self.planet_list:
             line_renderer = Entity(
                 model=Mesh(
-                    vertices=[Vec3(0, 0, 0) for i in range(6)],
-                    colors=[lerp(color.clear, color.white, i / 6 * 2) for i in range(6)],
+                    vertices=[Vec3(0, 0, 0) for planet in range(6)],
+                    colors=[lerp(color.clear, color.white, planet / 6 * 2) for planet in range(6)],
                     mode='line',
                     thickness=5,
                     static=False
                 )
             )
-            i.trace = line_renderer
+            planet.trace = line_renderer
         self.trace_time = 0
         self.trace_counter = 0
 
     def update(self):
+        # updates data of sim
         if mouse.locked:
             if self.count == 10:
                 self.count = 0
             else:
                 self.count += 1
-            for gui_element in self.gui.buttons_gm:
+            for gui_element in self.menu.buttons_gm:
                 gui_element.enabled = False
 
             # CAMERA ROTATION ------------------------------------------------------
@@ -142,7 +110,7 @@ class FirstPersonController(Entity):
             self.position += self.direction / 2 * self.speed * time.dt
 
             # PLANET POSITION ------------------------------------------------------
-            if not (round(self.gui.dt_slider.value) == 0 or (self.time <= 0 and round(self.gui.dt_slider.value) <= 0)):
+            if not (round(self.menu.dt_slider.value) == 0 or (self.time <= 0 and round(self.menu.dt_slider.value) <= 0)):
                 for planet in self.planet_list:
                     planet.x = planet.poslist[round(self.time / 60)][0] / 10000000000
                     planet.y = planet.poslist[round(self.time / 60)][1] / 10000000000
@@ -189,15 +157,26 @@ class FirstPersonController(Entity):
                 self.hud_text_vel.color = color.red
                 self.hud_text_vel.text = self.hud_vel
             # ----------------------------------------------------------------------
-            if not (self.time <= 0 and round(self.gui.dt_slider.value) <= 0):
-                self.time += round(self.gui.dt_slider.value)
+            if not (self.time <= 0 and round(self.menu.dt_slider.value) <= 0):
+                self.time += round(self.menu.dt_slider.value)
 
         # EXIT FPC -----------------------------------------------------------------
         if held_keys['escape']:
-            for gui_element in self.gui.buttons_gm:
+            for gui_element in self.menu.buttons_gm:
                 gui_element.enabled = True
             mouse.locked = False
 
-    def check_instance(self, obj):
-        return hasattr(obj, '__dict__')
+        # Keyboard Shortcuts -------------------------------------------------------
 
+        if held_keys['alt'] and held_keys['+']:
+            self.menu.dt_slider.value += 60
+
+        if held_keys['alt'] and held_keys['-']:
+            self.menu.dt_slider.value -= 60
+
+        if held_keys['alt'] and held_keys['0']:
+            self.menu.dt_slider.value = 0
+
+    def check_instance(self, obj):
+        # checks if obj is an instance and return True or False
+        return hasattr(obj, '__dict__')

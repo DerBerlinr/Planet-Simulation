@@ -12,6 +12,7 @@ class Planet(Button):
             position = [(coord_x, coord_y, coord_z)],
             color = color.white
         )
+        # creates planet object
         self.trace = None
         self.plannr = plannr
         self.tooltip_input = "0"
@@ -40,6 +41,7 @@ class Planet(Button):
         self.counter = 0
 
     def input(self, key):
+        # checks if a button(planet) gets clicked
         if self.hovered:
             if key == 'left mouse down':
                 self.button_pressed = True
@@ -57,18 +59,21 @@ class Planet(Button):
 
 
     def get_coords(self):
+        # returns coords
         return self.coord_x, self.coord_y, self.coord_z
 
     def get_vel(self):
+        # return velocity
         return self.vel_x, self.vel_y, self.vel_z
 
 
 class Sky(Entity):
+    # creates giant sphere which allows to change the background of the simulation
     def __init__(self):
         super().__init__(
             parent = scene,
             model = 'sphere',
-            color = color.dark_gray,
-            scale = 150,
+            texture='textures/sky',
+            scale = 1500,
             double_sided = True
         )

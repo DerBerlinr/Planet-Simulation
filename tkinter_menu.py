@@ -8,6 +8,7 @@ import os
 
 class GUI_Startup(Tk):
     def __init__(self, planetlist=[]):
+        # main menu to choose your preset/own config
         self.root = Tk()
         self.app = ursina.Ursina()
 
@@ -96,11 +97,11 @@ class GUI_Startup(Tk):
         self.planet_list = planetlist
 
     def exit(self):
+        # closes the program
         exit()
 
     def ov(self):
         # opens planet overview
-        # TODO: fix open toplevel 2nd time
         try:
             a = self.ov.farbe
             try:
@@ -111,15 +112,16 @@ class GUI_Startup(Tk):
             self.ov = GUI_Planet_Overview(self, self.planet_list)
 
     def copyright(self):
-        # TODO: add functionality
+        # opens license.txt
         os.system('start " " license.txt')
 
     def own_planets(self):
+        # Initialises your own config
         self.planet_list = self.rem_none(self.planet_list)
         Main(self.app, self.planet_list)
 
     def rem_none(self, list):
-        # Removes all None-items from list
+        # Removes all None-items from list so only planet objects remain
         c = 0
         temp = []
         for element in list:
@@ -129,6 +131,7 @@ class GUI_Startup(Tk):
         return temp
 
     def two_planets(self):
+        # preset for 2 planets
         self.planet_list = []
         planet = Planet(file_name='/textures/planet_1', planet_name="planet1", planet_diameter=1, plannr=1,
                         vel_x=10308.531985820431,
@@ -140,49 +143,50 @@ class GUI_Startup(Tk):
         self.planet_list.append(planet)
 
         planet2 = Planet(file_name='/textures/planet_2', planet_name='planet2', planet_diameter=1, plannr=2,
-                         vel_x=10308.531985820431,
-                         vel_y=-27640.154010970804,
-                         vel_z=-0.7364511260199437,
-                         coord_x=140699825958.8049,
-                         coord_y=-54738590238.00282,
-                         coord_z=-2510791.537005455)  # create a planet
+                         vel_x=40300.531985820431,
+                         vel_y=-26764.154010970804,
+                         vel_z=-50000.7364511260199437,
+                         coord_x=-9510791.537005455,
+                         coord_y=-12473859023.00282,
+                         coord_z=44069982595.8049)  # create a planet
 
         self.planet_list.append(planet2)
 
         start = Main(self.app, self.planet_list)
 
     def solar_sys(self):
+        # preset for 4 planets
         self.planet_list = []
         planet = Planet(file_name='/textures/planet_1', planet_name="planet1", planet_diameter=1, plannr=1,
                         vel_x=10308.531985820431,
                         vel_y=27640.154010970804,
-                        vel_z=-0.7364511260199437,
+                        vel_z=-10000.7364511260199437,
                         coord_x=140699825958.8049,
                         coord_y=-54738590238.00282,
-                        coord_z=2510791.537005455)  # create a planet
+                        coord_z=2710791.537005455)  # create a planet
         self.planet_list.append(planet)
 
         planet2 = Planet(file_name='/textures/planet_2', planet_name='planet2', planet_diameter=1, plannr=2,
                          vel_x=-10308.531985820431,
-                         vel_y=-27640.154010970804,
+                         vel_y=-20640.154010970804,
                          vel_z=0.7364511260199437,
-                         coord_x=140699825958.8049,
+                         coord_x=240699825958.8049,
                          coord_y=-50738590238.00282,
-                         coord_z=2510791.537005455)
+                         coord_z=2110791.537005455)
         self.planet_list.append(planet2)
 
         planet3 = Planet(file_name='/textures/planet_3', planet_name='planet3', planet_diameter=1, plannr=3,
-                         vel_x=10308.531985820431,
-                         vel_y=-27640.154010970804,
-                         vel_z=0.7364511260199437,
-                         coord_x=140699825958.8049,
+                         vel_x=9308.531985820431,
+                         vel_y=-0.154010970804,
+                         vel_z=20000.7364511260199437,
+                         coord_x=190699825958.8049,
                          coord_y=-50738590238.00282,
                          coord_z=2510791.537005455)
         self.planet_list.append(planet3)
 
         planet4 = Planet(file_name='/textures/planet_4', planet_name='planet4', planet_diameter=1, plannr=4,
-                         vel_x=-10308.531985820431,
-                         vel_y=27640.154010970804,
+                         vel_x=-15308.531985820431,
+                         vel_y=21640.154010970804,
                          vel_z=0.7364511260199437,
                          coord_x=-140699825958.8049,
                          coord_y=-50738590238.00282,
@@ -193,13 +197,14 @@ class GUI_Startup(Tk):
 
 
 class GUI_add_Planet(Tk):
-    def __init__(self, pn, overview, name="Planet", mass="10000", vx="-30000", vy="30000", vz="30000", x="-16070000000", y="-65040000000", z="3500800"):
+    def __init__(self, planet_number, overview, name="Planet", mass="10000", vx="-30000", vy="30000", vz="30000", x="-16070000000", y="-65040000000", z="3500800"):
+        # window to insert planet data and to save data for later usage
         self.root = Toplevel()
         self.lock = False
 
         self.root.title("Edit planet: " + name)
 
-        self.pn = pn
+        self.planet_number = planet_number
 
         rahmen1 = Frame(self.root, relief=SUNKEN, borderwidth=2)
         rahmen1.pack()
@@ -279,7 +284,7 @@ class GUI_add_Planet(Tk):
         self.bu1.grid(row=4, column=0, padx=abstand_x, pady=abstand_y)
 
 
-        if self.overview.lines[self.pn-1] == str(self.pn):
+        if self.overview.lines[self.planet_number - 1] == str(self.planet_number):
             self.en1_text.set(name)
             self.en2_text.set(mass)
             self.en3_1_text.set(vx)
@@ -290,9 +295,9 @@ class GUI_add_Planet(Tk):
             self.en4_3_text.set(z)
 
             self.submit()
-            
+
         else:
-            data_texture, data_name, data_mass, data_vx, data_vy, data_vz, data_x, data_y, data_z = self.overview.lines[self.pn-1].split("#")
+            data_texture, data_name, data_mass, data_vx, data_vy, data_vz, data_x, data_y, data_z = self.overview.lines[self.planet_number - 1].split("#")
 
             self.en1_text.set(data_name)
             self.en2_text.set(data_mass)
@@ -305,14 +310,10 @@ class GUI_add_Planet(Tk):
 
             self.submit()
 
-
-
-
         self.planet_list = []
 
-
-
     def clear(self):
+        # clears all entries of the GUI_add_Planet-window
         self.en1_text.set("")
         self.en2_text.set("")
         self.en3_1_text.set("")
@@ -323,10 +324,9 @@ class GUI_add_Planet(Tk):
         self.en4_3_text.set("")
         self.submit()
 
-
     def submit(self, button=0):
-        # TODO: add check if input correct
-        if self.pn != 0:
+        # reads entries, stores the data and creates a planet object
+        if self.planet_number != 0:
             name = self.en1_text.get()
             mass = self.en2_text.get()
             vx = self.en3_1_text.get()
@@ -336,28 +336,23 @@ class GUI_add_Planet(Tk):
             y = self.en4_2_text.get()
             z = self.en4_3_text.get()
 
-            fn = "textures/planet_" + str(self.pn-1) + ".jpg"
+            fn = "textures/planet_" + str(self.planet_number - 1) + ".jpg"
 
-            self.overview.data_list[self.pn-1] = str(fn)+"#"+str(name)+"#"+str(mass)+"#"+str(vx)+"#"+str(vy)+"#"+str(vz)+"#"+str(x)+"#"+str(y)+"#"+str(z)
+            self.overview.data_list[self.planet_number - 1] = str(fn) + "#" + str(name) + "#" + str(mass) + "#" + str(vx) + "#" + str(vy) + "#" + str(vz) + "#" + str(x) + "#" + str(y) + "#" + str(z)
 
+            self.planet = Planet(file_name=fn, planet_name=name, plannr=self.planet_number, planet_mass=mass,
+                                 vel_x=vx, vel_y=vy, vel_z=vz, coord_x=x, coord_y=y, coord_z=z)
 
-            self.planet = Planet(file_name=fn, planet_name=name, plannr=self.pn, planet_mass=mass,
-                            vel_x=vx, vel_y=vy, vel_z=vz, coord_x=x, coord_y=y, coord_z=z)
-
-            self.overview.planetlist[self.pn - 1] = self.planet
-            self.overview.planetlist_all[self.pn - 1] = self.planet
+            self.overview.planetlist[self.planet_number - 1] = self.planet
+            self.overview.planetlist_all[self.planet_number - 1] = self.planet
             if button == 1:
                 self.root.destroy()
 
 
-
-
-
-
 class GUI_Planet_Overview(Tk):
+    # overview of all added planets and if they will appear in the simulation
     lock = 0
     def __init__(self, mm, planetlist=[]):
-        print(planetlist, mm)
         root2 = Toplevel()
         # self.app = ursina.Ursina()
         self.mm = mm # Main-menu
@@ -374,8 +369,6 @@ class GUI_Planet_Overview(Tk):
         root2.columnconfigure(0, weight=1)
         root2.columnconfigure(1, weight=2)
 
-
-
         farbe = "light grey"
 
         abstand_x = 3
@@ -385,14 +378,10 @@ class GUI_Planet_Overview(Tk):
 
         while len(planetlist) < 10:
             planetlist.append(None)
-
-
         self.data_list = []
 
         while len(self.data_list) < 10:
             self.data_list.append(None)
-
-
         temp = planetlist[:]
 
         self.planetlist = temp[:]
@@ -415,8 +404,6 @@ class GUI_Planet_Overview(Tk):
         f.close()
 
         if GUI_Planet_Overview.lock == 0:
-
-
 
             self.col_positive = 'light green'
             self.col_negative = 'indian red'
@@ -635,7 +622,6 @@ class GUI_Planet_Overview(Tk):
         self.la47.grid(row=23, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
         # IMAGES -------------------------------------------------------------------------------------------------------
-        # code snippet from https://pythonbasics.org/tkinter-image/
         load1 = Image.open("textures/rendered_sun_scaled.png")
         render = ImageTk.PhotoImage(load1)
 
@@ -750,9 +736,11 @@ class GUI_Planet_Overview(Tk):
 
 
     def activ_plan1(self):
+        # the sun is always active
         pass
 
     def activ_plan2(self):
+        # toggles activation of planet 2
         if self.text_plan2 == self.txt_positive:
             self.bu25.config(text = self.txt_negative, bg = self.col_negative)
             self.text_plan2 = self.txt_negative
@@ -764,6 +752,7 @@ class GUI_Planet_Overview(Tk):
             self.planetlist[1] = self.planetlist_all[1]
 
     def activ_plan3(self):
+        # toggles activation of planet 3
         if self.text_plan3 == self.txt_positive:
             self.bu22.config(text = self.txt_negative, bg = self.col_negative)
             self.text_plan3 = self.txt_negative
@@ -774,6 +763,7 @@ class GUI_Planet_Overview(Tk):
             self.planetlist[2] = self.planetlist_all[2]
 
     def activ_plan4(self):
+        # toggles activation of planet 4
         if self.text_plan4 == self.txt_positive:
             self.bu26.config(text = self.txt_negative, bg = self.col_negative)
             self.text_plan4 = self.txt_negative
@@ -784,6 +774,7 @@ class GUI_Planet_Overview(Tk):
             self.planetlist[3] = self.planetlist_all[3]
 
     def activ_plan5(self):
+        # toggles activation of planet 5
         if self.text_plan5 == self.txt_positive:
             self.bu23.config(text = self.txt_negative, bg = self.col_negative)
             self.text_plan5 = self.txt_negative
@@ -794,6 +785,7 @@ class GUI_Planet_Overview(Tk):
             self.planetlist[4] = self.planetlist_all[4]
 
     def activ_plan6(self):
+        # toggles activation of planet 6
         if self.text_plan6 == self.txt_positive:
             self.bu27.config(text = self.txt_negative, bg = self.col_negative)
             self.text_plan6 = self.txt_negative
@@ -804,6 +796,7 @@ class GUI_Planet_Overview(Tk):
             self.planetlist[5] = self.planetlist_all[5]
 
     def activ_plan7(self):
+        # toggles activation of planet 7
         if self.text_plan7 == self.txt_positive:
             self.bu24.config(text = self.txt_negative, bg = self.col_negative)
             self.text_plan7 = self.txt_negative
@@ -814,6 +807,7 @@ class GUI_Planet_Overview(Tk):
             self.planetlist[6] = self.planetlist_all[6]
 
     def activ_plan8(self):
+        # toggles activation of planet 8
         if self.text_plan8 == self.txt_positive:
             self.bu28.config(text = self.txt_negative, bg = self.col_negative)
             self.text_plan8 = self.txt_negative
@@ -824,6 +818,7 @@ class GUI_Planet_Overview(Tk):
             self.planetlist[7] = self.planetlist_all[7]
 
     def activ_plan9(self):
+        # toggles activation of planet 9
         if self.text_plan9 == self.txt_positive:
             self.bu29.config(text = self.txt_negative, bg = self.col_negative)
             self.text_plan9 = self.txt_negative
@@ -834,6 +829,7 @@ class GUI_Planet_Overview(Tk):
             self.planetlist[8] = self.planetlist_all[8]
 
     def activ_plan10(self):
+        # toggles activation of planet 10
         if self.text_plan10 == self.txt_positive:
             self.bu30.config(text = self.txt_negative, bg = self.col_negative)
             self.text_plan10 = self.txt_negative
@@ -844,6 +840,7 @@ class GUI_Planet_Overview(Tk):
             self.planetlist[9] = self.planetlist_all[9]
 
     def return_to_gui(self):
+        # stores planet data in a file
         self.mm.planet_list = self.planetlist[:]
 
         f = open('planet_data.txt', 'w').close()
@@ -853,7 +850,6 @@ class GUI_Planet_Overview(Tk):
             if self.data_list[i] == None:
                 f.write(str(i+1)+"\n")
             else:
-                print(self.data_list[i])
                 f.write(self.data_list[i]+"\n")
         self.mm.root.lift()
 
@@ -861,17 +857,20 @@ class GUI_Planet_Overview(Tk):
         f.close()
 
     def help(self):
+        # opens the help file
         os.system('start " " help.txt')
 
     def plan(self, planet, plannr):
+        # opens a GUI_add_Planet-window for the selected planet in the overview
         if planet == None:
             gui_add = GUI_add_Planet(plannr, overview=self)
         else:
             gui_add = GUI_add_Planet(name=planet.planet_name, mass=planet.planet_mass,
                                      x=planet.coord_x, y=planet.coord_y, z=planet.coord_z,
-                                     vx=planet.vel_x, vy=planet.vel_y, vz=planet.vel_z, pn=plannr, overview=self)
+                                     vx=planet.vel_x, vy=planet.vel_y, vz=planet.vel_z, planet_number=plannr, overview=self)
 
 
 if __name__ == '__main__':
+    # initiates the GUI_Startup class and therefore starts the whole program
     gui = GUI_Startup()
     mainloop()

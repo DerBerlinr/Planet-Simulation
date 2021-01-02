@@ -1,7 +1,7 @@
 import threading
 import ursina
 from calc import *
-from gui import FirstPersonController
+from gui import Simulation
 from planet import Planet, Sky
 
 
@@ -21,13 +21,17 @@ class Main:
 
         # CREATION OF SUN  ---------------------------------------------------------------------
 
-        sun = Planet(file_name='/textures/sun', planet_name="sun", planet_diameter=2.5, plannr=0)
+        Planet(file_name='/textures/sun', planet_name="sun", planet_diameter=2.5, plannr=0)
 
         # CREATION OF SKY ----------------------------------------------------------------------
 
-        sky = Sky()
+        Sky()
 
-        fpc = FirstPersonController(self.planet_list)
+        # CREATION OF SIMULATION ---------------------------------------------------------------
+
+        simulation = Simulation(self.planet_list)
+
+        # CREATION OF THREADS ------------------------------------------------------------------
 
         for planet in self.planet_list:
             # For every planet, there is a thread, which calculates the current Position of its planet
@@ -35,9 +39,6 @@ class Main:
             temp = threading.Thread(target=calc.get_coords, args=(planet,))
             temp.start()
 
-
+        # STARTS THE SIMULATION ---------------------------------------------------------------
+        # runs simulation.update() constantly
         self.app.run()
-
-
-if __name__ == '__main__':
-    main = Main()

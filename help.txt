@@ -32,3 +32,5 @@ the planets leaving the displayed area of the simulation.
 
 EXIT:
 You can force quit the simulation by pressing SHIFT and Q simultaneously.
+
+----------------------------------------------------------------------------

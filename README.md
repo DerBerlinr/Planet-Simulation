@@ -16,13 +16,14 @@ You need to install various dependencies to get this simulation going.
 3) To start the program, type
       
          python tkinter_menu.py
-   in the Project-Directoy
+   in the Project-directoy
 
 ----------------------------------------------------------------------------
 
 ###NOTE:
 The help file contains useful information for customizing
-a setup. That is especially helpful when creating your own planets.
+a setup. 
+It is especially helpful when creating your own planets.
 
 ----------------------------------------------------------------------------
 
