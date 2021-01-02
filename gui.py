@@ -16,9 +16,6 @@ class GUI:
         self.buttons_gm.append(self.bu_reenter)
         self.bu_reenter.on_click = self.reenter_game
 
-        self.bu_menu = Button(position=(0, .15), text='Go to Menu', scale=(.5, .07))
-        self.buttons_gm.append(self.bu_menu)
-        self.bu_menu.on_click = self.go_to_menu
 
         # Time Menu -------------------------------------------------------------------------------
 
@@ -44,10 +41,7 @@ class GUI:
             self.fpc.time = int(self.time_input.text) - int(self.time_input.text) % 60 
     '''
 
-    def go_to_menu(self):
-        # TODO
-        execfile('tkinter_menu.py')
-        exit()
+
 
     def reenter_game(self):
         mouse.locked = True
@@ -130,8 +124,8 @@ class FirstPersonController(Entity):
                 self.count = 0
             else:
                 self.count += 1
-            for i in self.gui.buttons_gm:
-                i.enabled = False
+            for gui_element in self.gui.buttons_gm:
+                gui_element.enabled = False
 
             # CAMERA ROTATION ------------------------------------------------------
             self.rotation_y += mouse.velocity[0] * self.mouse_sensitivity[1]
@@ -149,39 +143,30 @@ class FirstPersonController(Entity):
 
             # PLANET POSITION ------------------------------------------------------
             if not (round(self.gui.dt_slider.value) == 0 or (self.time <= 0 and round(self.gui.dt_slider.value) <= 0)):
-                for i in self.planet_list:
-                    i.x = i.poslist[round(self.time / 60)][0] / 10000000000
-                    i.y = i.poslist[round(self.time / 60)][1] / 10000000000
-                    i.z = i.poslist[round(self.time / 60)][2] / 10000000000
+                for planet in self.planet_list:
+                    planet.x = planet.poslist[round(self.time / 60)][0] / 10000000000
+                    planet.y = planet.poslist[round(self.time / 60)][1] / 10000000000
+                    planet.z = planet.poslist[round(self.time / 60)][2] / 10000000000
 
                     # TRACES -----------------------------------------------------------
                     # Code by Petter Amland (modified by Erik Haarländer)
-                    if self.time == 0:
-                        print("plannr: ", i.plannr)
-                        i.trace.model.vertices.pop(0)
                     if self.trace_time >= .025:
                         self.trace_time = 0
                         if self.trace_counter == 100:
-                            i.trace.model.vertices.pop(0)
+                            planet.trace.model.vertices.pop(0)
                             self.trace_counter = 0
                         else:
                             self.trace_counter += 1
-                        i.trace.model.vertices.append(Vec3(i.x, i.y, i.z))
-                        i.trace.model.generate()
+                        planet.trace.model.vertices.append(Vec3(planet.x, planet.y, planet.z))
+                        planet.trace.model.generate()
                     self.trace_time += time.dt
 
                 # HUD ------------------------------------------------------------------
-                
-                sel_list = []
-                for i in self.planet_list:
-                    if i.pressedd:
-                        sel_list.append((i, perf_counter()))
-                        i.pressedd = False
 
-                if len(sel_list) > 1:
-                    sel_list.pop(0)
-                elif len(sel_list) == 1:
-                    self.sel_plan = sel_list[0][0]
+                for planet in self.planet_list:
+                    if planet.button_pressed:
+                        self.sel_plan = planet
+                        planet.button_pressed = False
 
                 px = 0
                 py = 0
@@ -209,8 +194,8 @@ class FirstPersonController(Entity):
 
         # EXIT FPC -----------------------------------------------------------------
         if held_keys['escape']:
-            for i in self.gui.buttons_gm:
-                i.enabled = True
+            for gui_element in self.gui.buttons_gm:
+                gui_element.enabled = True
             mouse.locked = False
 
     def check_instance(self, obj):

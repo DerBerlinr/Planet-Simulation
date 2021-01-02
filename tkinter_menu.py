@@ -115,14 +115,14 @@ class GUI_Startup(Tk):
         os.system('start " " license.txt')
 
     def own_planets(self):
-        # list(filter(lambda a: a == None, self.planet_list)) # Removes all None-items from list
         self.planet_list = self.rem_none(self.planet_list)
         Main(self.app, self.planet_list)
 
-    def rem_none(self, i):
+    def rem_none(self, list):
+        # Removes all None-items from list
         c = 0
         temp = []
-        for element in i:
+        for element in list:
             if element != None:
                 temp.append(element)
             c += 1

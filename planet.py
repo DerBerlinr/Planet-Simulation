@@ -35,17 +35,18 @@ class Planet(Button):
         self.y = 0
         self.z = 0
 
-        self.pressedd = False
+        self.button_pressed = False
 
         self.counter = 0
 
     def input(self, key):
         if self.hovered:
             if key == 'left mouse down':
-                self.pressedd = True
+                self.button_pressed = True
 
 
-    def set_coords(self, x, y, z, vx, vy, vz):  # set coordinates of planet
+    def set_coords(self, x, y, z, vx, vy, vz):
+        # appends coordinates and velocities to poslist
         if self.counter == 4:
             if len(self.poslist) > 1000000:
                 self.poslist[0] = None
