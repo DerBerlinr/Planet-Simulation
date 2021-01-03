@@ -350,6 +350,7 @@ class GUI_add_Planet(Tk):
             x = self.en4_1_text.get()
             y = self.en4_2_text.get()
             z = self.en4_3_text.get()
+
             try:
                 # if all entries exept for the name are convertible to int, this code gets executed
                 mass = int(mass)
@@ -372,9 +373,11 @@ class GUI_add_Planet(Tk):
                 self.overview.planetlist_all[self.planet_number - 1] = self.planet
                 if button == 1:
                     self.root.destroy()
+
             except:
                 # if one of the variables mentioned above isn'n convertible, an error-window pops up and notifies the user
                 ctypes.windll.user32.MessageBoxW(None, u"One of your Inputs had unknown characters in it. \nPlease only use Numbers for mass, velocity, and position", u"ERROR", 0)
+            print(self.overview.planetlist, "planet", self.planet_number)
 
 
 
@@ -429,8 +432,8 @@ class GUI_Planet_Overview(Tk):
                 self.planet = Planet(file_name=data_texture, planet_name=data_name, plannr=i, planet_mass=data_mass,
                                     vel_x=data_vx, vel_y=data_vy, vel_z=data_vz, coord_x=data_x, coord_y=data_y, coord_z=data_z)
 
-                self.planetlist[i - 1] = self.planet
-                self.planetlist_all[i - 1] = self.planet
+                self.planetlist[i] = self.planet
+                self.planetlist_all[i] = self.planet
                 self.data_list[i] = self.lines[i]
 
         f.close()
@@ -726,43 +729,43 @@ class GUI_Planet_Overview(Tk):
 
         # BUTTONS ------------------------------------------------------------------------------------------------------
         bu_1 = Button(rahmen1, text="Edit planet", width=groesse,
-                      command=lambda: self.plan(self.planetlist[0], 0))
+                      command=lambda: self.plan(self.planetlist[9], 0))
         bu_1.grid(row=5, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_3 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=lambda: self.plan(self.planetlist[2], 2))
+                      command=lambda: self.plan(self.planetlist[1], 2))
         bu_3.grid(row=9, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_5 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=lambda: self.plan(self.planetlist[4], 4))
+                      command=lambda: self.plan(self.planetlist[3], 4))
         bu_5.grid(row=13, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_7 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=lambda: self.plan(self.planetlist[6], 6))
+                      command=lambda: self.plan(self.planetlist[5], 6))
         bu_7.grid(row=17, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_2 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=lambda: self.plan(self.planetlist[1], 1))
+                      command=lambda: self.plan(self.planetlist[0], 1))
         bu_2.grid(row=5, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_4 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=lambda: self.plan(self.planetlist[3], 3))
+                      command=lambda: self.plan(self.planetlist[2], 3))
         bu_4.grid(row=9, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_6 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=lambda: self.plan(self.planetlist[5], 5))
+                      command=lambda: self.plan(self.planetlist[4], 5))
         bu_6.grid(row=13, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_8 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=lambda: self.plan(self.planetlist[7], 7))
+                      command=lambda: self.plan(self.planetlist[6], 7))
         bu_8.grid(row=17, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_9 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                      command=lambda: self.plan(self.planetlist[8], 8))
+                      command=lambda: self.plan(self.planetlist[7], 8))
         bu_9.grid(row=21, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         bu_10 = Button(rahmen1, text="Edit planet", image="", width=groesse,
-                       command=lambda: self.plan(self.planetlist[9], 9))
+                       command=lambda: self.plan(self.planetlist[8], 9))
         bu_10.grid(row=21, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
 
@@ -873,6 +876,7 @@ class GUI_Planet_Overview(Tk):
 
     def return_to_gui(self):
         # stores planet data in a file
+        print(self.planetlist, "Start SAVE")
         if self.text_plan1 == self.txt_positive:
             pass
 
@@ -894,7 +898,7 @@ class GUI_Planet_Overview(Tk):
             self.text_plan10,
         ]
         print(statelist)
-        print(self.planetlist)
+        print(self.planetlist, "MITTE")
 
         for i in range(len(self.data_list)):
             if self.data_list[i] == None:
@@ -905,7 +909,7 @@ class GUI_Planet_Overview(Tk):
         for i in range(len(self.data_list)-1):
             if statelist[i] == self.txt_negative:
                 print(i)
-                self.planetlist[i] = "BLUP"
+                self.planetlist[i] = None
         self.mm.root.lift()
 
         self.mm.planet_list = self.planetlist[:]
