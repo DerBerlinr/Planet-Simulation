@@ -5,9 +5,9 @@ from planet import Planet
 class Calc:
     # Calculates positions for one planet
     def __init__(self, planet):
-        # G -> gravitational force; mS -> Mass of Sun
-        self.G = np.array([-6.67430 * 10 ** -11, -6.67430 * 10 ** -11, -6.67430 * 10 ** -11])
-        self.mS = np.array([1.9885 * 10 ** 30, 1.9885 * 10 ** 30, 1.9885 * 10 ** 30])
+        # g -> gravitational force; m_s -> Mass of Sun
+        self.g = np.array([-6.67430 * 10 ** -11, -6.67430 * 10 ** -11, -6.67430 * 10 ** -11])
+        self.m_s = np.array([1.9885 * 10 ** 30, 1.9885 * 10 ** 30, 1.9885 * 10 ** 30])
 
         posx, posy, posz = planet.get_coords()
         self.pos = [int(posx), int(posy), int(posz)]
@@ -18,13 +18,13 @@ class Calc:
         self.acceleration = None
         self.counter = 0
         self.velocity = None
-        self.vel_o = 0
+        self.vel_old = 0
 
     def acc(self):
         # calculates the acceleration-vector
         vec = self.mul_scalar(self.pos, -1)
         vec_power_2 = self.len_power_2(vec)
-        scalar = -1 * self.G * self.mS / vec_power_2
+        scalar = -1 * self.g * self.m_s / vec_power_2
         return self.mul_scalar(self.vec_norm(vec), scalar[0])
 
     def get_coords(self, planet):

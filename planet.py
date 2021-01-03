@@ -32,16 +32,12 @@ class Planet(Button):
         self.vel_y = vel_y
         self.vel_z = vel_z
 
-        self.x = 0
-        self.y = 0
-        self.z = 0
-
         self.button_pressed = False
 
         self.counter = 0
 
     def input(self, key):
-        # checks if a button(planet) gets clicked
+        # checks if this planet gets clicked
         if self.hovered:
             if key == 'left mouse down':
                 self.button_pressed = True
