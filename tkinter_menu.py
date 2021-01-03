@@ -4,6 +4,7 @@ import ursina
 from main import Main
 from PIL import Image, ImageTk
 import os
+import ctypes
 
 
 class GUI_Startup(Tk):
@@ -283,8 +284,6 @@ class GUI_add_Planet(Tk):
         self.bu1 = Button(rahmen1, text="Clear", width=groesse + 3, command=self.clear)
         self.bu1.grid(row=4, column=0, padx=abstand_x, pady=abstand_y)
 
-        print(self.overview.data_list[self.planet_number - 1])
-
         if self.overview.data_list[self.planet_number - 1] != None:
             data_texture, data_name, data_mass, data_vx, data_vy, data_vz, data_x, data_y, data_z = \
             self.overview.data_list[
@@ -351,18 +350,34 @@ class GUI_add_Planet(Tk):
             x = self.en4_1_text.get()
             y = self.en4_2_text.get()
             z = self.en4_3_text.get()
+            try:
+                # if all entries exept for the name are convertible to int, this code gets executed
+                mass = int(mass)
+                vx = int(vx)
+                vy = int(vy)
+                vz = int(vz)
+                x = int(x)
+                y = int(y)
+                z = int(z)
 
-            fn = "textures/planet_" + str(self.planet_number - 1) + ".jpg"
+                fn = "textures/planet_" + str(self.planet_number - 1) + ".jpg"
 
-            self.overview.data_list[self.planet_number - 1] = str(fn) + "#" + str(name) + "#" + str(mass) + "#" + str(vx) + "#" + str(vy) + "#" + str(vz) + "#" + str(x) + "#" + str(y) + "#" + str(z)
+                self.overview.data_list[self.planet_number - 1] = str(fn) + "#" + str(name) + "#" + str(
+                    mass) + "#" + str(vx) + "#" + str(vy) + "#" + str(vz) + "#" + str(x) + "#" + str(y) + "#" + str(z)
 
-            self.planet = Planet(file_name=fn, planet_name=name, plannr=self.planet_number, planet_mass=mass,
-                                 vel_x=vx, vel_y=vy, vel_z=vz, coord_x=x, coord_y=y, coord_z=z)
+                self.planet = Planet(file_name=fn, planet_name=name, plannr=self.planet_number, planet_mass=mass,
+                                     vel_x=vx, vel_y=vy, vel_z=vz, coord_x=x, coord_y=y, coord_z=z)
 
-            self.overview.planetlist[self.planet_number - 1] = self.planet
-            self.overview.planetlist_all[self.planet_number - 1] = self.planet
-            if button == 1:
-                self.root.destroy()
+                self.overview.planetlist[self.planet_number - 1] = self.planet
+                self.overview.planetlist_all[self.planet_number - 1] = self.planet
+                if button == 1:
+                    self.root.destroy()
+            except:
+                # if one of the variables mentioned above isn'n convertible, an error-window pops up and notifies the user
+                ctypes.windll.user32.MessageBoxW(None, u"One of your Inputs had unknown charakters in it. \nPlease only use Numbers for mass, velocity, and position", u"ERROR", 0)
+
+
+
 
 
 class GUI_Planet_Overview(Tk):
