@@ -906,10 +906,10 @@ class GUI_Planet_Overview(Tk):
             else:
                 print(self.data_list[i], "AAAAAAAAAAAAAAAAA")
                 f.write(self.data_list[i]+"\n")
-        for i in range(len(self.data_list)-1):
-            if statelist[i] == self.txt_negative:
+        for i in range(9):
+            if statelist[i] == 'Inactive':
                 print(i)
-                self.planetlist[i] = None
+                self.planetlist[i+1] = None
         self.mm.root.lift()
 
         f.close()
