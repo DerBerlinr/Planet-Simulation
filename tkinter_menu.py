@@ -283,8 +283,24 @@ class GUI_add_Planet(Tk):
         self.bu1 = Button(rahmen1, text="Clear", width=groesse + 3, command=self.clear)
         self.bu1.grid(row=4, column=0, padx=abstand_x, pady=abstand_y)
 
+        print(self.overview.data_list[self.planet_number - 1])
 
-        if self.overview.lines[self.planet_number - 1] == str(self.planet_number):
+        if self.overview.data_list[self.planet_number - 1] != None:
+            data_texture, data_name, data_mass, data_vx, data_vy, data_vz, data_x, data_y, data_z = \
+            self.overview.data_list[
+                self.planet_number - 1].split("#")
+
+            self.en1_text.set(data_name)
+            self.en2_text.set(data_mass)
+            self.en3_1_text.set(data_vx)
+            self.en3_2_text.set(data_vy)
+            self.en3_3_text.set(data_vz)
+            self.en4_1_text.set(data_x)
+            self.en4_2_text.set(data_y)
+            self.en4_3_text.set(data_z)
+
+
+        elif self.overview.lines[self.planet_number - 1] == str(self.planet_number):
             self.en1_text.set(name)
             self.en2_text.set(mass)
             self.en3_1_text.set(vx)
@@ -296,7 +312,7 @@ class GUI_add_Planet(Tk):
 
             self.submit()
 
-        else:
+        elif self.overview.lines[self.planet_number - 1] != str(self.planet_number):
             data_texture, data_name, data_mass, data_vx, data_vy, data_vz, data_x, data_y, data_z = self.overview.lines[self.planet_number - 1].split("#")
 
             self.en1_text.set(data_name)
