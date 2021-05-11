@@ -14,7 +14,7 @@ class GUI_Startup(Tk):
         self.app=ursina.Ursina()
 
         self.root.title("Main Menu")
-        self.root.geometry("750x300")
+        self.root.geometry("580x260")
         self.root.resizable(True, True)
 
         rahmen1=Frame(self.root, relief=SUNKEN, borderwidth=2)
@@ -27,22 +27,22 @@ class GUI_Startup(Tk):
 
         groesse=25
 
-        self.bu1=Button(rahmen1, text="Run Custom setup", width=groesse, highlightbackground='#3E4149', command=self.own_planets)
+        self.bu1=Button(rahmen1, text="Run Custom setup", width=groesse, command=self.own_planets)
         self.bu1.grid(row=4, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu2=Button(rahmen1, text="Run Pre-setup (2 Planets)", width=groesse, highlightbackground='#3E4149', command=self.two_planets)
+        self.bu2=Button(rahmen1, text="Run Pre-setup (2 Planets)", width=groesse, command=self.two_planets)
         self.bu2.grid(row=6, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu3=Button(rahmen1, text="Run Pre-setup (4 Planets)", width=groesse, highlightbackground='#3E4149', command=self.solar_sys)
+        self.bu3=Button(rahmen1, text="Run Pre-setup (4 Planets)", width=groesse, command=self.solar_sys)
         self.bu3.grid(row=6, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu4=Button(rahmen1, text="Customize Planets", width=groesse, highlightbackground='#3E4149', command=self.ov)
+        self.bu4=Button(rahmen1, text="Customize Planets", width=groesse, command=self.ov)
         self.bu4.grid(row=4, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu5=Button(rahmen1, text="Exit", width=groesse, highlightbackground='#3E4149', command=self.exit)
+        self.bu5=Button(rahmen1, text="Exit", width=groesse, command=self.exit)
         self.bu5.grid(row=9, column=3, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu6=Button(rahmen1, text="Copyright", width=groesse, highlightbackground='#3E4149', command=self.copyright)
+        self.bu6=Button(rahmen1, text="Copyright", width=groesse, command=self.copyright)
         self.bu6.grid(row=9, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la1_text=StringVar()
@@ -278,10 +278,10 @@ class GUI_add_Planet(Tk):
         self.en4_3=Entry(rahmen1, width=round(groesse / 3), textvariable=self.en4_3_text)
         self.en4_3.grid(row=3, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu1=Button(rahmen1, text="Submit", width=groesse + 3, highlightbackground='#3E4149', command=lambda: self.submit(1))
+        self.bu1=Button(rahmen1, text="Submit", width=groesse + 3, command=lambda: self.submit(1))
         self.bu1.grid(row=4, column=1, padx=abstand_x, pady=abstand_y)
 
-        self.bu1=Button(rahmen1, text="Clear", width=groesse + 3, highlightbackground='#3E4149', command=self.clear)
+        self.bu1=Button(rahmen1, text="Clear", width=groesse + 3, command=self.clear)
         self.bu1.grid(row=4, column=0, padx=abstand_x, pady=abstand_y)
 
         if self.overview.data_list[self.planet_number - 1] != None:
@@ -391,7 +391,7 @@ class GUI_Planet_Overview(Tk):
 
 
         root2.title("Customize Planets")
-        root2.geometry("945x785")
+        root2.geometry("785x745")
         root2.resizable(False, False)
 
         rahmen1=Frame(root2, relief=SUNKEN, borderwidth=7)
@@ -523,7 +523,7 @@ class GUI_Planet_Overview(Tk):
         self.la20.grid(row=5, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
 
-        self.bu21=Button(rahmen1, text=self.text_plan1, width=groesse, highlightbackground=self.state_plan1, justify=CENTER, command=self.activ_plan1)
+        self.bu21=Button(rahmen1, text=self.text_plan1, width=groesse, bg=self.state_plan1, justify=CENTER, command=self.activ_plan1)
         self.bu21.grid(row=4, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
         self.la22_text=StringVar()
@@ -541,14 +541,14 @@ class GUI_Planet_Overview(Tk):
         self.la24=Label(rahmen1, textvariable=self.la24_text, width=groesse, fg='#F0F0F0', justify=CENTER)
         self.la24.grid(row=8, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu22=Button(rahmen1, text=self.text_plan3, width=groesse, highlightbackground=self.state_plan3, justify=CENTER, command=self.activ_plan3)
+        self.bu22=Button(rahmen1, text=self.text_plan3, width=groesse, bg=self.state_plan3, justify=CENTER, command=self.activ_plan3)
         self.bu22.grid(row=8, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu23=Button(rahmen1, text=self.text_plan5, width=groesse, highlightbackground=self.state_plan5, justify=CENTER,
+        self.bu23=Button(rahmen1, text=self.text_plan5, width=groesse, bg=self.state_plan5, justify=CENTER,
                            command=self.activ_plan5)
         self.bu23.grid(row=12, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu24=Button(rahmen1, text=self.text_plan7, width=groesse, highlightbackground=self.state_plan7, justify=CENTER,
+        self.bu24=Button(rahmen1, text=self.text_plan7, width=groesse, bg=self.state_plan7, justify=CENTER,
                            command=self.activ_plan7)
         self.bu24.grid(row=16, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
@@ -607,33 +607,33 @@ class GUI_Planet_Overview(Tk):
         self.la38=Label(rahmen1, textvariable=self.la38_text, width=groesse, fg='#F0F0F0', justify=CENTER)
         self.la38.grid(row=19, column=2, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu1=Button(rahmen1, text="Save Changes", width=groesse, highlightbackground='#3E4149', command=self.return_to_gui)
+        self.bu1=Button(rahmen1, text="Save Changes", width=groesse, command=self.return_to_gui)
         self.bu1.grid(row=24, column=4, padx=abstand_x, pady=abstand_y)
 
-        self.bu2=Button(rahmen1, text="Help", width=groesse, highlightbackground='#3E4149', command=self.help)
+        self.bu2=Button(rahmen1, text="Help", width=groesse, command=self.help)
         self.bu2.grid(row=24, column=0, padx=abstand_x, pady=abstand_y)
 
-        self.bu25=Button(rahmen1, text=self.text_plan2, width=groesse, highlightbackground=self.state_plan2, justify=CENTER,
+        self.bu25=Button(rahmen1, text=self.text_plan2, width=groesse, bg=self.state_plan2, justify=CENTER,
                            command=self.activ_plan2)
         self.bu25.grid(row=4, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu26=Button(rahmen1, text=self.text_plan4, width=groesse, highlightbackground=self.state_plan4, justify=CENTER,
+        self.bu26=Button(rahmen1, text=self.text_plan4, width=groesse, bg=self.state_plan4, justify=CENTER,
                            command=self.activ_plan4)
         self.bu26.grid(row=8, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu27=Button(rahmen1, text=self.text_plan6, width=groesse, highlightbackground=self.state_plan6, justify=CENTER,
+        self.bu27=Button(rahmen1, text=self.text_plan6, width=groesse, bg=self.state_plan6, justify=CENTER,
                            command=self.activ_plan6)
         self.bu27.grid(row=12, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu28=Button(rahmen1, text=self.text_plan8, width=groesse, highlightbackground=self.state_plan8, justify=CENTER,
+        self.bu28=Button(rahmen1, text=self.text_plan8, width=groesse, bg=self.state_plan8, justify=CENTER,
                            command=self.activ_plan8)
         self.bu28.grid(row=16, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu29=Button(rahmen1, text=self.text_plan9, width=groesse, highlightbackground=self.state_plan9, justify=CENTER,
+        self.bu29=Button(rahmen1, text=self.text_plan9, width=groesse, bg=self.state_plan9, justify=CENTER,
                            command=self.activ_plan9)
         self.bu29.grid(row=20, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        self.bu30=Button(rahmen1, text=self.text_plan10, width=groesse, highlightbackground=self.state_plan10, justify=CENTER,
+        self.bu30=Button(rahmen1, text=self.text_plan10, width=groesse, bg=self.state_plan10, justify=CENTER,
                            command=self.activ_plan10)
         self.bu30.grid(row=20, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
@@ -724,43 +724,43 @@ class GUI_Planet_Overview(Tk):
         img10.place(x=490, y=550)
 
         # BUTTONS ------------------------------------------------------------------------------------------------------
-        bu_1=Button(rahmen1, text="Edit planet", width=groesse, highlightbackground='#3E4149',
+        bu_1=Button(rahmen1, text="Edit planet", width=groesse,
                       command=lambda: self.plan(self.planetlist[0], 1))
         bu_1.grid(row=5, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_3=Button(rahmen1, text="Edit planet", image="", width=groesse, highlightbackground='#3E4149',
+        bu_3=Button(rahmen1, text="Edit planet", image="", width=groesse,
                       command=lambda: self.plan(self.planetlist[2], 3))
         bu_3.grid(row=9, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_5=Button(rahmen1, text="Edit planet", image="", width=groesse, highlightbackground='#3E4149',
+        bu_5=Button(rahmen1, text="Edit planet", image="", width=groesse,
                       command=lambda: self.plan(self.planetlist[4], 5))
         bu_5.grid(row=13, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_7=Button(rahmen1, text="Edit planet", image="", width=groesse, highlightbackground='#3E4149',
+        bu_7=Button(rahmen1, text="Edit planet", image="", width=groesse,
                       command=lambda: self.plan(self.planetlist[6], 7))
         bu_7.grid(row=17, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_2=Button(rahmen1, text="Edit planet", image="", width=groesse, highlightbackground='#3E4149',
+        bu_2=Button(rahmen1, text="Edit planet", image="", width=groesse,
                       command=lambda: self.plan(self.planetlist[1], 2))
         bu_2.grid(row=5, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_4=Button(rahmen1, text="Edit planet", image="", width=groesse, highlightbackground='#3E4149',
+        bu_4=Button(rahmen1, text="Edit planet", image="", width=groesse,
                       command=lambda: self.plan(self.planetlist[3], 4))
         bu_4.grid(row=9, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_6=Button(rahmen1, text="Edit planet", image="", width=groesse, highlightbackground='#3E4149',
+        bu_6=Button(rahmen1, text="Edit planet", image="", width=groesse,
                       command=lambda: self.plan(self.planetlist[5], 6))
         bu_6.grid(row=13, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_8=Button(rahmen1, text="Edit planet", image="", width=groesse, highlightbackground='#3E4149',
+        bu_8=Button(rahmen1, text="Edit planet", image="", width=groesse,
                       command=lambda: self.plan(self.planetlist[7], 8))
         bu_8.grid(row=17, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_9=Button(rahmen1, text="Edit planet", image="", width=groesse, highlightbackground='#3E4149',
+        bu_9=Button(rahmen1, text="Edit planet", image="", width=groesse,
                       command=lambda: self.plan(self.planetlist[8], 9))
         bu_9.grid(row=21, column=1, sticky=E, padx=abstand_x, pady=abstand_y)
 
-        bu_10=Button(rahmen1, text="Edit planet", image="", width=groesse, highlightbackground='#3E4149',
+        bu_10=Button(rahmen1, text="Edit planet", image="", width=groesse,
                        command=lambda: self.plan(self.planetlist[9], 10))
         bu_10.grid(row=21, column=4, sticky=E, padx=abstand_x, pady=abstand_y)
 
@@ -773,100 +773,100 @@ class GUI_Planet_Overview(Tk):
     def activ_plan2(self):
         # toggles activation of planet 2
         if self.text_plan2 == self.txt_positive:
-            self.bu25.config(text=self.txt_negative, highlightbackground=self.col_negative)
+            self.bu25.config(text=self.txt_negative, bg=self.col_negative)
             self.text_plan2=self.txt_negative
             self.planetlist[1]=None
         else:
 
-            self.bu25.config(text=self.txt_positive, highlightbackground=self.col_positive)
+            self.bu25.config(text=self.txt_positive, bg=self.col_positive)
             self.text_plan2=self.txt_positive
             self.planetlist[1]=self.planetlist_all[1]
 
     def activ_plan3(self):
         # toggles activation of planet 3
         if self.text_plan3 == self.txt_positive:
-            self.bu22.config(text=self.txt_negative, highlightbackground=self.col_negative)
+            self.bu22.config(text=self.txt_negative, bgd=self.col_negative)
             self.text_plan3=self.txt_negative
             self.planetlist[2]=None
         else:
-            self.bu22.config(text=self.txt_positive, highlightbackground=self.col_positive)
+            self.bu22.config(text=self.txt_positive, bg=self.col_positive)
             self.text_plan3=self.txt_positive
             self.planetlist[2]=self.planetlist_all[2]
 
     def activ_plan4(self):
         # toggles activation of planet 4
         if self.text_plan4 == self.txt_positive:
-            self.bu26.config(text=self.txt_negative, highlightbackground=self.col_negative)
+            self.bu26.config(text=self.txt_negative, bg=self.col_negative)
             self.text_plan4=self.txt_negative
             self.planetlist[3]=None
         else:
-            self.bu26.config(text=self.txt_positive, highlightbackground=self.col_positive)
+            self.bu26.config(text=self.txt_positive, bg=self.col_positive)
             self.text_plan4=self.txt_positive
             self.planetlist[3]=self.planetlist_all[3]
 
     def activ_plan5(self):
         # toggles activation of planet 5
         if self.text_plan5 == self.txt_positive:
-            self.bu23.config(text=self.txt_negative, highlightbackground=self.col_negative)
+            self.bu23.config(text=self.txt_negative, bg=self.col_negative)
             self.text_plan5=self.txt_negative
             self.planetlist[4]=None
         else:
-            self.bu23.config(text=self.txt_positive, highlightbackground=self.col_positive)
+            self.bu23.config(text=self.txt_positive, bg=self.col_positive)
             self.text_plan5=self.txt_positive
             self.planetlist[4]=self.planetlist_all[4]
 
     def activ_plan6(self):
         # toggles activation of planet 6
         if self.text_plan6 == self.txt_positive:
-            self.bu27.config(text=self.txt_negative, highlightbackground=self.col_negative)
+            self.bu27.config(text=self.txt_negative, bg=self.col_negative)
             self.text_plan6=self.txt_negative
             self.planetlist[5]=None
         else:
-            self.bu27.config(text=self.txt_positive, highlightbackground=self.col_positive)
+            self.bu27.config(text=self.txt_positive, bg=self.col_positive)
             self.text_plan6=self.txt_positive
             self.planetlist[5]=self.planetlist_all[5]
 
     def activ_plan7(self):
         # toggles activation of planet 7
         if self.text_plan7 == self.txt_positive:
-            self.bu24.config(text=self.txt_negative, highlightbackground=self.col_negative)
+            self.bu24.config(text=self.txt_negative, bg=self.col_negative)
             self.text_plan7=self.txt_negative
             self.planetlist[6]=None
         else:
-            self.bu24.config(text=self.txt_positive, highlightbackground=self.col_positive)
+            self.bu24.config(text=self.txt_positive, bg=self.col_positive)
             self.text_plan7=self.txt_positive
             self.planetlist[6]=self.planetlist_all[6]
 
     def activ_plan8(self):
         # toggles activation of planet 8
         if self.text_plan8 == self.txt_positive:
-            self.bu28.config(text=self.txt_negative, highlightbackground=self.col_negative)
+            self.bu28.config(text=self.txt_negative, bg=self.col_negative)
             self.text_plan8=self.txt_negative
             self.planetlist[7]=None
         else:
-            self.bu28.config(text=self.txt_positive, highlightbackground=self.col_positive)
+            self.bu28.config(text=self.txt_positive, bg=self.col_positive)
             self.text_plan8=self.txt_positive
             self.planetlist[7]=self.planetlist_all[7]
 
     def activ_plan9(self):
         # toggles activation of planet 9
         if self.text_plan9 == self.txt_positive:
-            self.bu29.config(text=self.txt_negative, highlightbackground=self.col_negative)
+            self.bu29.config(text=self.txt_negative, bg=self.col_negative)
             self.text_plan9=self.txt_negative
             self.planetlist[8]=None
         else:
-            self.bu29.config(text=self.txt_positive, highlightbackground=self.col_positive)
+            self.bu29.config(text=self.txt_positive, bg=self.col_positive)
             self.text_plan9=self.txt_positive
             self.planetlist[8]=self.planetlist_all[8]
 
     def activ_plan10(self):
         # toggles activation of planet 10
         if self.text_plan10 == self.txt_positive:
-            self.bu30.config(text=self.txt_negative, highlightbackground=self.col_negative)
+            self.bu30.config(text=self.txt_negative, bg=self.col_negative)
             self.text_plan10=self.txt_negative
             self.planetlist[9]=None
         else:
-            self.bu30.config(text=self.txt_positive, highlightbackground=self.col_positive)
+            self.bu30.config(text=self.txt_positive, bg=self.col_positive)
             self.text_plan10=self.txt_positive
             self.planetlist[9]=self.planetlist_all[9]
 
